@@ -1,6 +1,6 @@
 [project]
 name = "nwn"
-version = "0.0.1"
+version = "0.0.2"
 description = "collection of modules for working with Neverwinter Nights 1: Enhanced Edition"
 readme = "README.rst"
 license = "MIT"
@@ -15,7 +15,8 @@ classifiers = [
 ]
 [project.urls]
 "Source Code" = "https://github.com/niv/nwn.py"
-
+"Issue Tracker" = "https://github.com/niv/nwn.py/issues"
+"Documentation" = "https://niv.github.io/nwn.py/"
 
 [build-system]
 requires = ["hatchling"]
@@ -30,6 +31,9 @@ addopts = ["--import-mode=importlib"]
 
 [tool.hatch.build]
 include = ["src/**", "README.rst", "LICENSE"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nwn"]
 
 [tool.pydoctor]
 add-package = ["src/nwn"]
