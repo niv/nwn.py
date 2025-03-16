@@ -1,0 +1,12 @@
+.pytest_cache
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.venv
+.vscode
+.ruff_cache
+_build
+_gh-pages
