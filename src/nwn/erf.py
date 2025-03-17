@@ -14,6 +14,20 @@ from nwn.shared import (
 
 
 class Reader:
+    """
+    Class to read and access an ERF archive (MOD, HAK, ERF, ...)
+
+    Example:
+        >>> with open("Prelude.mod", "rb") as file:
+        ...    erf = Reader(file)
+        ...    print(erf.filenames)
+        ...    gff_data = erf.read_file("item.uti")
+        ...    ...
+
+    Args:
+        file: The file object to read from.
+    """
+
     class Version(Enum):
         V_1_0 = "V1.0"
         # E_1_0 = "E1.0"
@@ -91,23 +105,26 @@ class Reader:
         }
 
     @property
-    def build_date(self):
+    def build_date(self) -> date:
+        """The build date of the ERF archive."""
         return date(1900 + self._header.build_year, 1, 1) + timedelta(
             days=self._header.build_day
         )
 
     @property
     def localized_strings(self) -> dict[Language, str]:
+        """The localized strings in the ERF archive."""
         return self._localized_strings
 
     @property
-    def description_strref(self):
+    def description_strref(self) -> int:
+        """The STRREF set in the ERF header. 0 if not set."""
         return self._header.description_strref
 
     @property
     def filenames(self) -> list[str]:
         """
-        Property that returns the filenames in the ERF archive.
+        Returns the filenames in the ERF archive.
 
         Returns:
             list[str]: A list of filenames present in the ERF archive.
@@ -115,7 +132,7 @@ class Reader:
         return list(self._files.keys())
 
     @property
-    def filemap(self):
+    def filemap(self) -> dict[str, Entry]:
         """
         Returns the mapping of files.
 
@@ -147,6 +164,17 @@ class Reader:
 
 
 class Writer:
+    """
+    A class to write ERF files.
+
+    Example:
+        >>> with open("Prelude.mod", "wb") as file:
+        ...    with Writer(file, file_type="MOD ") as e:
+        ...        e.add_localized_string(Language.ENGLISH, "Prelude")
+        ...        with open("item.uti", "rb") as item:
+        ...            e.add_file("item.uti", item)
+    """
+
     class Entry(NamedTuple):
         resref: str
         restype: int
