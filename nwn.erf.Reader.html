@@ -388,7 +388,16 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p>Class to read and access an ERF archive (MOD, HAK, ERF, ...)</p>
+<div class="rst-admonition rst-admonition-example">
+<p class="rst-admonition-title rst-first">Example</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">with</span> <span class="py-builtin">open</span>(<span class="py-string">"Prelude.mod"</span>, <span class="py-string">"rb"</span>) <span class="py-keyword">as</span> file:
+<span class="py-more">... </span>   erf = Reader(file)
+<span class="py-more">... </span>   <span class="py-builtin">print</span>(erf.filenames)
+<span class="py-more">... </span>   gff_data = erf.read_file(<span class="py-string">"item.uti"</span>)
+<span class="py-more">... </span>   ...</pre></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file</span></td><td class="fieldArgDesc">The file object to read from.</td></tr></table></div>
         </div>
 
         <div id="splitTables">
@@ -424,12 +433,12 @@
     
     <td>Property</td>
     <td><code><a href="#build_date" class="internal-link" title="nwn.erf.Reader.build_date">build<wbr></wbr>_date</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>The build date of the ERF archive.</td>
   </tr><tr class="property">
     
     <td>Property</td>
     <td><code><a href="#description_strref" class="internal-link" title="nwn.erf.Reader.description_strref">description<wbr></wbr>_strref</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>The STRREF set in the ERF header. 0 if not set.</td>
   </tr><tr class="property">
     
     <td>Property</td>
@@ -439,12 +448,12 @@
     
     <td>Property</td>
     <td><code><a href="#filenames" class="internal-link" title="nwn.erf.Reader.filenames">filenames</a></code></td>
-    <td>Property that returns the filenames in the ERF archive.</td>
+    <td>Returns the filenames in the ERF archive.</td>
   </tr><tr class="property">
     
     <td>Property</td>
     <td><code><a href="#localized_strings" class="internal-link" title="nwn.erf.Reader.localized_strings">localized<wbr></wbr>_strings</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>The localized strings in the ERF archive.</td>
   </tr><tr class="method private">
     
     <td>Method</td>
@@ -542,7 +551,7 @@
   </a>
   <div class="functionHeader">
     @property<br />
-    <span class="py-defname">build_date</span> =
+    <span class="py-defname">build_date</span>: <code>date</code> =
     
     <a class="headerLink" href="#build_date" title="nwn.erf.Reader.build_date">
       
@@ -552,7 +561,7 @@
   </div>
   <div class="functionBody">
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div><p>The build date of the ERF archive.</p></div>
     
   </div>
 </div><div class="baseproperty">
@@ -566,7 +575,7 @@
   </a>
   <div class="functionHeader">
     @property<br />
-    <span class="py-defname">description_strref</span> =
+    <span class="py-defname">description_strref</span>: <code>int</code> =
     
     <a class="headerLink" href="#description_strref" title="nwn.erf.Reader.description_strref">
       
@@ -576,7 +585,7 @@
   </div>
   <div class="functionBody">
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div><p>The STRREF set in the ERF header. 0 if not set.</p></div>
     
   </div>
 </div><div class="baseproperty">
@@ -590,7 +599,7 @@
   </a>
   <div class="functionHeader">
     @property<br />
-    <span class="py-defname">filemap</span> =
+    <span class="py-defname">filemap</span>: <code>dict[<wbr></wbr>str, <wbr></wbr><a href="nwn.erf.Reader.Entry.html" class="internal-link" title="nwn.erf.Reader.Entry">Entry</a>]</code> =
     
     <a class="headerLink" href="#filemap" title="nwn.erf.Reader.filemap">
       
@@ -627,7 +636,7 @@ corresponding file data.</p>
   </div>
   <div class="functionBody">
     
-    <div><p>Property that returns the filenames in the ERF archive.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>list[str]</code></td><td class="fieldArgDesc">A list of filenames present in the ERF archive.</td></tr></table></div>
+    <div><p>Returns the filenames in the ERF archive.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>list[str]</code></td><td class="fieldArgDesc">A list of filenames present in the ERF archive.</td></tr></table></div>
     
   </div>
 </div><div class="baseproperty">
@@ -651,7 +660,7 @@ corresponding file data.</p>
   </div>
   <div class="functionBody">
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div><p>The localized strings in the ERF archive.</p></div>
     
   </div>
 </div><div class="basemethod private">
@@ -811,7 +820,7 @@ corresponding file data.</p>
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for nwn,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-03-16 22:09:20.
+      24.11.2 at 2025-03-17 15:47:23.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>
