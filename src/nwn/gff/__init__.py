@@ -14,6 +14,7 @@ enforce the GFF type system.
 """
 
 from nwn.gff._reader import read
+from nwn.gff._writer import write
 from nwn.gff._types import (
     Byte,
     Char,
@@ -36,6 +37,7 @@ from nwn.gff._types import (
 
 __all__ = [
     "read",
+    "write",
     "Byte",
     "Char",
     "Word",
