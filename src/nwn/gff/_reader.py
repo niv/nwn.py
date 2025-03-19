@@ -2,7 +2,7 @@ import struct
 from typing import BinaryIO
 
 
-from nwn.shared import get_nwn_encoding, CExoLocString
+from nwn.shared import get_nwn_encoding
 from nwn.gff._types import (
     Byte,
     Char,
@@ -13,6 +13,7 @@ from nwn.gff._types import (
     Float,
     CExoString,
     ResRef,
+    CExoLocString,
     Struct,
     List,
 )

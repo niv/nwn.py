@@ -1,14 +1,6 @@
 """Shared types and helpers useful across the whole library."""
 
 from enum import IntEnum
-from typing import NamedTuple
-
-
-class CExoLocString(NamedTuple):
-    """Represents a localized string in the NWN engine."""
-
-    strref: int
-    entries: dict[int, str]
 
 
 class Language(IntEnum):

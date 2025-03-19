@@ -1,4 +1,11 @@
+from dataclasses import dataclass
+
+from nwn.gff._impl import FieldKind
+
+
 class Byte(int):
+    FIELD_KIND = FieldKind.BYTE
+
     def __new__(cls, value):
         if not 0 <= value <= 255:
             raise ValueError(f"BYTE value out of bounds: {value}")
@@ -6,6 +13,8 @@ class Byte(int):
 
 
 class Char(int):
+    FIELD_KIND = FieldKind.CHAR
+
     def __new__(cls, value):
         if not -128 <= value <= 127:
             raise ValueError(f"CHAR value out of bounds: {value}")
@@ -13,6 +22,8 @@ class Char(int):
 
 
 class Word(int):
+    FIELD_KIND = FieldKind.WORD
+
     def __new__(cls, value):
         if not 0 <= value <= 65535:
             raise ValueError(f"WORD value out of bounds: {value}")
@@ -20,6 +31,8 @@ class Word(int):
 
 
 class Short(int):
+    FIELD_KIND = FieldKind.SHORT
+
     def __new__(cls, value):
         if not -32768 <= value <= 32767:
             raise ValueError(f"SHORT value out of bounds: {value}")
@@ -27,6 +40,8 @@ class Short(int):
 
 
 class Dword(int):
+    FIELD_KIND = FieldKind.DWORD
+
     def __new__(cls, value):
         if not 0 <= value <= 4294967295:
             raise ValueError(f"DWORD value out of bounds: {value}")
@@ -34,6 +49,8 @@ class Dword(int):
 
 
 class Int(int):
+    FIELD_KIND = FieldKind.INT
+
     def __new__(cls, value):
         if not -2147483648 <= value <= 2147483647:
             raise ValueError(f"INT value out of bounds: {value}")
@@ -41,6 +58,8 @@ class Int(int):
 
 
 class Dword64(int):
+    FIELD_KIND = FieldKind.DWORD64
+
     def __new__(cls, value):
         if not 0 <= value <= 18446744073709551615:
             raise ValueError(f"DWORD64 value out of bounds: {value}")
@@ -48,6 +67,8 @@ class Dword64(int):
 
 
 class Int64(int):
+    FIELD_KIND = FieldKind.INT64
+
     def __new__(cls, value):
         if not -9223372036854775808 <= value <= 9223372036854775807:
             raise ValueError(f"INT64 value out of bounds: {value}")
@@ -55,26 +76,40 @@ class Int64(int):
 
 
 class Float(float):
-    pass
+    FIELD_KIND = FieldKind.FLOAT
 
 
 class Double(float):
-    pass
+    FIELD_KIND = FieldKind.DOUBLE
 
 
 class CExoString(str):
-    pass
+    FIELD_KIND = FieldKind.CEXOSTRING
 
 
 class ResRef(str):
+    FIELD_KIND = FieldKind.RESREF
+
     def __new__(cls, value):
         if len(value) > 16:
             raise ValueError(f"ResRef value too long: {value}")
         return super().__new__(cls, value)
 
 
+@dataclass
+class CExoLocString:
+    """Represents a localized string in the NWN engine."""
+
+    FIELD_KIND = FieldKind.CEXOLOCSTRING
+
+    strref: int
+    entries: dict[int, str]
+
+
 class Struct(dict):
     """GFF Structs are just python dicts with .attr access and some metadata."""
+
+    FIELD_KIND = FieldKind.STRUCT
 
     def __init__(self, struct_id, **kwargs):
         super().__init__(**kwargs)
@@ -104,6 +139,8 @@ class List(list[Struct]):
     This class exists as a convenience for type checking and
     future extensibility.
     """
+
+    FIELD_KIND = FieldKind.LIST
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
