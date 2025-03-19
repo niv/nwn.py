@@ -7,7 +7,7 @@ structure definitions.
 
 from enum import Enum
 from dataclasses import dataclass
-from io import BytesIO
+from typing import TextIO
 
 
 class ScalarType(Enum):
@@ -80,12 +80,12 @@ def _parse_type(s):
     return ScalarType(s[0])
 
 
-def parse(file: BytesIO) -> Ndb:
+def read(file: TextIO) -> Ndb:
     """
-    Parses the given BytesIO object containing NDB data and returns an Ndb object.
+    Reads the given file object containing NDB data and returns an Ndb object.
 
     Args:
-        file: A file-like, in text mode, containing the NDB data to be parsed.
+        file: A text mode file containing the NDB data to be parsed.
 
     Returns:
         Ndb: The parsed Ndb object.

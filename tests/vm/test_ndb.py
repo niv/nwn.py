@@ -10,7 +10,7 @@ from nwn.vm.ndb import (
     Variable,
     Line,
     Ndb,
-    parse,
+    read,
 )
 
 
@@ -27,7 +27,7 @@ def test_any_ndb():
 @pytest.mark.parametrize("ndb_filename", find_ndb_files())
 def test_parse(ndb_filename):
     with open(ndb_filename, "r") as f:
-        ndb = parse(f)
+        ndb = read(f)
 
     assert len(ndb.files) >= 1
 
