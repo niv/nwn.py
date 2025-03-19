@@ -1,7 +1,6 @@
 import struct
 from typing import BinaryIO
 
-
 from nwn.shared import get_nwn_encoding
 from nwn.gff._types import (
     Byte,
@@ -89,6 +88,15 @@ def read(file: BinaryIO):
 
         file.seek(root_offset + header.field_data_offset + field.data_or_offset)
 
+        if field.type == FieldKind.DOUBLE:
+            return struct.unpack("<d", file.read(8))[0]
+
+        if field.type == FieldKind.DWORD64:
+            return struct.unpack("<Q", file.read(8))[0]
+
+        if field.type == FieldKind.INT64:
+            return struct.unpack("<q", file.read(8))[0]
+
         if field.type == FieldKind.CEXOSTRING:
             sz = struct.unpack("<I", file.read(4))[0]
             if sz > 0xFFFF:
@@ -112,18 +120,22 @@ def read(file: BinaryIO):
                 entries[fid] = file.read(sz).decode(get_nwn_encoding())
             return CExoLocString(strref, entries)
 
+        if field.type == FieldKind.VOID:
+            sz = struct.unpack("<I", file.read(4))[0]
+            return file.read(sz)
+
         if field.type == FieldKind.LIST:
             offset = field.data_or_offset // 4
             size = list_indices[offset]
             start = offset + 1
             end = start + size
 
-            return List(*[_read_struct(field, lid) for lid in list_indices[start:end]])
+            return List([_read_struct(field, lid) for lid in list_indices[start:end]])
 
         if field.type == FieldKind.STRUCT:
             return _read_struct(field, field.data_or_offset)
 
-        raise NotImplementedError(f"Field type {field.type} not implemented")
+        raise NotImplementedError(f"Field {field} not implemented")
 
     def _read_struct(parent, struct_idx) -> Struct:
         if struct_idx in resolved_structs:

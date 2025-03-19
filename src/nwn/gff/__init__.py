@@ -28,6 +28,7 @@ from nwn.gff._types import (
     CExoString,
     ResRef,
     CExoLocString,
+    VOID,
     Struct,
     List,
 )
@@ -48,6 +49,7 @@ __all__ = [
     "CExoString",
     "ResRef",
     "CExoLocString",
+    "VOID",
     "List",
     "Struct",
 ]

@@ -156,3 +156,9 @@ def test_list():
     assert len(lst) == 2
     assert lst[0] == struct1
     assert lst[1] == struct2
+
+
+def test_list_empty():
+    lst = List()
+    assert len(lst) == 0
+    assert lst == []

@@ -106,6 +106,13 @@ class CExoLocString:
     entries: dict[int, str]
 
 
+class VOID(bytes):
+    FIELD_KIND = FieldKind.VOID
+
+    def __new__(cls, value):
+        return super().__new__(cls, value)
+
+
 class Struct(dict):
     """GFF Structs are just python dicts with .attr access and some metadata."""
 
@@ -131,6 +138,9 @@ class Struct(dict):
     def __setattr__(self, name, value):
         self[name] = value
 
+    def __hash__(self):
+        return hash(self.struct_id)
+
 
 class List(list[Struct]):
     """
@@ -142,5 +152,7 @@ class List(list[Struct]):
 
     FIELD_KIND = FieldKind.LIST
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, value=None):
+        if value is None:
+            value = []
+        super().__init__(value)
