@@ -352,7 +352,7 @@
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id39">
+          <table class="children sortable" id="id40">
   
   
   <tr class="class">
@@ -415,7 +415,7 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file)</span>:
+    <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file: <code>TextIO</code>)</span>:
     
     <a class="headerLink" href="#read" title="nwn.twoda.read">
       
@@ -432,7 +432,7 @@
 <span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">with</span> <span class="py-builtin">open</span>(<span class="py-string">"file.2da"</span>, <span class="py-string">"r"</span>) <span class="py-keyword">as</span> f:
 <span class="py-more">... </span>    <span class="py-keyword">for</span> row <span class="py-keyword">in</span> twoda.read(f):
 <span class="py-more">... </span>        <span class="py-builtin">print</span>(row)</pre></div>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>file-like</code></td><td class="fieldArgDesc">The 2DA file to read.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.twoda.DictReader.html" class="internal-link" title="nwn.twoda.DictReader">DictReader</a></code></td><td class="fieldArgDesc">An object that allows reading the 2DA file as a dictionary.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>Parse/format errors.</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>TextIO</code></td><td class="fieldArgDesc">The 2DA file to read.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.twoda.DictReader.html" class="internal-link" title="nwn.twoda.DictReader">DictReader</a></code></td><td class="fieldArgDesc">An object that allows reading the 2DA file as a dictionary.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>Parse/format errors.</td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
@@ -446,7 +446,7 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file, columns: <code>list[<wbr></wbr>str]</code>) -&gt; <code><a href="nwn.twoda.DictWriter.html" class="internal-link" title="nwn.twoda.DictWriter">DictWriter</a></code></span>:
+    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>TextIO</code>, columns: <code>list[<wbr></wbr>str]</code>) -&gt; <code><a href="nwn.twoda.DictWriter.html" class="internal-link" title="nwn.twoda.DictWriter">DictWriter</a></code></span>:
     
     <a class="headerLink" href="#write" title="nwn.twoda.write">
       
@@ -464,7 +464,7 @@
 <span class="py-more">... </span>    writer = twoda.write(f, [<span class="py-string">"col1"</span>, <span class="py-string">"col2"</span>])
 <span class="py-more">... </span>    writer.add_row({<span class="py-string">"col1"</span>: <span class="py-string">"foo"</span>, <span class="py-string">"col2"</span>: <span class="py-string">"bar"</span>})
 <span class="py-more">... </span>    writer.add_row({<span class="py-string">"col1"</span>: <span class="py-string">"baz"</span>, <span class="py-string">"col2"</span>: <span class="py-string">"qux"</span>})</pre></div>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>file-like</code></td><td class="fieldArgDesc">The file object where the data will be written.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">columns:</span><code>list</code> of <code>str</code></td><td class="fieldArgDesc">A list of column names to be used in the output file.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.twoda.DictWriter.html" class="internal-link" title="nwn.twoda.DictWriter">DictWriter</a></code></td><td class="fieldArgDesc">An instance of DictWriter initialized with the given columns and file.</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>TextIO</code></td><td class="fieldArgDesc">The file object where the data will be written.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">columns:</span><code>list[<wbr></wbr>str]</code></td><td class="fieldArgDesc">A list of column names to be used in the output file.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.twoda.DictWriter.html" class="internal-link" title="nwn.twoda.DictWriter">DictWriter</a></code></td><td class="fieldArgDesc">An instance of DictWriter initialized with the given columns and file.</td></tr></table></div>
   </div>
 </div><div class="baseconstant">
   
@@ -575,7 +575,7 @@
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for nwn,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-03-17 15:47:23.
+      24.11.2 at 2025-03-19 19:48:49.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>

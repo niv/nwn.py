@@ -146,6 +146,16 @@
             </div>
         
 
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.gff._writer.html" class="internal-link" title="nwn.gff._writer">_writer</a></code>
+            </div>
+        
+
     </li>
 </ul> 
 
@@ -159,6 +169,16 @@
 
         
             <div class="itemName"><code><a href="nwn.gff.Byte.html" class="internal-link" title="nwn.gff.Byte"><wbr></wbr>Byte</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.gff.CExoLocString.html" class="internal-link" title="nwn.gff.CExoLocString"><wbr></wbr>CExo<wbr></wbr>Loc<wbr></wbr>String</a></code>
             </div>
         
 
@@ -288,6 +308,16 @@
         
 
         
+            <div class="itemName"><code><a href="nwn.gff.VOID.html" class="internal-link" title="nwn.gff.VOID">VOID</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="nwn.gff.Word.html" class="internal-link" title="nwn.gff.Word"><wbr></wbr>Word</a></code>
             </div>
         
@@ -305,6 +335,16 @@
 
         
             <div class="itemName"><code><a href="#read" class="internal-link" title="nwn.gff.read">read</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#write" class="internal-link" title="nwn.gff.write">write</a></code>
             </div>
         
 
@@ -479,6 +519,11 @@ enforce the GFF type system.</p>
     <td>Module</td>
     <td><code><a href="nwn.gff._types.html" class="internal-link" title="nwn.gff._types">_types</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="module private">
+    
+    <td>Module</td>
+    <td><code><a href="nwn.gff._writer.html" class="internal-link" title="nwn.gff._writer">_writer</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
           
@@ -491,6 +536,11 @@ enforce the GFF type system.</p>
     <td>Class</td>
     <td><code><a href="nwn.gff.Byte.html" class="internal-link" title="nwn.gff.Byte"><wbr></wbr>Byte</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="nwn.gff.CExoLocString.html" class="internal-link" title="nwn.gff.CExoLocString"><wbr></wbr>CExo<wbr></wbr>Loc<wbr></wbr>String</a></code></td>
+    <td>Represents a localized string in the NWN engine.</td>
   </tr><tr class="class">
     
     <td>Class</td>
@@ -554,6 +604,11 @@ enforce the GFF type system.</p>
   </tr><tr class="class">
     
     <td>Class</td>
+    <td><code><a href="nwn.gff.VOID.html" class="internal-link" title="nwn.gff.VOID">VOID</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="class">
+    
+    <td>Class</td>
     <td><code><a href="nwn.gff.Word.html" class="internal-link" title="nwn.gff.Word"><wbr></wbr>Word</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="function">
@@ -561,6 +616,11 @@ enforce the GFF type system.</p>
     <td>Function</td>
     <td><code><a href="#read" class="internal-link" title="nwn.gff.read">read</a></code></td>
     <td>Read a GFF data from a binary stream.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#write" class="internal-link" title="nwn.gff.write">write</a></code></td>
+    <td>Write a GFF data structure to a binary stream.</td>
   </tr>
 </table>
         </div>
@@ -588,7 +648,48 @@ enforce the GFF type system.</p>
   </div>
   <div class="docstring functionBody">
     
-    <div><p>Read a GFF data from a binary stream.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary stream to read from.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer">(<code><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a></code>, <code>str)</code></td><td class="fieldArgDesc">The root structure of the GFF file and the file type.</td></tr></table></div>
+    <div><p>Read a GFF data from a binary stream.</p>
+<div class="rst-admonition rst-admonition-example">
+<p class="rst-admonition-title rst-first">Example</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">with</span> <span class="py-builtin">open</span>(<span class="py-string">"file.gff"</span>, <span class="py-string">"rb"</span>) <span class="py-keyword">as</span> f:
+<span class="py-more">... </span>    root, file_type = gff.read(f)
+<span class="py-more">... </span>    <span class="py-builtin">print</span>(root)</pre></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary stream to read from.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer">(<code><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a></code>, <code>str)</code></td><td class="fieldArgDesc">The root structure of the GFF file and the file type.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="nwn.gff.write">
+    
+  </a>
+  <a name="write">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>BinaryIO</code>, root: <code>Struct</code>, file_type: <code>str</code>)</span>:
+    
+    <a class="headerLink" href="#write" title="nwn.gff.write">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Write a GFF data structure to a binary stream.</p>
+<p>The structure must only use supported GFF types, as GFF is a strongly
+typed format and deviation from these will make the game fail to read
+them (e.g. storing a byte as a int will make the game not see it).</p>
+<div class="rst-admonition rst-admonition-example">
+<p class="rst-admonition-title rst-first">Example</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>root = gff.Struct(0, Byte=gff.Byte(255), SomeStruct=gff.Struct(SomeKey=gff.CExoString(<span class="py-string">"5"</span>)))
+<span class="py-more">... </span>out = BytesIO()
+<span class="py-more">... </span>gff.write(out, root, <span class="py-string">"TEST"</span>)</pre></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary stream to write to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">root:</span><code><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a></code></td><td class="fieldArgDesc">The root structure of the GFF file.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file<wbr></wbr>_type:</span><code>str</code></td><td class="fieldArgDesc">The file type identifier (4 characters).</td></tr></table></div>
   </div>
 </div>
         </div>
@@ -603,7 +704,7 @@ enforce the GFF type system.</p>
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for nwn,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-03-17 15:47:23.
+      24.11.2 at 2025-03-19 19:48:49.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>
