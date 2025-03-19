@@ -2,6 +2,8 @@
 This module provides functionality to read and write 2DA files.
 """
 
+from typing import TextIO
+
 _MAGIC = "2DA V2.0"
 
 CELL = str | None
@@ -65,7 +67,7 @@ class DictReader:
         self._f.close()
 
 
-def read(file):
+def read(file: TextIO):
     """
     Reads a 2DA file and returns a DictReader object.
 
@@ -75,7 +77,7 @@ def read(file):
         ...         print(row)
 
     Args:
-        file (file-like): The 2DA file to read.
+        file: The 2DA file to read.
 
     Returns:
         DictReader: An object that allows reading the 2DA file as a dictionary.
@@ -123,7 +125,7 @@ class DictWriter:
         self._idx += 1
 
 
-def write(file, columns: list[str]) -> DictWriter:
+def write(file: TextIO, columns: list[str]) -> DictWriter:
     """
     Writes data to a file using the specified columns.
 
@@ -134,8 +136,8 @@ def write(file, columns: list[str]) -> DictWriter:
         ...     writer.add_row({"col1": "baz", "col2": "qux"})
 
     Args:
-        file (file-like): The file object where the data will be written.
-        columns (list of str): A list of column names to be used in the output file.
+        file: The file object where the data will be written.
+        columns: A list of column names to be used in the output file.
 
     Returns:
         DictWriter: An instance of DictWriter initialized with the given columns and file.
