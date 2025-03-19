@@ -23,6 +23,11 @@ def read(file: BinaryIO):
     """
     Read a GFF data from a binary stream.
 
+    Example:
+        >>> with open("file.gff", "rb") as f:
+        ...     root, file_type = gff.read(f)
+        ...     print(root)
+
     Args:
         file: The binary stream to read from.
 
