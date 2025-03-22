@@ -272,7 +272,7 @@ wheels = [
 
 [[package]]
 name = "nwn"
-version = "0.0.4"
+version = "0.0.5"
 source = { editable = "." }
 dependencies = [
     { name = "pyzstd" },
