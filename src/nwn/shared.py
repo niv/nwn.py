@@ -155,3 +155,23 @@ def extension_to_restype(extension: str) -> int:
         return {v: k for k, v in _restype_to_extension.items()}[extension]
     except KeyError as e:
         raise ValueError(f"Unknown extension: {extension}") from e
+
+
+class FileMagic(bytes):
+    """
+    A file magic identifies a file type: For NWN, it is the first four characters
+    on certain file types.
+
+    Args:
+        value: Exactly 4 characters or bytes.
+
+    Raises:
+        ValueError: If the input is not exactly 4 bytes long.
+    """
+
+    def __new__(cls, value: str | bytes):
+        if len(value) != 4:
+            raise ValueError("Magic must be 4 bytes long")
+        if isinstance(value, str):
+            value = value.encode("ascii")
+        return super().__new__(cls, value)
