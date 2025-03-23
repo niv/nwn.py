@@ -188,6 +188,14 @@
             <div class="kind">Module</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Shared types and helpers useful across the whole library.</div>
+          </li><li id="nwn.ssf">
+            
+            <div class="fullName">nwn<wbr></wbr>.ssf</div>
+            <div class="url">nwn.ssf.html</div>
+            <div class="type">Module</div>
+            <div class="kind">Module</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">Read and write soundset files.</div>
           </li><li id="nwn.tileset">
             
             <div class="fullName">nwn<wbr></wbr>.tileset</div>
@@ -196,6 +204,14 @@
             <div class="kind">Module</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">A parser for .set files (tilesets configuration).</div>
+          </li><li id="nwn.tlk">
+            
+            <div class="fullName">nwn<wbr></wbr>.tlk</div>
+            <div class="url">nwn.tlk.html</div>
+            <div class="type">Module</div>
+            <div class="kind">Module</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">Read and write TLK (Talk Table) files.</div>
           </li><li id="nwn.twoda">
             
             <div class="fullName">nwn<wbr></wbr>.twoda</div>
@@ -1692,6 +1708,46 @@
             <div class="kind">Function</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Writes a manifest to a binary stream.</div>
+          </li><li id="nwn.ssf.Entry">
+            
+            <div class="fullName">nwn<wbr></wbr>.ssf<wbr></wbr>.<wbr></wbr>Entry</div>
+            <div class="url">nwn.ssf.Entry.html</div>
+            <div class="type">Class</div>
+            <div class="kind">Class</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">A single entry in a SSF file including the resref and strref.</div>
+          </li><li id="nwn.ssf.Entry.resref">
+            
+            <div class="fullName">nwn<wbr></wbr>.ssf<wbr></wbr>.<wbr></wbr>Entry<wbr></wbr>.resref</div>
+            <div class="url">nwn.ssf.Entry.html#resref</div>
+            <div class="type">Attribute</div>
+            <div class="kind">Class Variable</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary"><span class="undocumented">Undocumented</span></div>
+          </li><li id="nwn.ssf.Entry.strref">
+            
+            <div class="fullName">nwn<wbr></wbr>.ssf<wbr></wbr>.<wbr></wbr>Entry<wbr></wbr>.strref</div>
+            <div class="url">nwn.ssf.Entry.html#strref</div>
+            <div class="type">Attribute</div>
+            <div class="kind">Class Variable</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary"><span class="undocumented">Undocumented</span></div>
+          </li><li id="nwn.ssf.read">
+            
+            <div class="fullName">nwn<wbr></wbr>.ssf<wbr></wbr>.read</div>
+            <div class="url">nwn.ssf.html#read</div>
+            <div class="type">Function</div>
+            <div class="kind">Function</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">Read a SSF file and return a list of entries.</div>
+          </li><li id="nwn.ssf.write">
+            
+            <div class="fullName">nwn<wbr></wbr>.ssf<wbr></wbr>.write</div>
+            <div class="url">nwn.ssf.html#write</div>
+            <div class="type">Function</div>
+            <div class="kind">Function</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">Writes a list of entries to a binary file in the SSF V1.0 format.</div>
           </li><li id="nwn.tileset.Terrain">
             
             <div class="fullName">nwn<wbr></wbr>.tileset<wbr></wbr>.<wbr></wbr>Terrain</div>
@@ -2356,6 +2412,62 @@
             <div class="kind">Function</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Reads a .set file and parses its contents into a Set object.</div>
+          </li><li id="nwn.tlk.TlkEntry">
+            
+            <div class="fullName">nwn<wbr></wbr>.tlk<wbr></wbr>.<wbr></wbr>Tlk<wbr></wbr>Entry</div>
+            <div class="url">nwn.tlk.TlkEntry.html</div>
+            <div class="type">Class</div>
+            <div class="kind">Class</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">A single entry in a TLK file including the text, sound resref, and sound length. Only used when reading TLK files with sound data.</div>
+          </li><li id="nwn.tlk.TlkEntry.text">
+            
+            <div class="fullName">nwn<wbr></wbr>.tlk<wbr></wbr>.<wbr></wbr>Tlk<wbr></wbr>Entry<wbr></wbr>.text</div>
+            <div class="url">nwn.tlk.TlkEntry.html#text</div>
+            <div class="type">Attribute</div>
+            <div class="kind">Class Variable</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary"><span class="undocumented">Undocumented</span></div>
+          </li><li id="nwn.tlk.TlkEntry.sound_resref">
+            
+            <div class="fullName">nwn<wbr></wbr>.tlk<wbr></wbr>.<wbr></wbr>Tlk<wbr></wbr>Entry<wbr></wbr>.sound<wbr></wbr>_resref</div>
+            <div class="url">nwn.tlk.TlkEntry.html#sound_resref</div>
+            <div class="type">Attribute</div>
+            <div class="kind">Class Variable</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary"><span class="undocumented">Undocumented</span></div>
+          </li><li id="nwn.tlk.TlkEntry.sound_length">
+            
+            <div class="fullName">nwn<wbr></wbr>.tlk<wbr></wbr>.<wbr></wbr>Tlk<wbr></wbr>Entry<wbr></wbr>.sound<wbr></wbr>_length</div>
+            <div class="url">nwn.tlk.TlkEntry.html#sound_length</div>
+            <div class="type">Attribute</div>
+            <div class="kind">Class Variable</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary"><span class="undocumented">Undocumented</span></div>
+          </li><li id="nwn.tlk.TlkEntry.__str__">
+            
+            <div class="fullName">nwn<wbr></wbr>.tlk<wbr></wbr>.<wbr></wbr>Tlk<wbr></wbr>Entry<wbr></wbr>.__str__</div>
+            <div class="url">nwn.tlk.TlkEntry.html#__str__</div>
+            <div class="type">Function</div>
+            <div class="kind">Method</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary"><span class="undocumented">Undocumented</span></div>
+          </li><li id="nwn.tlk.read">
+            
+            <div class="fullName">nwn<wbr></wbr>.tlk<wbr></wbr>.read</div>
+            <div class="url">nwn.tlk.html#read</div>
+            <div class="type">Function</div>
+            <div class="kind">Function</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">Reads a TLK file fully into memory and returns a list of entries.</div>
+          </li><li id="nwn.tlk.write">
+            
+            <div class="fullName">nwn<wbr></wbr>.tlk<wbr></wbr>.write</div>
+            <div class="url">nwn.tlk.html#write</div>
+            <div class="type">Function</div>
+            <div class="kind">Function</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">Writes a Tlk object to a binary file.</div>
           </li><li id="nwn.twoda._MAGIC">
             
             <div class="fullName">nwn<wbr></wbr>.twoda<wbr></wbr>._MAGIC</div>

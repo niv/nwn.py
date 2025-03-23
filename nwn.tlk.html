@@ -6,7 +6,7 @@
 
   <head>
     
-    <title>nwn.shared</title>
+    <title>nwn.tlk</title>
     <meta name="generator" content="pydoctor 24.11.2"> 
         
     </meta>
@@ -107,7 +107,7 @@
 
       <div class="thingTitle">
         <span>Module</span>
-        <code class="thisobject"><a href="nwn.shared.html" class="internal-link" title="This module">shared</a></code> 
+        <code class="thisobject"><a href="nwn.tlk.html" class="internal-link" title="This module">tlk</a></code> 
       </div>
       
       <div>
@@ -125,17 +125,7 @@
         
 
         
-            <div class="itemName"><code><a href="nwn.shared.FileMagic.html" class="internal-link" title="nwn.shared.FileMagic"><wbr></wbr>File<wbr></wbr>Magic</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="nwn.shared.Language.html" class="internal-link" title="nwn.shared.Language"><wbr></wbr>Language</a></code>
+            <div class="itemName"><code><a href="nwn.tlk.TlkEntry.html" class="internal-link" title="nwn.tlk.TlkEntry"><wbr></wbr>Tlk<wbr></wbr>Entry</a></code>
             </div>
         
 
@@ -151,7 +141,7 @@
         
 
         
-            <div class="itemName"><code><a href="#extension_to_restype" class="internal-link" title="nwn.shared.extension_to_restype">extension<wbr></wbr>_to<wbr></wbr>_restype</a></code>
+            <div class="itemName"><code><a href="#read" class="internal-link" title="nwn.tlk.read">read</a></code>
             </div>
         
 
@@ -161,17 +151,7 @@
         
 
         
-            <div class="itemName"><code><a href="#get_nwn_encoding" class="internal-link" title="nwn.shared.get_nwn_encoding">get<wbr></wbr>_nwn<wbr></wbr>_encoding</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="#restype_to_extension" class="internal-link" title="nwn.shared.restype_to_extension">restype<wbr></wbr>_to<wbr></wbr>_extension</a></code>
+            <div class="itemName"><code><a href="#write" class="internal-link" title="nwn.tlk.write">write</a></code>
             </div>
         
 
@@ -181,21 +161,8 @@
         
          
 
-        <div class="childrenKindTitle">Variables</div>
-        <ul>
-    
-    <li class="private">
         
-        
-        
-
-        
-            <div class="itemName"><code><a href="#_restype_to_extension" class="internal-link" title="nwn.shared._restype_to_extension">_restype<wbr></wbr>_to<wbr></wbr>_extension</a></code>
-            </div>
-        
-
-    </li>
-</ul> 
+         
 
         
          
@@ -264,7 +231,7 @@
             </div>
         
 
-    </li><li class=" thisobject">
+    </li><li class="">
         
         
         
@@ -294,7 +261,7 @@
             </div>
         
 
-    </li><li class="">
+    </li><li class=" thisobject">
         
         
         
@@ -362,7 +329,7 @@
 
 
         <div class="page-header">
-          <h1 class="module"><code><code><a href="index.html" class="internal-link">nwn</a></code><wbr></wbr>.<code><a href="nwn.shared.html" class="internal-link" title="nwn.shared">shared</a></code></code></h1>
+          <h1 class="module"><code><code><a href="index.html" class="internal-link">nwn</a></code><wbr></wbr>.<code><a href="nwn.tlk.html" class="internal-link" title="nwn.tlk">tlk</a></code></code></h1>
           <div id="showPrivate">
             <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
           </div>
@@ -373,48 +340,35 @@
         </div>
 
         <div class="extrasDocstring">
-          <a href="https://github.com/niv/nwn.py/blob/master//src/nwn/shared.py" class="sourceLink">(source)</a>
+          <a href="https://github.com/niv/nwn.py/blob/master//src/nwn/tlk.py" class="sourceLink">(source)</a>
           <p></p>
         </div>
 
         <div class="moduleDocstring">
-          <div><p>Shared types and helpers useful across the whole library.</p></div>
+          <div><p>Read and write TLK (Talk Table) files.</p>
+<p>All strings are transparently converted to and from the NWN encoding.</p>
+</div>
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id38">
+          <table class="children sortable" id="id52">
   
   
   <tr class="class">
     
     <td>Class</td>
-    <td><code><a href="nwn.shared.FileMagic.html" class="internal-link" title="nwn.shared.FileMagic"><wbr></wbr>File<wbr></wbr>Magic</a></code></td>
-    <td>A file magic identifies a file type: For NWN, it is the first four characters on certain file types.</td>
-  </tr><tr class="class">
-    
-    <td>Class</td>
-    <td><code><a href="nwn.shared.Language.html" class="internal-link" title="nwn.shared.Language"><wbr></wbr>Language</a></code></td>
-    <td>Maps engine language IDs.</td>
+    <td><code><a href="nwn.tlk.TlkEntry.html" class="internal-link" title="nwn.tlk.TlkEntry"><wbr></wbr>Tlk<wbr></wbr>Entry</a></code></td>
+    <td>A single entry in a TLK file including the text, sound resref, and sound length. Only used when reading TLK files with sound data.</td>
   </tr><tr class="function">
     
     <td>Function</td>
-    <td><code><a href="#extension_to_restype" class="internal-link" title="nwn.shared.extension_to_restype">extension<wbr></wbr>_to<wbr></wbr>_restype</a></code></td>
-    <td>Convert a file extension to its corresponding resource type identifier.</td>
+    <td><code><a href="#read" class="internal-link" title="nwn.tlk.read">read</a></code></td>
+    <td>Reads a TLK file fully into memory and returns a list of entries.</td>
   </tr><tr class="function">
     
     <td>Function</td>
-    <td><code><a href="#get_nwn_encoding" class="internal-link" title="nwn.shared.get_nwn_encoding">get<wbr></wbr>_nwn<wbr></wbr>_encoding</a></code></td>
-    <td>A stand-in to enable dynamic configuration later.</td>
-  </tr><tr class="function">
-    
-    <td>Function</td>
-    <td><code><a href="#restype_to_extension" class="internal-link" title="nwn.shared.restype_to_extension">restype<wbr></wbr>_to<wbr></wbr>_extension</a></code></td>
-    <td>Convert a resource type to its corresponding file extension.</td>
-  </tr><tr class="variable private">
-    
-    <td>Variable</td>
-    <td><code><a href="#_restype_to_extension" class="internal-link" title="nwn.shared._restype_to_extension">_restype<wbr></wbr>_to<wbr></wbr>_extension</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#write" class="internal-link" title="nwn.tlk.write">write</a></code></td>
+    <td>Writes a Tlk object to a binary file.</td>
   </tr>
 </table>
           
@@ -426,21 +380,21 @@
           <div class="basefunction">
   
   
-  <a name="nwn.shared.extension_to_restype">
+  <a name="nwn.tlk.read">
     
   </a>
-  <a name="extension_to_restype">
+  <a name="read">
     
   </a>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">extension_to_restype</span><span class="function-signature">(extension: <code>str</code>) -&gt; <code>int</code></span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/shared.py#L142">
+    <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file: <code>BinaryIO</code>, include_sound_data=False, max_entries=524287) -&gt; <code>tuple[<wbr></wbr>list, <wbr></wbr><a href="nwn.shared.Language.html" class="internal-link" title="nwn.shared.Language">Language</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/tlk.py#L27">
       
       (source)
     </a>
-    <a class="headerLink" href="#extension_to_restype" title="nwn.shared.extension_to_restype">
+    <a class="headerLink" href="#read" title="nwn.tlk.read">
       
       
       ¶
@@ -448,26 +402,30 @@
   </div>
   <div class="docstring functionBody">
     
-    <div><p>Convert a file extension to its corresponding resource type identifier.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">extension:</span><code>str</code></td><td class="fieldArgDesc">The file extension to convert.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">The resource type identifier corresponding to the given extension.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the extension is not recognized.</td></tr></table></div>
+    <div><p>Reads a TLK file fully into memory and returns a list of entries.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary file object containing the TLK file.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">include<wbr></wbr>_sound<wbr></wbr>_data</span></td><td class="fieldArgDesc">If True, entries are returned as TlkEntry objects.
+Otherwise, the resulting dict will contain only the text.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">max<wbr></wbr>_entries</span></td><td class="fieldArgDesc">The maximum number of entries to read from the TLK file.
+This is a sanity check to avoid allocating excess memory when
+reading untrusted or corrupted data.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>list</code></td><td class="fieldArgDesc">An object containing the language and entries from the TLK file.
+Language: The language the TLK file is configured as.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the file does not contain valid TLK data.</td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
   
-  <a name="nwn.shared.get_nwn_encoding">
+  <a name="nwn.tlk.write">
     
   </a>
-  <a name="get_nwn_encoding">
+  <a name="write">
     
   </a>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_nwn_encoding</span><span class="function-signature">()</span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/shared.py#L17">
+    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>BinaryIO</code>, entries: <code>list</code>, language: <code><a href="nwn.shared.Language.html" class="internal-link" title="nwn.shared.Language">Language</a></code>)</span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/tlk.py#L90">
       
       (source)
     </a>
-    <a class="headerLink" href="#get_nwn_encoding" title="nwn.shared.get_nwn_encoding">
+    <a class="headerLink" href="#write" title="nwn.tlk.write">
       
       
       ¶
@@ -475,63 +433,8 @@
   </div>
   <div class="docstring functionBody">
     
-    <div><p>A stand-in to enable dynamic configuration later.</p>
-<p>Currently hardcoded to "windows-1252".</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">The encoding used by NWN.</td></tr></table></div>
-  </div>
-</div><div class="basefunction">
-  
-  
-  <a name="nwn.shared.restype_to_extension">
-    
-  </a>
-  <a name="restype_to_extension">
-    
-  </a>
-  <div class="functionHeader">
-    
-    
-    <span class="py-keyword">def</span> <span class="py-defname">restype_to_extension</span><span class="function-signature">(restype: <code>int</code>) -&gt; <code>str</code></span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/shared.py#L126">
-      
-      (source)
-    </a>
-    <a class="headerLink" href="#restype_to_extension" title="nwn.shared.restype_to_extension">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="docstring functionBody">
-    
-    <div><p>Convert a resource type to its corresponding file extension.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">restype:</span><code>int</code></td><td class="fieldArgDesc">The resource type to convert.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">The corresponding file extension for the given resource type.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the given resource type is unknown.</td></tr></table></div>
-  </div>
-</div><div class="basevariable private">
-  
-  
-  <a name="nwn.shared._restype_to_extension">
-    
-  </a>
-  <a name="_restype_to_extension">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">_restype_to_extension</span>: <code>dict[<wbr></wbr>int, <wbr></wbr>str]</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/shared.py#L29">
-      
-      (source)
-    </a>
-    <a class="headerLink" href="#_restype_to_extension" title="nwn.shared._restype_to_extension">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="functionBody">
-    
-    <div><p class="undocumented">Undocumented</p></div>
-    
+    <div><p>Writes a Tlk object to a binary file.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary file object to write the TLK data to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">entries:</span><code>list</code></td><td class="fieldArgDesc">A list containing the entries to write, in order.
+Entries can be either strings or TlkEntry objects.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">language:</span><code><a href="nwn.shared.Language.html" class="internal-link" title="nwn.shared.Language">Language</a></code></td><td class="fieldArgDesc">The language of the TLK file to write.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the TLK object contains invalid data.</td></tr></table></div>
   </div>
 </div>
         </div>
