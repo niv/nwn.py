@@ -3,7 +3,7 @@ from datetime import date
 import hashlib
 
 from nwn.erf import Reader, Writer
-from nwn.shared import Language
+from nwn._shared import Language
 
 
 def test_reader():

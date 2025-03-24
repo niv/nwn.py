@@ -2,7 +2,7 @@ import struct
 from io import BufferedReader, BytesIO
 
 from nwn.nwscript.asm import Opcode, Auxcode, read_extra
-from nwn.shared import get_nwn_encoding
+from nwn._shared import get_nwn_encoding
 
 
 def test_parse_extra_constant_integer():

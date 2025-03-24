@@ -11,7 +11,7 @@ from enum import Enum
 from typing import NamedTuple
 import json
 
-from nwn.shared import get_nwn_encoding
+from nwn._shared import get_nwn_encoding
 
 _NCS_HEADER = b"NCS V1.0"
 

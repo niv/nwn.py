@@ -8,7 +8,7 @@ from nwn.compressedbuf import (
     Algorithm,
 )
 
-from nwn.shared import FileMagic
+from nwn._shared import FileMagic
 
 
 MAGIC_NWSYNC_MANIFEST = FileMagic(b"NSYM")

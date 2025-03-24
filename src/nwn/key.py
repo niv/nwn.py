@@ -7,7 +7,7 @@ import struct
 from datetime import datetime, timedelta
 from typing import NamedTuple, BinaryIO
 
-from nwn.shared import restype_to_extension
+from ._shared import restype_to_extension
 
 
 class _VariableResource(NamedTuple):

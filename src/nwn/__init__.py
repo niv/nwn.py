@@ -24,3 +24,19 @@ License
 
 This package is licensed under the MIT license.
 """
+
+from ._shared import (
+    Language,
+    get_nwn_encoding,
+    restype_to_extension,
+    extension_to_restype,
+    FileMagic,
+)
+
+__all__ = [
+    "Language",
+    "get_nwn_encoding",
+    "restype_to_extension",
+    "extension_to_restype",
+    "FileMagic",
+]

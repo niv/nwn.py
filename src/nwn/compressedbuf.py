@@ -33,7 +33,7 @@ import zlib
 
 import pyzstd
 
-from nwn.shared import FileMagic
+from ._shared import FileMagic
 
 
 class Algorithm(IntEnum):

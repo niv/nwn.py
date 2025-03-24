@@ -2,7 +2,7 @@ from io import BytesIO
 
 
 from nwn.tlk import read, write
-from nwn.shared import Language
+from nwn._shared import Language
 
 
 def test_tlk_sound():

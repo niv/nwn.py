@@ -45,7 +45,7 @@ uint16               restype
 
 from typing import NamedTuple, BinaryIO
 
-from nwn.shared import FileMagic, restype_to_extension, extension_to_restype
+from ._shared import FileMagic, restype_to_extension, extension_to_restype
 
 NWSYNC_MANIFEST_VERSION = 3
 """The only supported version of the NWSync manifest file format."""

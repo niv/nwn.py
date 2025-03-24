@@ -5,7 +5,7 @@ from typing import NamedTuple, IO
 from enum import Enum
 from datetime import date, timedelta
 
-from nwn.shared import (
+from ._shared import (
     get_nwn_encoding,
     Language,
     restype_to_extension,
