@@ -1,7 +1,7 @@
 import struct
 from io import BufferedReader, BytesIO
 
-from nwn.vm.asm import Opcode, Auxcode, read_extra
+from nwn.nwscript.asm import Opcode, Auxcode, read_extra
 from nwn.shared import get_nwn_encoding
 
 

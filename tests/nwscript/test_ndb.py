@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from nwn.vm.ndb import (
+from nwn.nwscript.ndb import (
     ScalarType,
     StructRef,
     Function,
@@ -14,7 +14,7 @@ from nwn.vm.ndb import (
 )
 
 
-def find_ndb_files(directory="./tests/vm/"):
+def find_ndb_files(directory="./tests/nwscript/"):
     return [
         os.path.join(directory, f) for f in os.listdir(directory) if f.endswith(".ndb")
     ]
