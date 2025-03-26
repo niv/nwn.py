@@ -1,6 +1,7 @@
 from io import BytesIO
 
-from nwn.nwsync import read, write, ManifestEntry, NWSYNC_MANIFEST_VERSION
+from nwn.nwsync import read, write, Manifest, ManifestEntry, NWSYNC_MANIFEST_VERSION
+from nwn import get_nwn_encoding
 
 
 def test_read_rewrite():
@@ -61,3 +62,21 @@ def test_repository_path():
     )
 
     assert entry.repository_path == "1d/4a/1d4abcd8de80b40de2fee055d1cfd14861aa8132"
+
+
+def test_encoding():
+    win1252_resref = "mus_bat_som_núrn.wav"  # utf-8
+
+    entry = ManifestEntry(
+        sha1=b"\x00" * 20,
+        size=1,
+        resref=win1252_resref,
+    )
+
+    manifest = Manifest(entries=[entry])
+    bio = BytesIO()
+    write(bio, manifest)
+    bio.seek(0)
+    read_manifest = read(bio)
+
+    assert read_manifest.entries[0].resref == win1252_resref

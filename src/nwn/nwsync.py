@@ -45,7 +45,12 @@ uint16               restype
 
 from typing import NamedTuple, BinaryIO
 
-from ._shared import FileMagic, restype_to_extension, extension_to_restype
+from ._shared import (
+    FileMagic,
+    restype_to_extension,
+    extension_to_restype,
+    get_nwn_encoding,
+)
 
 NWSYNC_MANIFEST_VERSION = 3
 """The only supported version of the NWSync manifest file format."""
@@ -110,7 +115,7 @@ def read(file: BinaryIO) -> Manifest:
     for _ in range(entry_count):
         sha1 = file.read(20)
         size = int.from_bytes(file.read(4), "little")
-        resref = file.read(16).decode("ascii").rstrip("\0")
+        resref = file.read(16).decode(get_nwn_encoding()).rstrip("\0")
         restype = int.from_bytes(file.read(2), "little")
         filename = f"{resref}.{restype_to_extension(restype)}"
         entry = ManifestEntry(sha1, size, filename)
@@ -118,7 +123,7 @@ def read(file: BinaryIO) -> Manifest:
 
     for _ in range(mapping_count):
         index = int.from_bytes(file.read(4), "little")
-        resref = file.read(16).decode("ascii").rstrip("\0")
+        resref = file.read(16).decode(get_nwn_encoding()).rstrip("\0")
         restype = int.from_bytes(file.read(2), "little")
         filename = f"{resref}.{restype_to_extension(restype)}"
         entry = ManifestEntry(entries[index].sha1, entries[index].size, filename)
@@ -162,7 +167,7 @@ def write(file: BinaryIO, manifest: Manifest):
             raise ValueError(f"Resref too long: {resref}")
         resext = entry.resref.split(".")[-1]
         restype = extension_to_restype(resext)
-        file.write(resref.encode("ascii").ljust(16, b"\0"))
+        file.write(resref.encode(get_nwn_encoding()).ljust(16, b"\0"))
         file.write((restype).to_bytes(2, "little"))
 
     for entry in unique_entries:
