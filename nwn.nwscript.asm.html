@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>nwn.nwscript.asm</title>
+    <meta name="generator" content="pydoctor 24.11.2"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="readthedocstheme.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a> <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+    
+        <!-- Side navigation -->
+      <div class="sidebarcontainer">
+        <nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code class="thisobject"><a href="nwn.nwscript.asm.html" class="internal-link" title="This module">asm</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.nwscript.asm.Auxcode.html" class="internal-link" title="nwn.nwscript.asm.Auxcode"><wbr></wbr>Auxcode</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.nwscript.asm.Instr.html" class="internal-link" title="nwn.nwscript.asm.Instr"><wbr></wbr>Instr</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.nwscript.asm.Opcode.html" class="internal-link" title="nwn.nwscript.asm.Opcode"><wbr></wbr>Opcode</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#disasm" class="internal-link" title="nwn.nwscript.asm.disasm">disasm</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#read_extra" class="internal-link" title="nwn.nwscript.asm.read_extra">read<wbr></wbr>_extra</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#read_instr" class="internal-link" title="nwn.nwscript.asm.read_instr">read<wbr></wbr>_instr</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+    
+    <li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_AUXCODE_TO_CANONICAL" class="internal-link" title="nwn.nwscript.asm._AUXCODE_TO_CANONICAL">_AUXCODE<wbr></wbr>_TO<wbr></wbr>_CANONICAL</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_NCS_HEADER" class="internal-link" title="nwn.nwscript.asm._NCS_HEADER">_NCS<wbr></wbr>_HEADER</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_OPCODE_TO_CANONICAL" class="internal-link" title="nwn.nwscript.asm._OPCODE_TO_CANONICAL">_OPCODE<wbr></wbr>_TO<wbr></wbr>_CANONICAL</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Package</span>
+        <code><a href="nwn.nwscript.html" class="internal-link" title="The parent of this module">nwscript</a></code> 
+      </div>
+      
+      <div>
+        
+
+        <div class="childrenKindTitle">Modules</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.nwscript.asm.html" class="internal-link" title="nwn.nwscript.asm">asm</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.nwscript.ndb.html" class="internal-link" title="nwn.nwscript.ndb">ndb</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+        
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        <!-- No sidebar toggle for read the docs theme, the sidebar is always
+          visible when the screen is width enough.
+        -->
+      </div>
+
+    </nav>
+    
+    <div class="container-fluid">
+
+      <div id="main" class="">
+        
+
+        
+
+
+        <div class="page-header">
+          <h1 class="module"><code><code><a href="index.html" class="internal-link">nwn</a></code><wbr></wbr>.<code><a href="nwn.nwscript.html" class="internal-link" title="nwn.nwscript">nwscript</a></code><wbr></wbr>.<code><a href="nwn.nwscript.asm.html" class="internal-link" title="nwn.nwscript.asm">asm</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          module documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <a href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwscript/asm.py" class="sourceLink">(source)</a>
+          <p></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>This module provides functionality for disassembling NCS (Neverwinter Nights Script) files.</p>
+<p>While the language bytecode is principally game-agnostic, the supported opcodes
+describe the default NWN:EE instruction set.</p>
+</div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id38">
+  
+  
+  <tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="nwn.nwscript.asm.Auxcode.html" class="internal-link" title="nwn.nwscript.asm.Auxcode"><wbr></wbr>Auxcode</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="nwn.nwscript.asm.Instr.html" class="internal-link" title="nwn.nwscript.asm.Instr"><wbr></wbr>Instr</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="nwn.nwscript.asm.Opcode.html" class="internal-link" title="nwn.nwscript.asm.Opcode"><wbr></wbr>Opcode</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#disasm" class="internal-link" title="nwn.nwscript.asm.disasm">disasm</a></code></td>
+    <td>Disassembles bytecode from a file-ish.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#read_extra" class="internal-link" title="nwn.nwscript.asm.read_extra">read<wbr></wbr>_extra</a></code></td>
+    <td>Parses additional data based on the opcode and auxiliary code.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#read_instr" class="internal-link" title="nwn.nwscript.asm.read_instr">read<wbr></wbr>_instr</a></code></td>
+    <td>Reads an instruction from the given input stream.</td>
+  </tr><tr class="constant private">
+    
+    <td>Constant</td>
+    <td><code><a href="#_AUXCODE_TO_CANONICAL" class="internal-link" title="nwn.nwscript.asm._AUXCODE_TO_CANONICAL">_AUXCODE<wbr></wbr>_TO<wbr></wbr>_CANONICAL</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="constant private">
+    
+    <td>Constant</td>
+    <td><code><a href="#_NCS_HEADER" class="internal-link" title="nwn.nwscript.asm._NCS_HEADER">_NCS<wbr></wbr>_HEADER</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="constant private">
+    
+    <td>Constant</td>
+    <td><code><a href="#_OPCODE_TO_CANONICAL" class="internal-link" title="nwn.nwscript.asm._OPCODE_TO_CANONICAL">_OPCODE<wbr></wbr>_TO<wbr></wbr>_CANONICAL</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basefunction">
+  
+  
+  <a name="nwn.nwscript.asm.disasm">
+    
+  </a>
+  <a name="disasm">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">disasm</span><span class="function-signature">(file)</span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwscript/asm.py#L204">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#disasm" title="nwn.nwscript.asm.disasm">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Disassembles bytecode from a file-ish.</p>
+<p>Skips any encountered NCS header as a convenience.</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file</span></td><td class="fieldArgDesc">A file-ish containing the bytecode to disassemble.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Yields</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.nwscript.asm.Instr.html" class="internal-link" title="nwn.nwscript.asm.Instr">Instr</a></code></td><td class="fieldArgDesc">The next instruction read from the bytecode stream.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="nwn.nwscript.asm.read_extra">
+    
+  </a>
+  <a name="read_extra">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">read_extra</span><span class="function-signature">(file, op: <code><a href="nwn.nwscript.asm.Opcode.html" class="internal-link" title="nwn.nwscript.asm.Opcode">Opcode</a></code>, aux: <code><a href="nwn.nwscript.asm.Auxcode.html" class="internal-link" title="nwn.nwscript.asm.Auxcode">Auxcode</a></code>) -&gt; <code>tuple</code></span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwscript/asm.py#L119">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#read_extra" title="nwn.nwscript.asm.read_extra">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Parses additional data based on the opcode and auxiliary code.</p>
+<p>Note: This will re-parse embedded extra data every time it's called:
+For example, JSON payloads will be evaluated.</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary stream from which to read the data.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">op:</span><code><a href="nwn.nwscript.asm.Opcode.html" class="internal-link" title="nwn.nwscript.asm.Opcode">Opcode</a></code></td><td class="fieldArgDesc">The opcode of the instruction.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">aux:</span><code><a href="nwn.nwscript.asm.Auxcode.html" class="internal-link" title="nwn.nwscript.asm.Auxcode">Auxcode</a></code></td><td class="fieldArgDesc">The auxiliary code providing additional context for the operation.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>tuple</code></td><td class="fieldArgDesc">A tuple containing the parsed data, or empty.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>struct.error</code></td><td>If the data cannot be read from the stream.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>Various error conditions.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="nwn.nwscript.asm.read_instr">
+    
+  </a>
+  <a name="read_instr">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">read_instr</span><span class="function-signature">(file) -&gt; <code><a href="nwn.nwscript.asm.Instr.html" class="internal-link" title="nwn.nwscript.asm.Instr">Instr</a></code></span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwscript/asm.py#L181">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#read_instr" title="nwn.nwscript.asm.read_instr">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Reads an instruction from the given input stream.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file</span></td><td class="fieldArgDesc">A binary stream from which the instruction is read.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.nwscript.asm.Instr.html" class="internal-link" title="nwn.nwscript.asm.Instr">Instr</a></code></td><td class="fieldArgDesc">The instruction read from the input stream.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>struct.error</code></td><td>If the data cannot be read from the stream.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the opcode or auxiliary code is invalid.</td></tr></table></div>
+  </div>
+</div><div class="baseconstant private">
+  
+  
+  <a name="nwn.nwscript.asm._AUXCODE_TO_CANONICAL">
+    
+  </a>
+  <a name="_AUXCODE_TO_CANONICAL">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_AUXCODE_TO_CANONICAL</span> =
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwscript/asm.py#L273">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#_AUXCODE_TO_CANONICAL" title="nwn.nwscript.asm._AUXCODE_TO_CANONICAL">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>{<wbr></wbr><a href="nwn.nwscript.asm.Auxcode.html#TYPE_INTEGER" class="internal-link" title="nwn.nwscript.asm.Auxcode.TYPE_INTEGER">Auxcode.TYPE_INTEGER</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">I</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Auxcode.html#TYPE_FLOAT" class="internal-link" title="nwn.nwscript.asm.Auxcode.TYPE_FLOAT">Auxcode.TYPE_FLOAT</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">F</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Auxcode.html#TYPE_STRING" class="internal-link" title="nwn.nwscript.asm.Auxcode.TYPE_STRING">Auxcode.TYPE_STRING</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">S</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Auxcode.html#TYPE_OBJECT" class="internal-link" title="nwn.nwscript.asm.Auxcode.TYPE_OBJECT">Auxcode.TYPE_OBJECT</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">O</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Auxcode.html#TYPE_ENGST0" class="internal-link" title="nwn.nwscript.asm.Auxcode.TYPE_ENGST0">Auxcode.TYPE_ENGST0</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">E0</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Auxcode.html#TYPE_ENGST1" class="internal-link" title="nwn.nwscript.asm.Auxcode.TYPE_ENGST1">Auxcode.TYPE_ENGST1</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">E1</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Auxcode.html#TYPE_ENGST2" class="internal-link" title="nwn.nwscript.asm.Auxcode.TYPE_ENGST2">Auxcode.TYPE_ENGST2</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">E2</span><span class="rst-variable-quote">'</span>,
+<span class="rst-variable-ellipsis">...</span></code></pre></td></tr></table>
+  </div>
+</div><div class="baseconstant private">
+  
+  
+  <a name="nwn.nwscript.asm._NCS_HEADER">
+    
+  </a>
+  <a name="_NCS_HEADER">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_NCS_HEADER</span>: <code>bytes</code> =
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwscript/asm.py#L16">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#_NCS_HEADER" title="nwn.nwscript.asm._NCS_HEADER">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>b<span class="rst-variable-quote">'</span><span class="rst-variable-string">NCS V1.0</span><span class="rst-variable-quote">'</span></code></pre></td></tr></table>
+  </div>
+</div><div class="baseconstant private">
+  
+  
+  <a name="nwn.nwscript.asm._OPCODE_TO_CANONICAL">
+    
+  </a>
+  <a name="_OPCODE_TO_CANONICAL">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_OPCODE_TO_CANONICAL</span> =
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwscript/asm.py#L225">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#_OPCODE_TO_CANONICAL" title="nwn.nwscript.asm._OPCODE_TO_CANONICAL">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>{<wbr></wbr><a href="nwn.nwscript.asm.Opcode.html#ASSIGNMENT" class="internal-link" title="nwn.nwscript.asm.Opcode.ASSIGNMENT">Opcode.ASSIGNMENT</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">CPDOWNSP</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Opcode.html#RUNSTACK_ADD" class="internal-link" title="nwn.nwscript.asm.Opcode.RUNSTACK_ADD">Opcode.RUNSTACK_ADD</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">RSADD</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Opcode.html#RUNSTACK_COPY" class="internal-link" title="nwn.nwscript.asm.Opcode.RUNSTACK_COPY">Opcode.RUNSTACK_COPY</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">CPTOPSP</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Opcode.html#CONSTANT" class="internal-link" title="nwn.nwscript.asm.Opcode.CONSTANT">Opcode.CONSTANT</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">CONST</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Opcode.html#EXECUTE_COMMAND" class="internal-link" title="nwn.nwscript.asm.Opcode.EXECUTE_COMMAND">Opcode.EXECUTE_COMMAND</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">ACTION</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Opcode.html#LOGICAL_AND" class="internal-link" title="nwn.nwscript.asm.Opcode.LOGICAL_AND">Opcode.LOGICAL_AND</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">LOGAND</span><span class="rst-variable-quote">'</span>,
+ <wbr></wbr><a href="nwn.nwscript.asm.Opcode.html#LOGICAL_OR" class="internal-link" title="nwn.nwscript.asm.Opcode.LOGICAL_OR">Opcode.LOGICAL_OR</a>: <span class="rst-variable-quote">'</span><span class="rst-variable-string">LOGOR</span><span class="rst-variable-quote">'</span>,
+<span class="rst-variable-ellipsis">...</span></code></pre></td></tr></table>
+  </div>
+</div>
+        </div>
+      
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+    <hr />
+    
+    
+    <div class="container-fluid">
+      <a href="index.html">API Documentation</a> for <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a>,
+    generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+      24.11.2 at 2025-03-26 10:57:48.
+    </div>
+    
+    <script src="ajax.js" type="text/javascript"></script>
+    <script src="searchlib.js" type="text/javascript"></script>
+    <script src="search.js" type="text/javascript"></script>
+  
+  </footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

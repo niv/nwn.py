@@ -264,7 +264,7 @@
         
 
         
-            <div class="itemName"><code><a href="nwn.nwsync.html" class="internal-link" title="nwn.nwsync">nwsync</a></code>
+            <div class="itemName"><code><a href="nwn.nwscript.html" class="internal-link" title="nwn.nwscript">nwscript</a></code>
             </div>
         
 
@@ -274,7 +274,7 @@
         
 
         
-            <div class="itemName"><code><a href="nwn.shared.html" class="internal-link" title="nwn.shared">shared</a></code>
+            <div class="itemName"><code><a href="nwn.nwsync.html" class="internal-link" title="nwn.nwsync">nwsync</a></code>
             </div>
         
 
@@ -318,24 +318,80 @@
             </div>
         
 
-    </li><li class="">
+    </li><li class="private">
         
         
         
 
         
-            <div class="itemName"><code><a href="nwn.vm.html" class="internal-link" title="nwn.vm">vm</a></code>
+            <div class="itemName"><code><a href="nwn._shared.html" class="internal-link" title="nwn._shared">_shared</a></code>
             </div>
         
 
     </li>
 </ul> 
 
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
+        
         
         
 
         
-         
+            <div class="itemName"><code><a href="nwn.FileMagic.html" class="internal-link" title="nwn.FileMagic"><wbr></wbr>File<wbr></wbr>Magic</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.Language.html" class="internal-link" title="nwn.Language"><wbr></wbr>Language</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="index.html#extension_to_restype" class="internal-link" title="nwn.extension_to_restype">extension<wbr></wbr>_to<wbr></wbr>_restype</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="index.html#get_nwn_encoding" class="internal-link" title="nwn.get_nwn_encoding">get<wbr></wbr>_nwn<wbr></wbr>_encoding</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="index.html#restype_to_extension" class="internal-link" title="nwn.restype_to_extension">restype<wbr></wbr>_to<wbr></wbr>_extension</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
 
         
          
@@ -402,7 +458,7 @@ nwsync storage and string/blob compression in campaign sqlite databases.</p>
 <tbody valign="top">
 <tr><td>Magic</td>
 <td>4</td>
-<td><code><a href="nwn.shared.FileMagic.html" class="internal-link" title="nwn.shared.FileMagic">FileMagic</a></code></td>
+<td><code><a href="nwn.FileMagic.html" class="internal-link" title="nwn.FileMagic">FileMagic</a></code></td>
 </tr>
 <tr><td>Header Version</td>
 <td>4</td>
@@ -436,7 +492,7 @@ nwsync storage and string/blob compression in campaign sqlite databases.</p>
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id2">
+          <table class="children sortable" id="id4">
   
   
   <tr class="class">
@@ -489,7 +545,7 @@ nwsync storage and string/blob compression in campaign sqlite databases.</p>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file: <code>BinaryIO</code>, expect_magic: <code><a href="nwn.shared.FileMagic.html" class="internal-link" title="nwn.shared.FileMagic">FileMagic</a></code> = None) -&gt; <code>tuple[<wbr></wbr>bytes, <wbr></wbr>int, <wbr></wbr><a href="nwn.compressedbuf.Algorithm.html" class="internal-link" title="nwn.compressedbuf.Algorithm">Algorithm</a>]</code></span>:
+    <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file: <code>BinaryIO</code>, expect_magic: <code>FileMagic</code> = None) -&gt; <code>tuple[<wbr></wbr>bytes, <wbr></wbr>int, <wbr></wbr><a href="nwn.compressedbuf.Algorithm.html" class="internal-link" title="nwn.compressedbuf.Algorithm">Algorithm</a>]</code></span>:
     <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/compressedbuf.py#L51">
       
       (source)
@@ -502,7 +558,7 @@ nwsync storage and string/blob compression in campaign sqlite databases.</p>
   </div>
   <div class="docstring functionBody">
     
-    <div><p>Decompresses the given binary file using the specified algorithm.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary file to decompress.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">expect<wbr></wbr>_magic:</span><code><a href="nwn.shared.FileMagic.html" class="internal-link" title="nwn.shared.FileMagic">FileMagic</a></code></td><td class="fieldArgDesc">The expected file magic. If provided,
+    <div><p>Decompresses the given binary file using the specified algorithm.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary file to decompress.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">expect<wbr></wbr>_magic:</span><code>FileMagic</code></td><td class="fieldArgDesc">The expected file magic. If provided,
 the file magic read from the file must match this value.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>tuple[<wbr></wbr>bytes, <wbr></wbr>int, <wbr></wbr><a href="nwn.compressedbuf.Algorithm.html" class="internal-link" title="nwn.compressedbuf.Algorithm">Algorithm</a>]</code></td><td class="fieldArgDesc">A tuple containing the decompressed data, the file magic, and the algorithm used.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the stream is invalid, or the magic number does not
 match the expected value, or if an unsupported algorithm is encountered.</td></tr></table></div>
   </div>
@@ -518,7 +574,7 @@ match the expected value, or if an unsupported algorithm is encountered.</td></t
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>BinaryIO</code>, magic: <code><a href="nwn.shared.FileMagic.html" class="internal-link" title="nwn.shared.FileMagic">FileMagic</a></code>, data: <code>bytes</code>, alg=<a href="nwn.compressedbuf.Algorithm.html#ZSTD" class="internal-link" title="nwn.compressedbuf.Algorithm.ZSTD">Algorithm.ZSTD</a>)</span>:
+    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>BinaryIO</code>, magic: <code>FileMagic</code>, data: <code>bytes</code>, alg=<a href="nwn.compressedbuf.Algorithm.html#ZSTD" class="internal-link" title="nwn.compressedbuf.Algorithm.ZSTD">Algorithm.ZSTD</a>)</span>:
     <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/compressedbuf.py#L107">
       
       (source)
@@ -531,7 +587,7 @@ match the expected value, or if an unsupported algorithm is encountered.</td></t
   </div>
   <div class="docstring functionBody">
     
-    <div><p>Compresses the given data and writes it to the specified file using the specified algorithm.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The file object to write the compressed data to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">magic:</span><code><a href="nwn.shared.FileMagic.html" class="internal-link" title="nwn.shared.FileMagic">FileMagic</a></code></td><td class="fieldArgDesc">The file magic to write.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>bytes</code></td><td class="fieldArgDesc">The data to be compressed.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alg:</span><code><a href="nwn.compressedbuf.Algorithm.html" class="internal-link" title="nwn.compressedbuf.Algorithm">Algorithm</a></code>, <em>optional</em></td><td class="fieldArgDesc">The compression algorithm to use. Defaults to Algorithm.ZSTD.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If an unsupported algorithm is specified.</td></tr></table></div>
+    <div><p>Compresses the given data and writes it to the specified file using the specified algorithm.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The file object to write the compressed data to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">magic:</span><code>FileMagic</code></td><td class="fieldArgDesc">The file magic to write.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>bytes</code></td><td class="fieldArgDesc">The data to be compressed.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">alg:</span><code><a href="nwn.compressedbuf.Algorithm.html" class="internal-link" title="nwn.compressedbuf.Algorithm">Algorithm</a></code>, <em>optional</em></td><td class="fieldArgDesc">The compression algorithm to use. Defaults to Algorithm.ZSTD.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If an unsupported algorithm is specified.</td></tr></table></div>
   </div>
 </div><div class="baseconstant private">
   
@@ -627,7 +683,7 @@ match the expected value, or if an unsupported algorithm is encountered.</td></t
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a>,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-03-23 09:27:41.
+      24.11.2 at 2025-03-26 10:57:48.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>

@@ -168,7 +168,7 @@
         
 
         
-            <div class="itemName"><code><a href="nwn.nwsync.html" class="internal-link" title="nwn.nwsync">nwsync</a></code>
+            <div class="itemName"><code><a href="nwn.nwscript.html" class="internal-link" title="nwn.nwscript">nwscript</a></code>
             </div>
         
 
@@ -178,7 +178,7 @@
         
 
         
-            <div class="itemName"><code><a href="nwn.shared.html" class="internal-link" title="nwn.shared">shared</a></code>
+            <div class="itemName"><code><a href="nwn.nwsync.html" class="internal-link" title="nwn.nwsync">nwsync</a></code>
             </div>
         
 
@@ -222,24 +222,80 @@
             </div>
         
 
-    </li><li class="">
+    </li><li class="private">
         
         
         
 
         
-            <div class="itemName"><code><a href="nwn.vm.html" class="internal-link" title="nwn.vm">vm</a></code>
+            <div class="itemName"><code><a href="nwn._shared.html" class="internal-link" title="nwn._shared">_shared</a></code>
             </div>
         
 
     </li>
 </ul> 
 
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
+        
         
         
 
         
-         
+            <div class="itemName"><code><a href="nwn.FileMagic.html" class="internal-link" title="nwn.FileMagic"><wbr></wbr>File<wbr></wbr>Magic</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.Language.html" class="internal-link" title="nwn.Language"><wbr></wbr>Language</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#extension_to_restype" class="internal-link" title="nwn.extension_to_restype">extension<wbr></wbr>_to<wbr></wbr>_restype</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_nwn_encoding" class="internal-link" title="nwn.get_nwn_encoding">get<wbr></wbr>_nwn<wbr></wbr>_encoding</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#restype_to_extension" class="internal-link" title="nwn.restype_to_extension">restype<wbr></wbr>_to<wbr></wbr>_extension</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
 
         
          
@@ -328,16 +384,16 @@ pip install nwn</pre></div>
     <td>Module</td>
     <td><code><a href="nwn.key.html" class="internal-link" title="nwn.key">key</a></code></td>
     <td>Utils for keyfiles, which store base game resources in the installation directory.</td>
+  </tr><tr class="package">
+    
+    <td>Package</td>
+    <td><code><a href="nwn.nwscript.html" class="internal-link" title="nwn.nwscript">nwscript</a></code></td>
+    <td><span class="undocumented">No package docstring; 2/2 modules documented</span></td>
   </tr><tr class="module">
     
     <td>Module</td>
     <td><code><a href="nwn.nwsync.html" class="internal-link" title="nwn.nwsync">nwsync</a></code></td>
     <td>These tables describe the binary file format for the NWSync manifest file itself.</td>
-  </tr><tr class="module">
-    
-    <td>Module</td>
-    <td><code><a href="nwn.shared.html" class="internal-link" title="nwn.shared">shared</a></code></td>
-    <td>Shared types and helpers useful across the whole library.</td>
   </tr><tr class="module">
     
     <td>Module</td>
@@ -358,20 +414,132 @@ pip install nwn</pre></div>
     <td>Module</td>
     <td><code><a href="nwn.twoda.html" class="internal-link" title="nwn.twoda">twoda</a></code></td>
     <td>This module provides functionality to read and write 2DA files.</td>
-  </tr><tr class="package">
+  </tr><tr class="module private">
     
-    <td>Package</td>
-    <td><code><a href="nwn.vm.html" class="internal-link" title="nwn.vm">vm</a></code></td>
-    <td>Utilities around NWScript/NCS bytecode for NWN:EE.</td>
+    <td>Module</td>
+    <td><code><a href="nwn._shared.html" class="internal-link" title="nwn._shared">_shared</a></code></td>
+    <td>Shared types and helpers useful across the whole library.</td>
   </tr>
 </table>
           
 
-            
+            <p class="fromInitPy">From <code>__init__.py</code>:</p><table class="children sortable" id="id2">
+  
+  
+  <tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="nwn.FileMagic.html" class="internal-link" title="nwn.FileMagic"><wbr></wbr>File<wbr></wbr>Magic</a></code></td>
+    <td>A file magic identifies a file type: For NWN, it is the first four characters on certain file types.</td>
+  </tr><tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="nwn.Language.html" class="internal-link" title="nwn.Language"><wbr></wbr>Language</a></code></td>
+    <td>Maps engine language IDs.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#extension_to_restype" class="internal-link" title="nwn.extension_to_restype">extension<wbr></wbr>_to<wbr></wbr>_restype</a></code></td>
+    <td>Convert a file extension to its corresponding resource type identifier.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#get_nwn_encoding" class="internal-link" title="nwn.get_nwn_encoding">get<wbr></wbr>_nwn<wbr></wbr>_encoding</a></code></td>
+    <td>A stand-in to enable dynamic configuration later.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#restype_to_extension" class="internal-link" title="nwn.restype_to_extension">restype<wbr></wbr>_to<wbr></wbr>_extension</a></code></td>
+    <td>Convert a resource type to its corresponding file extension.</td>
+  </tr>
+</table>
         </div>
 
         <div id="childList">
-          
+          <div class="basefunction">
+  
+  
+  <a name="nwn.extension_to_restype">
+    
+  </a>
+  <a name="extension_to_restype">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">extension_to_restype</span><span class="function-signature">(extension: <code>str</code>) -&gt; <code>int</code></span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/_shared.py#L142">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#extension_to_restype" title="nwn.extension_to_restype">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Convert a file extension to its corresponding resource type identifier.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">extension:</span><code>str</code></td><td class="fieldArgDesc">The file extension to convert.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">The resource type identifier corresponding to the given extension.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the extension is not recognized.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="nwn.get_nwn_encoding">
+    
+  </a>
+  <a name="get_nwn_encoding">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_nwn_encoding</span><span class="function-signature">()</span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/_shared.py#L17">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#get_nwn_encoding" title="nwn.get_nwn_encoding">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>A stand-in to enable dynamic configuration later.</p>
+<p>Currently hardcoded to "windows-1252".</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">The encoding used by NWN.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="nwn.restype_to_extension">
+    
+  </a>
+  <a name="restype_to_extension">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">restype_to_extension</span><span class="function-signature">(restype: <code>int</code>) -&gt; <code>str</code></span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/_shared.py#L126">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#restype_to_extension" title="nwn.restype_to_extension">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Convert a resource type to its corresponding file extension.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">restype:</span><code>int</code></td><td class="fieldArgDesc">The resource type to convert.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">The corresponding file extension for the given resource type.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the given resource type is unknown.</td></tr></table></div>
+  </div>
+</div>
         </div>
       
       </div>
@@ -384,7 +552,7 @@ pip install nwn</pre></div>
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a>,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-03-23 09:27:41.
+      24.11.2 at 2025-03-26 10:57:48.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>
