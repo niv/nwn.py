@@ -1,7 +1,7 @@
 import struct
 from typing import BinaryIO
 
-from nwn._shared import get_nwn_encoding
+from nwn._shared import get_nwn_encoding, Language
 from nwn.gff._types import (
     Byte,
     Char,
@@ -116,11 +116,11 @@ def read(file: BinaryIO):
 
         if field.type == FieldKind.CEXOLOCSTRING:
             _ = struct.unpack("<I", file.read(4))[0]
-            strref = struct.unpack("<I", file.read(4))[0]
+            strref = Dword(struct.unpack("<I", file.read(4))[0])
             count = struct.unpack("<I", file.read(4))[0]
             entries = {}
             for _ in range(count):
-                fid = struct.unpack("<I", file.read(4))[0]
+                fid = Language(struct.unpack("<I", file.read(4))[0])
                 sz = struct.unpack("<I", file.read(4))[0]
                 entries[fid] = file.read(sz).decode(get_nwn_encoding())
             return CExoLocString(strref, entries)

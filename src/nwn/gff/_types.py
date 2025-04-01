@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from nwn import Language
 from nwn.gff._impl import FieldKind
 
 
@@ -102,8 +103,8 @@ class CExoLocString:
 
     FIELD_KIND = FieldKind.CEXOLOCSTRING
 
-    strref: int
-    entries: dict[int, str]
+    strref: Dword
+    entries: dict[Language, str]
 
 
 class VOID(bytes):

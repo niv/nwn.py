@@ -2,17 +2,28 @@ from io import BytesIO
 
 import pytest
 
-import nwn.gff as gff
+from nwn import gff, Language
 
 
 def test_read():
     with open("tests/gff/x3_it_rubygem.uti", "rb") as f:
         root, file_type = gff.read(f)
-        assert file_type == "UTI "
-        assert root.Tag == "X3_IT_RUBYGEM"
 
-        assert root.PaletteID == 54
-        assert isinstance(root.PaletteID, gff.Byte)
+    assert file_type == "UTI "
+    assert root.Tag == "X3_IT_RUBYGEM"
+
+    assert root.PaletteID == 54
+    assert isinstance(root.PaletteID, gff.Byte)
+
+
+def test_cexolocstr():
+    with open("tests/gff/x3_it_rubygem.uti", "rb") as f:
+        root, _ = gff.read(f)
+
+    assert isinstance(root.Description, gff.CExoLocString)
+    assert isinstance(root.Description.strref, gff.Dword)
+    assert isinstance(list(root.Description.entries.keys())[0], Language)
+    assert root.Description.entries[Language.FRENCH] == "Bonjour."
 
 
 def test_rewrite():
