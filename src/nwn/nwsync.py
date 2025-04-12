@@ -136,6 +136,9 @@ def write(file: BinaryIO, manifest: Manifest):
     """
     Writes a manifest to a binary stream.
 
+    Entries are always sorted by SHA1, then by resref, even if the passed-in
+    manifest is not sorted. This ensures binary reproducibility.
+
     Args:
         file: A binary stream to write the manifest to.
         manifest: The manifest to write to the stream.
@@ -151,30 +154,39 @@ def write(file: BinaryIO, manifest: Manifest):
     mappings = []
     seen_sha1 = {}
 
-    for entry in manifest.entries:
-        if entry.sha1 not in seen_sha1:
+    sorted_entries = [
+        (
+            entry,
+            entry.resref.split(".")[0],
+            extension_to_restype(entry.resref.split(".")[1]),
+        )
+        for entry in manifest.entries
+    ]
+    sorted_entries.sort(key=lambda x: (x[0].sha1, x[1]))
+
+    for entry, resref_base, restype in sorted_entries:
+        if len(resref_base) > 16:
+            raise ValueError(f"Resref too long: {entry.resref}")
+
+        idx = seen_sha1.get(entry.sha1)
+        if idx is None:
             seen_sha1[entry.sha1] = len(unique_entries)
-            unique_entries.append(entry)
+            unique_entries.append((entry, resref_base, restype))
         else:
-            mappings.append((seen_sha1[entry.sha1], entry))
+            mappings.append((idx, entry, resref_base, restype))
 
     file.write(len(unique_entries).to_bytes(4, "little"))
     file.write(len(mappings).to_bytes(4, "little"))
 
-    def write_filename(entry):
-        resref = entry.resref.split(".")[0]
-        if len(resref) > 16:
-            raise ValueError(f"Resref too long: {resref}")
-        resext = entry.resref.split(".")[-1]
-        restype = extension_to_restype(resext)
-        file.write(resref.encode(get_nwn_encoding()).ljust(16, b"\0"))
+    def write_filename(resref_base, restype):
+        file.write(resref_base.encode(get_nwn_encoding()).ljust(16, b"\0"))
         file.write((restype).to_bytes(2, "little"))
 
-    for entry in unique_entries:
+    for entry, resref_base, restype in unique_entries:
         file.write(entry.sha1)
         file.write(entry.size.to_bytes(4, "little"))
-        write_filename(entry)
+        write_filename(resref_base, restype)
 
-    for index, entry in mappings:
+    for index, entry, resref_base, restype in mappings:
         file.write(index.to_bytes(4, "little"))
-        write_filename(entry)
+        write_filename(resref_base, restype)

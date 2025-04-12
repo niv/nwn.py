@@ -1,7 +1,8 @@
 from io import BytesIO
 
+import pytest
+
 from nwn.nwsync import read, write, Manifest, ManifestEntry, NWSYNC_MANIFEST_VERSION
-from nwn import get_nwn_encoding
 
 
 def test_read_rewrite():
@@ -80,3 +81,57 @@ def test_encoding():
     read_manifest = read(bio)
 
     assert read_manifest.entries[0].resref == win1252_resref
+
+
+def test_invalid_resref_length():
+    entries = [ManifestEntry(sha1=b"a" * 20, size=100, resref="toolongresrefname.txt")]
+    manifest = Manifest(entries=entries)
+
+    buf = BytesIO()
+    with pytest.raises(ValueError, match="Resref too long"):
+        write(buf, manifest)
+
+
+def test_manifest_sort_order():
+    entries = [
+        ManifestEntry(sha1=b"b" * 20, size=100, resref="test2.txt"),
+        ManifestEntry(sha1=b"a" * 20, size=100, resref="test1.txt"),
+        ManifestEntry(sha1=b"a" * 20, size=100, resref="test2.txt"),
+    ]
+    manifest = Manifest(entries=entries)
+
+    buf = BytesIO()
+    write(buf, manifest)
+
+    buf.seek(8)
+
+    entry_count = int.from_bytes(buf.read(4), "little")
+    mapping_count = int.from_bytes(buf.read(4), "little")
+
+    assert entry_count == 2
+    assert mapping_count == 1
+
+    first_sha1 = buf.read(20)
+    assert first_sha1 == b"a" * 20
+
+    buf.seek(4, 1)
+
+    first_resref = buf.read(16).decode("windows-1252").rstrip("\0")
+    assert first_resref == "test1"
+
+    buf.seek(2, 1)
+
+    second_sha1 = buf.read(20)
+    assert second_sha1 == b"b" * 20
+
+    buf.seek(4, 1)
+    second_resref = buf.read(16).decode("windows-1252").rstrip("\0")
+    assert second_resref == "test2"
+
+    buf.seek(2, 1)
+
+    mapping_index = int.from_bytes(buf.read(4), "little")
+    assert mapping_index == 0
+
+    mapping_resref = buf.read(16).decode("windows-1252").rstrip("\0")
+    assert mapping_resref == "test2"
