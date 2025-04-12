@@ -165,8 +165,8 @@ def write(file: BinaryIO, manifest: Manifest):
     sorted_entries.sort(key=lambda x: (x[0].sha1, x[1]))
 
     for entry, resref_base, restype in sorted_entries:
-        if len(resref_base) > 16:
-            raise ValueError(f"Resref too long: {entry.resref}")
+        if not 0 < len(resref_base) <= 16:
+            raise ValueError(f"Resref invalid: {entry.resref}")
 
         idx = seen_sha1.get(entry.sha1)
         if idx is None:

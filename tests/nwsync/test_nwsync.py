@@ -1,4 +1,5 @@
 from io import BytesIO
+from hashlib import sha1
 
 import pytest
 
@@ -51,8 +52,17 @@ def test_read_rewrite():
         bio = BytesIO()
         write(bio, mf)
         bio.seek(0)
+        sha1_hash_1 = sha1(bio.read()).hexdigest()
+        bio.seek(0)
         mf2 = read(bio)
         assert mf2.entries == entries
+
+        bio2 = BytesIO()
+        write(bio2, mf2)
+        bio2.seek(0)
+        sha1_hash_2 = sha1(bio2.read()).hexdigest()
+
+        assert sha1_hash_1 == sha1_hash_2
 
 
 def test_repository_path():
@@ -88,7 +98,7 @@ def test_invalid_resref_length():
     manifest = Manifest(entries=entries)
 
     buf = BytesIO()
-    with pytest.raises(ValueError, match="Resref too long"):
+    with pytest.raises(ValueError, match="Resref invalid: "):
         write(buf, manifest)
 
 
