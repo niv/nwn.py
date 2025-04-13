@@ -1,5 +1,5 @@
 """
-Read and write TLK (Talk Table) files.
+Read and write TLK (Talk Table) files (for translation and base game string references).
 
 All strings are transparently converted to and from the NWN encoding.
 """

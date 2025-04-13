@@ -1,5 +1,5 @@
 """
-Utils for keyfiles, which store base game resources in the installation directory.
+Read keyfiles, which store base game resources in the installation directory.
 """
 
 import os

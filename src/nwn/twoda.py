@@ -1,5 +1,5 @@
 """
-This module provides functionality to read and write 2DA files.
+Read and write 2DA files (2-dimensional array, similar to CSV).
 """
 
 from typing import TextIO

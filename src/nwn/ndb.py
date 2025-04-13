@@ -1,6 +1,7 @@
 """
-This module provides a parser for the NDB format used by the Neverwinter Nights
-scripting engine. The NDB format is used to store debugging information for
+Read NDB files: NWScript compiled debug information.
+
+The NDB format is used to store debugging information for
 compiled scripts, such as variable and function names, line numbers, and
 structure definitions.
 """

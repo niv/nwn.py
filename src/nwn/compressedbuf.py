@@ -1,5 +1,5 @@
 """
-Compressedbuf read/write support.
+Read and write compressedbuf files, used in NWSync and campaign databases.
 
 Mainly used for NWSync file storage; but also used in sqlite files such as
 nwsync storage and string/blob compression in campaign sqlite databases.

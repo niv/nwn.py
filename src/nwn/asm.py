@@ -1,5 +1,5 @@
 """
-This module provides functionality for disassembling NCS (Neverwinter Nights Script) files.
+Disassemble NCS (compiled script) files.
 
 While the language bytecode is principally game-agnostic, the supported opcodes
 describe the default NWN:EE instruction set.

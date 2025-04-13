@@ -1,4 +1,6 @@
 """
+Read/write nwsync manifests and associated helper utilities.
+
 Binary File Format Version 3
 ============================
 
