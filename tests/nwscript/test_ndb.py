@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from nwn.nwscript.ndb import (
+from nwn.ndb import (
     ScalarType,
     StructRef,
     Function,
