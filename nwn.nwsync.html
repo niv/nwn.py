@@ -113,9 +113,13 @@
       <div>
          
           <div class="childrenKindTitle">Contents</div>
-          <ul><li><a class="rst-internal rst-reference" href="#rst-manifest" id="rst-toc-entry-1">Manifest</a></li>
-<li><a class="rst-internal rst-reference" href="#rst-manifestentry-sorted" id="rst-toc-entry-2">ManifestEntry (sorted)</a></li>
-<li><a class="rst-internal rst-reference" href="#rst-manifestmapping-sorted" id="rst-toc-entry-3">ManifestMapping (sorted)</a></li>
+          <ul><li><p class="rst-first"><a class="rst-internal rst-reference" href="#rst-binary-file-format-version-3" id="rst-toc-entry-1">Binary File Format Version 3</a></p>
+<ul class="rst-simple">
+<li><a class="rst-internal rst-reference" href="#rst-manifest" id="rst-toc-entry-2">Manifest</a></li>
+<li><a class="rst-internal rst-reference" href="#rst-manifestentry-sorted" id="rst-toc-entry-3">ManifestEntry (sorted)</a></li>
+<li><a class="rst-internal rst-reference" href="#rst-manifestmapping-sorted" id="rst-toc-entry-4">ManifestMapping (sorted)</a></li>
+</ul>
+</li>
 </ul>
         
 
@@ -226,6 +230,16 @@
         
 
         
+            <div class="itemName"><code><a href="nwn.asm.html" class="internal-link" title="nwn.asm">asm</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="nwn.compressedbuf.html" class="internal-link" title="nwn.compressedbuf">compressedbuf</a></code>
             </div>
         
@@ -266,7 +280,7 @@
         
 
         
-            <div class="itemName"><code><a href="nwn.nwscript.html" class="internal-link" title="nwn.nwscript">nwscript</a></code>
+            <div class="itemName"><code><a href="nwn.ndb.html" class="internal-link" title="nwn.ndb">ndb</a></code>
             </div>
         
 
@@ -440,10 +454,13 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p>These tables describe the binary file format for the NWSync manifest file itself.</p>
+          <div><p>Read/write nwsync manifests and associated helper utilities.</p>
+<div class="rst-section" id="rst-binary-file-format-version-3">
+<h2 class="heading">Binary File Format Version 3</h2>
+<p>These tables describe the binary file format for the NWSync manifest file itself.</p>
 <p>For individual files, see <code><a href="nwn.compressedbuf.html" class="internal-link">nwn.compressedbuf</a></code>.</p>
 <div class="rst-section" id="rst-manifest">
-<h2 class="heading">Manifest</h2>
+<h3 class="heading">Manifest</h3>
 <table border="1" class="rst-docutils">
 <colgroup>
 <col width="30%" />
@@ -474,7 +491,7 @@
 </table>
 </div>
 <div class="rst-section" id="rst-manifestentry-sorted">
-<h2 class="heading">ManifestEntry (sorted)</h2>
+<h3 class="heading">ManifestEntry (sorted)</h3>
 <table border="1" class="rst-docutils">
 <colgroup>
 <col width="30%" />
@@ -502,7 +519,7 @@
 </table>
 </div>
 <div class="rst-section" id="rst-manifestmapping-sorted">
-<h2 class="heading">ManifestMapping (sorted)</h2>
+<h3 class="heading">ManifestMapping (sorted)</h3>
 <table border="1" class="rst-docutils">
 <colgroup>
 <col width="30%" />
@@ -527,10 +544,11 @@
 </table>
 </div>
 </div>
+</div>
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id50">
+          <table class="children sortable" id="id49">
   
   
   <tr class="class">
@@ -584,7 +602,7 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file: <code>BinaryIO</code>) -&gt; <code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest">Manifest</a></code></span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L86">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L88">
       
       (source)
     </a>
@@ -611,7 +629,7 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>BinaryIO</code>, manifest: <code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest">Manifest</a></code>)</span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L135">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L137">
       
       (source)
     </a>
@@ -623,7 +641,10 @@
   </div>
   <div class="docstring functionBody">
     
-    <div><p>Writes a manifest to a binary stream.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary stream to write the manifest to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">manifest:</span><code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest">Manifest</a></code></td><td class="fieldArgDesc">The manifest to write to the stream.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the manifest is invalid.</td></tr></table></div>
+    <div><p>Writes a manifest to a binary stream.</p>
+<p>Entries are always sorted by SHA1, then by resref, even if the passed-in
+manifest is not sorted. This ensures binary reproducibility.</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary stream to write the manifest to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">manifest:</span><code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest">Manifest</a></code></td><td class="fieldArgDesc">The manifest to write to the stream.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the manifest is invalid.</td></tr></table></div>
   </div>
 </div><div class="baseconstant">
   
@@ -637,7 +658,7 @@
   <div class="functionHeader">
     
     <span class="py-defname">NWSYNC_MANIFEST_MAGIC</span> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L58">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L60">
       
       (source)
     </a>
@@ -664,7 +685,7 @@
   <div class="functionHeader">
     
     <span class="py-defname">NWSYNC_MANIFEST_VERSION</span>: <code>int</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L55">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L57">
       
       (source)
     </a>
@@ -692,7 +713,7 @@
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a>,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-04-01 16:21:05.
+      24.11.2 at 2025-04-13 10:09:09.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>
