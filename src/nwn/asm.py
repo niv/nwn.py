@@ -8,7 +8,7 @@ describe the default NWN:EE instruction set.
 import struct
 
 from enum import Enum
-from typing import NamedTuple
+from typing import NamedTuple, BinaryIO
 import json
 
 from nwn._shared import get_nwn_encoding
@@ -116,7 +116,7 @@ class Instr(NamedTuple):
         return f"{self.op.name}.{self.aux.name}{self.extra}"
 
 
-def read_extra(file, op: Opcode, aux: Auxcode) -> tuple:
+def read_extra(file: BinaryIO, op: Opcode, aux: Auxcode) -> tuple:
     """
     Parses additional data based on the opcode and auxiliary code.
 
@@ -124,12 +124,12 @@ def read_extra(file, op: Opcode, aux: Auxcode) -> tuple:
     For example, JSON payloads will be evaluated.
 
     Args:
-        file (BinaryIO): A binary stream from which to read the data.
+        file: A binary stream from which to read the data.
         op: The opcode of the instruction.
         aux: The auxiliary code providing additional context for the operation.
 
     Returns:
-        tuple: A tuple containing the parsed data, or empty.
+        A variable length tuple containing the parsed data, or empty.
 
     Raises:
         struct.error: If the data cannot be read from the stream.
@@ -178,7 +178,7 @@ def read_extra(file, op: Opcode, aux: Auxcode) -> tuple:
     return ()
 
 
-def read_instr(file) -> Instr:
+def read_instr(file: BinaryIO) -> Instr:
     """
     Reads an instruction from the given input stream.
 
@@ -186,7 +186,7 @@ def read_instr(file) -> Instr:
         file: A binary stream from which the instruction is read.
 
     Returns:
-        Instr: The instruction read from the input stream.
+        The instruction read from the input stream.
 
     Raises:
         struct.error: If the data cannot be read from the stream.
@@ -201,7 +201,7 @@ def read_instr(file) -> Instr:
     return Instr(op, aux, ex, exl)
 
 
-def disasm(file):
+def disasm(file: BinaryIO):
     """
     Disassembles bytecode from a file-ish.
 

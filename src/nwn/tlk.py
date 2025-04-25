@@ -39,8 +39,9 @@ def read(
             reading untrusted or corrupted data.
 
     Returns:
-        list: An object containing the language and entries from the TLK file.
-        Language: The language the TLK file is configured as.
+        A tuple containing a list of entries and the language of the TLK file.
+            The list contains either strings or TlkEntry objects, depending on
+            the value of include_sound_data.
 
     Raises:
         ValueError: If the file does not contain valid TLK data.

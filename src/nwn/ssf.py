@@ -27,7 +27,7 @@ def read(file: BinaryIO, max_entries=0xFF) -> list[Entry]:
         max_entries: The maximum number of entries to read.
 
     Returns:
-        list: A list of tuples containing the resref and strref of each entry.
+        A list of tuples containing the resref and strref of each entry.
 
     Raises:
         ValueError: If the file does not contain valid SSF data.

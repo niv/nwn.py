@@ -169,7 +169,7 @@ class Reader:
             filename: The name of the file to read, including extension.
 
         Returns:
-            bytes: The content of the file.
+            The content of the file.
 
         Raises:
             ValueError: If the internal state is invalid.

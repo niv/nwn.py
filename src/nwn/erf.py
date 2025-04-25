@@ -127,7 +127,7 @@ class Reader:
         Returns the filenames in the ERF archive.
 
         Returns:
-            list[str]: A list of filenames present in the ERF archive.
+            A list of filenames present in the ERF archive.
         """
         return list(self._files.keys())
 
@@ -140,7 +140,7 @@ class Reader:
         corresponding file data.
 
         Returns:
-            dict[str, Entry]: File names mapping to internal Entry tuple.
+            A dict mapping file names to their corresponding Entry objects.
         """
         return self._files
 
@@ -152,7 +152,7 @@ class Reader:
             filename: The name of the file to retrieve.
 
         Returns:
-            bytes: The contents of the file as a byte string.
+            The contents of the file as a byte string.
 
         Raises:
             KeyError: If the file is not found in the archive.

@@ -21,7 +21,7 @@ def get_nwn_encoding():
     Currently hardcoded to "windows-1252".
 
     Returns:
-        str: The encoding used by NWN.
+        The encoding used by NWN.
     """
     return "windows-1252"
 
@@ -126,10 +126,13 @@ _restype_to_extension = {
 def restype_to_extension(restype: int) -> str:
     """
     Convert a resource type to its corresponding file extension.
+
     Args:
         restype: The resource type to convert.
+
     Returns:
-        str: The corresponding file extension for the given resource type.
+        The corresponding file extension for the given resource type.
+
     Raises:
         ValueError: If the given resource type is unknown.
     """
@@ -145,8 +148,10 @@ def extension_to_restype(extension: str) -> int:
 
     Args:
         extension: The file extension to convert.
+
     Returns:
-        int: The resource type identifier corresponding to the given extension.
+        The resource type identifier corresponding to the given extension.
+
     Raises:
         ValueError: If the extension is not recognized.
     """

@@ -32,7 +32,7 @@ def read(file: BinaryIO):
         file: The binary stream to read from.
 
     Returns:
-        (Struct, str): The root structure of the GFF file and the file type.
+        A tuple containing the root struct and the file type.
     """
 
     root_offset = file.tell()
