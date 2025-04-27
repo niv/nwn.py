@@ -47,7 +47,7 @@ uint16               restype
 
 from typing import NamedTuple, BinaryIO
 
-from ._shared import (
+from .._shared import (
     FileMagic,
     restype_to_extension,
     extension_to_restype,

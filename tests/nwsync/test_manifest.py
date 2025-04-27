@@ -3,7 +3,13 @@ from hashlib import sha1
 
 import pytest
 
-from nwn.nwsync import read, write, Manifest, ManifestEntry, NWSYNC_MANIFEST_VERSION
+from nwn.nwsync.manifest import (
+    read,
+    write,
+    Manifest,
+    ManifestEntry,
+    NWSYNC_MANIFEST_VERSION,
+)
 
 
 def test_read_rewrite():
