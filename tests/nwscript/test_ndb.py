@@ -2,13 +2,11 @@ import os
 
 import pytest
 
-from nwn.ndb import (
+from nwn.nwscript.ndb import (
     ScalarType,
     StructRef,
     Function,
     Struct,
-    Variable,
-    Line,
     Ndb,
     read,
 )
