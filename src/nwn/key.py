@@ -1,187 +1,272 @@
-"""
-Read keyfiles, which store base game resources in the installation directory.
-"""
+"""Read and write ERF (Encapsulated Resource Format) archives."""
 
-import os
 import struct
-from datetime import datetime, timedelta
-from typing import NamedTuple, BinaryIO
+from typing import NamedTuple, IO
+from enum import Enum
+from datetime import date, timedelta
 
-from ._shared import restype_to_extension
-
-
-class _VariableResource(NamedTuple):
-    id: int
-    io_offset: int
-    io_size: int
-    res_type: int
+from ._shared import (
+    get_nwn_encoding,
+    Language,
+    restype_to_extension,
+    extension_to_restype,
+)
 
 
 class Reader:
     """
-    Open a keyfile for reading.
+    Class to read and access an ERF archive (MOD, HAK, ERF, ...)
 
     Example:
-        >>> with Reader("nwn_base.key") as rd:
-        ...     data = rd.read_file("doortype.2da")
-        ...     print(data)
+        >>> with open("Prelude.mod", "rb") as file:
+        ...    erf = Reader(file)
+        ...    print(erf.filenames)
+        ...    gff_data = erf.read_file("item.uti")
+        ...    ...
 
     Args:
-        filename: The name of the keyfile to open.
-        bif_directory: The directory to search for BIF files in. If not provided,
-            the directory containing the keyfile is used.
-
-    Raises:
-        ValueError: If the keyfile is not valid.
-        FileNotFoundError: If the keyfile or a BIF file is not found.
+        file: The file object to read from.
     """
 
-    class _BIFF(NamedTuple):
-        filename: str
-        file: BinaryIO
-        variable_resources: dict[int, _VariableResource]
+    class Version(Enum):
+        V_1_0 = "V1.0"
+        # E_1_0 = "E1.0"
 
-    def __init__(self, filename: str, bif_directory=None):
-        bif_directory = bif_directory or os.path.dirname(filename) + "/.."
-        self._bif_files = {}
-        file = self._file = open(filename, "rb")
+    class Header(NamedTuple):
+        file_type: str
+        file_version: "Reader.Version"
+        locstr_count: int
+        locstr_sz: int
+        entry_count: int
+        offset_to_locstr: int
+        offset_to_keylist: int
+        offset_to_reslist: int
+        build_year: int
+        build_day: int
+        description_strref: int
 
-        magic = file.read(4)
-        if magic != b"KEY ":
-            raise ValueError("Not a keyfile")
-        version = file.read(4)
-        if version != b"V1  ":
-            raise ValueError("Unsupported keyfile version")
+    class Entry(NamedTuple):
+        original_filename: str
+        resref: int
+        offset: int
+        disk_size: int
+        uncompressed_size: int
 
-        bif_count = struct.unpack("<I", file.read(4))[0]
-        key_count = struct.unpack("<I", file.read(4))[0]
-        offset_to_file_table = struct.unpack("<I", file.read(4))[0]
-        offset_to_key_table = struct.unpack("<I", file.read(4))[0]
-        self._build_year = struct.unpack("<I", file.read(4))[0]
-        self._build_day = struct.unpack("<I", file.read(4))[0]
+    def _seek(self, relative_to_start):
+        self._file.seek(self._root_offset + relative_to_start)
 
-        file.seek(offset_to_file_table)
-        file_table = []
-        for _ in range(bif_count):
-            file_table.append(
-                (
-                    struct.unpack("<I", file.read(4))[0],
-                    struct.unpack("<I", file.read(4))[0],
-                    struct.unpack("<H", file.read(2))[0],
-                    struct.unpack("<H", file.read(2))[0],
-                )
+    def __init__(self, file, max_entries=65535, max_locstr=100):
+        self._file = file
+        self._root_offset = self._file.tell()
+
+        ft = self._file.read(4).decode("ASCII")
+        fv = self.Version(self._file.read(4).decode("ASCII"))
+        va = struct.unpack("IIIIIIIII", self._file.read(36))
+        self._header = self.Header(ft, fv, *va)
+
+        if self._header.entry_count > max_entries:
+            raise ValueError("Too many resources")
+
+        if self._header.locstr_count > max_locstr:
+            raise ValueError("Too many localized strings")
+
+        self._seek(self._header.offset_to_locstr)
+        loc_str = {}
+        for _ in range(self._header.locstr_count):
+            lid = struct.unpack("I", self._file.read(4))[0]
+            sz = struct.unpack("I", self._file.read(4))[0]
+            st = self._file.read(sz).decode(get_nwn_encoding())
+            loc_str[lid] = st
+
+        self._seek(self._header.offset_to_reslist)
+        resources = []
+        for _ in range(self._header.entry_count):
+            offset = struct.unpack("i", self._file.read(4))[0]
+            disk_size = struct.unpack("i", self._file.read(4))[0]
+            uncompressed = disk_size
+            resources.append((offset, disk_size, uncompressed))
+
+        self._seek(self._header.offset_to_keylist)
+        keys = []
+        for _ in range(self._header.entry_count):
+            resref = self._file.read(16).split(b"\x00")[0].decode("ASCII")
+            _ = struct.unpack("I", self._file.read(4))[0]  # res_id unused
+            res_type = struct.unpack("H", self._file.read(2))[0]
+            _ = self._file.read(2)  # unused
+            keys.append((resref, res_type))
+
+        self._localized_strings = loc_str
+
+        self._files = {
+            f"{resref.lower()}.{restype_to_extension(restype)}": self.Entry(
+                resref, restype, o, d, u
             )
-
-        filename_table = []
-        for entry in file_table:
-            file.seek(entry[1])
-            filename = file.read(entry[2]).decode("ASCII").replace("\\", "/")
-            filename_table.append(filename)
-
-        def read_bif(bif_filename):
-            bif_file = open(os.path.join(bif_directory, bif_filename), "rb")
-            magic = bif_file.read(4)
-            if magic != b"BIFF":
-                raise ValueError("Not a BIF file")
-            version = bif_file.read(4)
-            if version != b"V1  ":
-                raise ValueError("Unsupported BIF version")
-            var_res_count = struct.unpack("<I", bif_file.read(4))[0]
-            fixed_res_count = struct.unpack("<I", bif_file.read(4))[0]
-            if fixed_res_count != 0:
-                raise ValueError("Fixed resources not supported")
-            variable_table_offset = struct.unpack("<I", bif_file.read(4))[0]
-            variable_resources = {}
-            bif_file.seek(variable_table_offset)
-            for _ in range(var_res_count):
-                full_id = struct.unpack("<I", bif_file.read(4))[0]
-                offset = struct.unpack("<I", bif_file.read(4))[0]
-                file_size = struct.unpack("<I", bif_file.read(4))[0]
-                res_type = struct.unpack("<I", bif_file.read(4))[0]
-                variable_resources[full_id & 0xFFFFF] = _VariableResource(
-                    id=full_id,
-                    io_offset=offset,
-                    io_size=file_size,
-                    res_type=res_type,
-                )
-            return self._BIFF(
-                os.path.normpath(bif_filename),
-                bif_file,
-                variable_resources,
-            )
-
-        file.seek(offset_to_key_table)
-        self._resref_id_lookup = {}
-        for _ in range(key_count):
-            resref = file.read(16).split(b"\x00")[0].decode("ASCII")
-            res_type = struct.unpack("<H", file.read(2))[0]
-            res_id = struct.unpack("<I", file.read(4))[0]
-            bif_idx = res_id >> 20
-            if bif_idx < 0 or bif_idx >= len(file_table):
-                raise ValueError("Invalid BIF index")
-            resext = restype_to_extension(res_type)
-            self._resref_id_lookup[f"{resref}.{resext}"] = res_id
-
-        self._bif_files = [read_bif(fn) for fn in filename_table]
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.close()
-
-    def close(self):
-        """
-        Closes the main file and all associated BIF files. You should call
-        this method when you are done with the keyfile. It is also called
-        automatically when the object is deleted (eg. via context manager).
-        """
-
-        if self._file:
-            self._file.close()
-            self._file = None
-            for bif_file in self._bif_files:
-                bif_file.file.close()
-            self._bif_files = []
+            for (resref, restype), (o, d, u) in zip(keys, resources)
+        }
 
     @property
-    def build_date(self) -> datetime:
-        """
-        The build date when this keyfile was created.
-        """
-
-        return datetime(1900 + self._build_year, 1, 1).date() + timedelta(
-            days=self._build_day - 1
+    def build_date(self) -> date:
+        """The build date of the ERF archive."""
+        return date(1900 + self._header.build_year, 1, 1) + timedelta(
+            days=self._header.build_day
         )
 
+    @property
+    def localized_strings(self) -> dict[Language, str]:
+        """The localized strings in the ERF archive."""
+        return self._localized_strings
+
+    @property
+    def description_strref(self) -> int:
+        """The STRREF set in the ERF header. 0 if not set."""
+        return self._header.description_strref
+
+    @property
     def filenames(self) -> list[str]:
         """
-        Returns all filenames in the keyfile.
-        """
+        Returns the filenames in the ERF archive.
 
-        return list(self._resref_id_lookup.keys())
+        Returns:
+            list[str]: A list of filenames present in the ERF archive.
+        """
+        return list(self._files.keys())
+
+    @property
+    def filemap(self) -> dict[str, Entry]:
+        """
+        Returns the mapping of files.
+
+        This method returns the internal dictionary that maps file names to their
+        corresponding file data.
+
+        Returns:
+            dict[str, Entry]: File names mapping to internal Entry tuple.
+        """
+        return self._files
 
     def read_file(self, filename: str) -> bytes:
         """
-        Reads the content of a file from the resource archive.
+        Retrieve the contents of a file from the archive.
 
         Args:
-            filename: The name of the file to read, including extension.
+            filename: The name of the file to retrieve.
 
         Returns:
-            bytes: The content of the file.
+            bytes: The contents of the file as a byte string.
 
         Raises:
-            ValueError: If the internal state is invalid.
-            FileNotFoundError: If the file is not found in the archive.
+            KeyError: If the file is not found in the archive.
+            ValueError: If the filename is of a unknown restype.
         """
+        resource = self._files[filename.lower()]
+        self._seek(resource.offset)
+        return self._file.read(resource.disk_size)
 
-        res_id = self._resref_id_lookup.get(filename)
-        if res_id is None:
-            raise FileNotFoundError(f"File {filename} not found in keyfile")
-        bif_idx = res_id >> 20
-        res_idx = res_id & 0xFFFFF
-        bif = self._bif_files[bif_idx]
-        resource = bif.variable_resources[res_idx]
-        bif.file.seek(resource.io_offset)
-        return bif.file.read(resource.io_size)
+
+class Writer:
+    """
+    A class to write ERF files.
+
+    Example:
+        >>> with open("Prelude.mod", "wb") as file:
+        ...    with Writer(file, file_type="MOD ") as e:
+        ...        e.add_localized_string(Language.ENGLISH, "Prelude")
+        ...        with open("item.uti", "rb") as item:
+        ...            e.add_file("item.uti", item)
+    """
+
+    class Entry(NamedTuple):
+        resref: str
+        restype: int
+        offset: int
+        size: int
+    
+    class FileType(Enum):
+        ERF = "ERF "
+        HAK = "HAK "
+        MOD = "MOD "
+
+    def __init__(
+        self,
+        file,
+        file_type: FileType = FileType.ERF,
+        build_date=date.today(),
+    ):
+        self._file = file
+        self._entries = []
+        self._locstr = {}
+        self._file_type = file_type.value
+        self._build_year = build_date.year - 1900
+        self._build_day = build_date.timetuple().tm_yday - 1
+
+    def __enter__(self):
+        self._file.write(self._file_type.encode("ASCII"))
+        self._file.write(Reader.Version.V_1_0.value.encode("ASCII"))
+        self._file.write(b"\x00" * 36)
+        self._file.write(b"\x00" * 116)  # reserved bytes as per spec
+        assert self._file.tell() == 160
+        return self
+
+    def add_localized_string(self, lang, text):
+        self._locstr[lang] = text
+
+    def add_file(self, filename, data: bytes | IO):
+        if hasattr(data, "read"):
+            data = data.read()
+
+        offset = self._file.tell()
+        size = len(data)
+        # ensure we have a restype
+        base, ext = filename.split(".")
+        if len(base) > 16:
+            raise ValueError("Resource name too long")
+        rt = extension_to_restype(ext)
+        self._entries.append(Writer.Entry(base, rt, offset, size))
+        self._file.write(data)
+        assert self._file.tell() == offset + size
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is not None:
+            return False
+
+        locstr_offset = self._file.tell()
+        for lid, text in self._locstr.items():
+            encoded_text = text.encode(get_nwn_encoding())
+            self._file.write(struct.pack("I", lid))
+            self._file.write(struct.pack("I", len(encoded_text)))
+            self._file.write(encoded_text)
+        locstr_size = self._file.tell() - locstr_offset
+
+        keylist_offset = self._file.tell()
+        for resref, restype, offset, size in self._entries:
+            res_ref = resref.ljust(16, "\x00").encode("ASCII")
+            res_id = 0  # res_id unused
+            self._file.write(res_ref)
+            self._file.write(struct.pack("I", res_id))
+            self._file.write(struct.pack("H", restype))
+            self._file.write(b"\x00\x00")  # Unused
+
+        reslist_offset = self._file.tell()
+        for _, _, offset, size in self._entries:
+            self._file.write(struct.pack("i", offset))
+            self._file.write(struct.pack("i", size))
+
+        eof_offset = self._file.tell()
+
+        self._file.seek(8)
+        self._file.write(
+            struct.pack(
+                "IIIIIIIII",
+                len(self._locstr),
+                locstr_size,
+                len(self._entries),
+                locstr_offset,
+                keylist_offset,
+                reslist_offset,
+                self._build_year,
+                self._build_day,
+                0,  # description_strref
+            )
+        )
+        self._file.seek(eof_offset)
+        return False
