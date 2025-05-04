@@ -175,8 +175,13 @@ class FileMagic(bytes):
     """
 
     def __new__(cls, value: str | bytes):
-        if len(value) != 4:
-            raise ValueError("Magic must be 4 bytes long")
         if isinstance(value, str):
             value = value.encode("ascii")
+        if len(value) > 4:
+            raise ValueError("Magic must be at most 4 bytes long")
+        value = value.ljust(4, b" ")
+        if not all(c in b"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 " for c in value):
+            raise ValueError(
+                "Magic must contain only ASCII uppercase letters, digits, or spaces"
+            )
         return super().__new__(cls, value)
