@@ -10,6 +10,7 @@ from ._shared import (
     Language,
     restype_to_extension,
     extension_to_restype,
+    FileMagic,
 )
 
 
@@ -32,8 +33,8 @@ class Reader:
         V_1_0 = "V1.0"
         # E_1_0 = "E1.0"
 
-    class Header(NamedTuple):
-        file_type: str
+    class _Header(NamedTuple):
+        file_type: FileMagic
         file_version: "Reader.Version"
         locstr_count: int
         locstr_sz: int
@@ -46,11 +47,15 @@ class Reader:
         description_strref: int
 
     class Entry(NamedTuple):
-        original_filename: str
-        resref: int
+        resref: str
+        restype: int
         offset: int
         disk_size: int
         uncompressed_size: int
+
+        @property
+        def filename(self):
+            return f"{self.resref.lower()}.{restype_to_extension(self.restype)}"
 
     def _seek(self, relative_to_start):
         self._file.seek(self._root_offset + relative_to_start)
@@ -59,10 +64,10 @@ class Reader:
         self._file = file
         self._root_offset = self._file.tell()
 
-        ft = self._file.read(4).decode("ASCII")
+        ft = self._file.read(4)
         fv = self.Version(self._file.read(4).decode("ASCII"))
         va = struct.unpack("IIIIIIIII", self._file.read(36))
-        self._header = self.Header(ft, fv, *va)
+        self._header = self._Header(FileMagic(ft), fv, *va)
 
         if self._header.entry_count > max_entries:
             raise ValueError("Too many resources")
@@ -103,6 +108,11 @@ class Reader:
             )
             for (resref, restype), (o, d, u) in zip(keys, resources)
         }
+
+    @property
+    def file_type(self) -> FileMagic:
+        """The file type of the ERF archive."""
+        return self._header.file_type
 
     @property
     def build_date(self) -> date:
@@ -184,19 +194,19 @@ class Writer:
     def __init__(
         self,
         file,
-        file_type="ERF ",
+        file_type: FileMagic = b"ERF ",
         build_date=date.today(),
     ):
         self._file = file
         self._entries = []
         self._locstr = {}
 
-        self._file_type = file_type
+        self._file_type = FileMagic(file_type)
         self._build_year = build_date.year - 1900
         self._build_day = build_date.timetuple().tm_yday - 1
 
     def __enter__(self):
-        self._file.write(self._file_type.encode("ASCII"))
+        self._file.write(self._file_type)
         self._file.write(Reader.Version.V_1_0.value.encode("ASCII"))
         self._file.write(b"\x00" * 36)
         self._file.write(b"\x00" * 116)  # reserved bytes as per spec

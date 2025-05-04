@@ -10,7 +10,6 @@ def test_reader():
     expect_date = date(2025, 3, 15)
     with open("tests/erf/test.hak", "rb") as f:
         reader = Reader(f)
-        print(reader.build_date)
         assert reader.build_date == expect_date
         assert len(reader.filenames) > 0
         assert reader.filenames[0] == "skyboxes.2da"
@@ -18,6 +17,16 @@ def test_reader():
             hashlib.sha1(reader.read_file("skyboxes.2da")).hexdigest()
             == "869fa0ad3aebd1cb8dfec90b5f46ce3463d4ad1e"
         )
+        assert reader.file_type == b"HAK "
+
+        assert reader.filemap["skyboxes.2da"] == Reader.Entry(
+            resref="skyboxes",
+            restype=2017,
+            offset=224,
+            disk_size=721,
+            uncompressed_size=721,
+        )
+        assert reader.filemap["skyboxes.2da"].filename == "skyboxes.2da"
 
 
 def test_write_read():
@@ -25,7 +34,7 @@ def test_write_read():
 
     file = BytesIO()
 
-    with Writer(file) as w:
+    with Writer(file, file_type="HI") as w:
         w.add_localized_string(Language.ENGLISH, "Test.")
         w.add_file("test.txt", payload)
 
@@ -36,3 +45,4 @@ def test_write_read():
     assert reader.localized_strings[Language.ENGLISH] == "Test."
     assert reader.localized_strings[0] == "Test."
     assert reader.read_file("test.txt") == payload
+    assert reader.file_type == b"HI  "
