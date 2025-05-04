@@ -100,6 +100,12 @@ void take_effect(effect eSomething)
     PrintInteger(GetEffectType(eSomething) == EFFECT_TYPE_SLOW);
 }
 
+vector take_and_modify_vector(vector v)
+{
+    v.x += 1.0;
+    return v;
+}
+
 void main()
 {
     test_PrintString();
