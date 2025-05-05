@@ -106,27 +106,14 @@
   <div>
 
       <div class="thingTitle">
-        <span>Module</span>
-        <code class="thisobject"><a href="nwn.nwsync.html" class="internal-link" title="This module">nwsync</a></code> 
+        <span>Package</span>
+        <code class="thisobject"><a href="nwn.nwsync.html" class="internal-link" title="This package">nwsync</a></code> 
       </div>
       
       <div>
-         
-          <div class="childrenKindTitle">Contents</div>
-          <ul><li><p class="rst-first"><a class="rst-internal rst-reference" href="#rst-binary-file-format-version-3" id="rst-toc-entry-1">Binary File Format Version 3</a></p>
-<ul class="rst-simple">
-<li><a class="rst-internal rst-reference" href="#rst-manifest" id="rst-toc-entry-2">Manifest</a></li>
-<li><a class="rst-internal rst-reference" href="#rst-manifestentry-sorted" id="rst-toc-entry-3">ManifestEntry (sorted)</a></li>
-<li><a class="rst-internal rst-reference" href="#rst-manifestmapping-sorted" id="rst-toc-entry-4">ManifestMapping (sorted)</a></li>
-</ul>
-</li>
-</ul>
         
 
-        
-         
-
-        <div class="childrenKindTitle">Classes</div>
+        <div class="childrenKindTitle">Modules</div>
         <ul>
     
     <li class="">
@@ -135,43 +122,7 @@
         
 
         
-            <div class="itemName"><code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest"><wbr></wbr>Manifest</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="nwn.nwsync.ManifestEntry.html" class="internal-link" title="nwn.nwsync.ManifestEntry"><wbr></wbr>Manifest<wbr></wbr>Entry</a></code>
-            </div>
-        
-
-    </li>
-</ul>
-
-        <div class="childrenKindTitle">Functions</div>
-        <ul>
-    
-    <li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="#read" class="internal-link" title="nwn.nwsync.read">read</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="#write" class="internal-link" title="nwn.nwsync.write">write</a></code>
+            <div class="itemName"><code><a href="nwn.nwsync.manifest.html" class="internal-link" title="nwn.nwsync.manifest">manifest</a></code>
             </div>
         
 
@@ -179,33 +130,16 @@
 </ul> 
 
         
+        
+
+        
          
 
-        <div class="childrenKindTitle">Variables</div>
-        <ul>
-    
-    <li class="">
         
-        
-        
+         
 
         
-            <div class="itemName"><code><a href="#NWSYNC_MANIFEST_MAGIC" class="internal-link" title="nwn.nwsync.NWSYNC_MANIFEST_MAGIC">NWSYNC<wbr></wbr>_MANIFEST<wbr></wbr>_MAGIC</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="#NWSYNC_MANIFEST_VERSION" class="internal-link" title="nwn.nwsync.NWSYNC_MANIFEST_VERSION">NWSYNC<wbr></wbr>_MANIFEST<wbr></wbr>_VERSION</a></code>
-            </div>
-        
-
-    </li>
-</ul> 
+         
 
         
          
@@ -215,7 +149,7 @@
 
       <div class="thingTitle">
         <span>Package</span>
-        <code><a href="index.html" class="internal-link" title="The parent of this module">nwn</a></code> 
+        <code><a href="index.html" class="internal-link" title="The parent of this package">nwn</a></code> 
       </div>
       
       <div>
@@ -281,6 +215,16 @@
 
         
             <div class="itemName"><code><a href="nwn.ndb.html" class="internal-link" title="nwn.ndb">ndb</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="nwn.nwscript.html" class="internal-link" title="nwn.nwscript">nwscript</a></code>
             </div>
         
 
@@ -438,149 +382,34 @@
 
 
         <div class="page-header">
-          <h1 class="module"><code><code><a href="index.html" class="internal-link">nwn</a></code><wbr></wbr>.<code><a href="nwn.nwsync.html" class="internal-link" title="nwn.nwsync">nwsync</a></code></code></h1>
+          <h1 class="package"><code><code><a href="index.html" class="internal-link">nwn</a></code><wbr></wbr>.<code><a href="nwn.nwsync.html" class="internal-link" title="nwn.nwsync">nwsync</a></code></code></h1>
           <div id="showPrivate">
             <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
           </div>
         </div>
 
         <div class="categoryHeader">
-          module documentation
+          package documentation
         </div>
 
         <div class="extrasDocstring">
-          <a href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py" class="sourceLink">(source)</a>
+          <a href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync/__init__.py" class="sourceLink">(source)</a>
           <p></p>
         </div>
 
         <div class="moduleDocstring">
-          <div><p>Read/write nwsync manifests and associated helper utilities.</p>
-<div class="rst-section" id="rst-binary-file-format-version-3">
-<h2 class="heading">Binary File Format Version 3</h2>
-<p>These tables describe the binary file format for the NWSync manifest file itself.</p>
-<p>For individual files, see <code><a href="nwn.compressedbuf.html" class="internal-link">nwn.compressedbuf</a></code>.</p>
-<div class="rst-section" id="rst-manifest">
-<h3 class="heading">Manifest</h3>
-<table border="1" class="rst-docutils">
-<colgroup>
-<col width="30%" />
-<col width="70%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="rst-head">Field Type</th>
-<th class="rst-head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>uint32</td>
-<td>version (always 3)</td>
-</tr>
-<tr><td>uint32</td>
-<td>count of ManifestEntries</td>
-</tr>
-<tr><td>uint32</td>
-<td>count of ManifestMappings</td>
-</tr>
-<tr><td>ManifestEntry[]</td>
-<td>count entries</td>
-</tr>
-<tr><td>ManifestMapping[]</td>
-<td>count additional mappings</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="rst-section" id="rst-manifestentry-sorted">
-<h3 class="heading">ManifestEntry (sorted)</h3>
-<table border="1" class="rst-docutils">
-<colgroup>
-<col width="30%" />
-<col width="70%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="rst-head">Field Type</th>
-<th class="rst-head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>byte[20]</td>
-<td>SHA1 (as raw bytes) of resref</td>
-</tr>
-<tr><td>uint32</td>
-<td>size (bytes)</td>
-</tr>
-<tr><td>char[16]</td>
-<td>resref (WITHOUT extension, pad with 0-bytes)</td>
-</tr>
-<tr><td>uint16</td>
-<td>restype</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="rst-section" id="rst-manifestmapping-sorted">
-<h3 class="heading">ManifestMapping (sorted)</h3>
-<table border="1" class="rst-docutils">
-<colgroup>
-<col width="30%" />
-<col width="70%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="rst-head">Field Type</th>
-<th class="rst-head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>uint32</td>
-<td>Index into ManifestEntry array</td>
-</tr>
-<tr><td>char[16]</td>
-<td>resref (WITHOUT extension, pad with 0-bytes)</td>
-</tr>
-<tr><td>uint16</td>
-<td>restype</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+          <div><p>nwsync file formats and utilities.</p></div>
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id49">
+          <table class="children sortable" id="id54">
   
   
-  <tr class="class">
+  <tr class="module">
     
-    <td>Class</td>
-    <td><code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest"><wbr></wbr>Manifest</a></code></td>
-    <td><span class="undocumented">No class docstring; 1/1 property, 0/1 class variable documented</span></td>
-  </tr><tr class="class">
-    
-    <td>Class</td>
-    <td><code><a href="nwn.nwsync.ManifestEntry.html" class="internal-link" title="nwn.nwsync.ManifestEntry"><wbr></wbr>Manifest<wbr></wbr>Entry</a></code></td>
-    <td><span class="undocumented">No class docstring; 1/1 property, 3/3 class variables documented</span></td>
-  </tr><tr class="function">
-    
-    <td>Function</td>
-    <td><code><a href="#read" class="internal-link" title="nwn.nwsync.read">read</a></code></td>
-    <td>Reads and parses a manifest file from a binary stream.</td>
-  </tr><tr class="function">
-    
-    <td>Function</td>
-    <td><code><a href="#write" class="internal-link" title="nwn.nwsync.write">write</a></code></td>
-    <td>Writes a manifest to a binary stream.</td>
-  </tr><tr class="constant">
-    
-    <td>Constant</td>
-    <td><code><a href="#NWSYNC_MANIFEST_MAGIC" class="internal-link" title="nwn.nwsync.NWSYNC_MANIFEST_MAGIC">NWSYNC<wbr></wbr>_MANIFEST<wbr></wbr>_MAGIC</a></code></td>
-    <td>The file magic for NWSync manifest files.</td>
-  </tr><tr class="constant">
-    
-    <td>Constant</td>
-    <td><code><a href="#NWSYNC_MANIFEST_VERSION" class="internal-link" title="nwn.nwsync.NWSYNC_MANIFEST_VERSION">NWSYNC<wbr></wbr>_MANIFEST<wbr></wbr>_VERSION</a></code></td>
-    <td>The only supported version of the NWSync manifest file format.</td>
+    <td>Module</td>
+    <td><code><a href="nwn.nwsync.manifest.html" class="internal-link" title="nwn.nwsync.manifest">manifest</a></code></td>
+    <td>Read/write nwsync manifests and associated helper utilities.</td>
   </tr>
 </table>
           
@@ -589,118 +418,7 @@
         </div>
 
         <div id="childList">
-          <div class="basefunction">
-  
-  
-  <a name="nwn.nwsync.read">
-    
-  </a>
-  <a name="read">
-    
-  </a>
-  <div class="functionHeader">
-    
-    
-    <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file: <code>BinaryIO</code>) -&gt; <code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest">Manifest</a></code></span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L88">
-      
-      (source)
-    </a>
-    <a class="headerLink" href="#read" title="nwn.nwsync.read">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="docstring functionBody">
-    
-    <div><p>Reads and parses a manifest file from a binary stream.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary stream representing the manifest file.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest">Manifest</a></code></td><td class="fieldArgDesc">An object representing the parsed manifest.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the file does not contain a valid manifest.</td></tr></table></div>
-  </div>
-</div><div class="basefunction">
-  
-  
-  <a name="nwn.nwsync.write">
-    
-  </a>
-  <a name="write">
-    
-  </a>
-  <div class="functionHeader">
-    
-    
-    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>BinaryIO</code>, manifest: <code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest">Manifest</a></code>)</span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L137">
-      
-      (source)
-    </a>
-    <a class="headerLink" href="#write" title="nwn.nwsync.write">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="docstring functionBody">
-    
-    <div><p>Writes a manifest to a binary stream.</p>
-<p>Entries are always sorted by SHA1, then by resref, even if the passed-in
-manifest is not sorted. This ensures binary reproducibility.</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary stream to write the manifest to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">manifest:</span><code><a href="nwn.nwsync.Manifest.html" class="internal-link" title="nwn.nwsync.Manifest">Manifest</a></code></td><td class="fieldArgDesc">The manifest to write to the stream.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the manifest is invalid.</td></tr></table></div>
-  </div>
-</div><div class="baseconstant">
-  
-  
-  <a name="nwn.nwsync.NWSYNC_MANIFEST_MAGIC">
-    
-  </a>
-  <a name="NWSYNC_MANIFEST_MAGIC">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">NWSYNC_MANIFEST_MAGIC</span> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L60">
-      
-      (source)
-    </a>
-    <a class="headerLink" href="#NWSYNC_MANIFEST_MAGIC" title="nwn.nwsync.NWSYNC_MANIFEST_MAGIC">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="functionBody">
-    
-    <div><p>The file magic for NWSync manifest files.</p></div>
-    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>FileMagic(<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">NSYM</span><span class="rst-variable-quote">'</span>)</code></pre></td></tr></table>
-  </div>
-</div><div class="baseconstant">
-  
-  
-  <a name="nwn.nwsync.NWSYNC_MANIFEST_VERSION">
-    
-  </a>
-  <a name="NWSYNC_MANIFEST_VERSION">
-    
-  </a>
-  <div class="functionHeader">
-    
-    <span class="py-defname">NWSYNC_MANIFEST_VERSION</span>: <code>int</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/nwsync.py#L57">
-      
-      (source)
-    </a>
-    <a class="headerLink" href="#NWSYNC_MANIFEST_VERSION" title="nwn.nwsync.NWSYNC_MANIFEST_VERSION">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="functionBody">
-    
-    <div><p>The only supported version of the NWSync manifest file format.</p></div>
-    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>3</code></pre></td></tr></table>
-  </div>
-</div>
+          
         </div>
       
       </div>
@@ -713,7 +431,7 @@ manifest is not sorted. This ensures binary reproducibility.</p>
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a>,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-04-13 10:09:09.
+      24.11.2 at 2025-05-05 14:09:44.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>

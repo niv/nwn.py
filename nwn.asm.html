@@ -310,6 +310,16 @@
         
 
         
+            <div class="itemName"><code><a href="nwn.nwscript.html" class="internal-link" title="nwn.nwscript">nwscript</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="nwn.nwsync.html" class="internal-link" title="nwn.nwsync">nwsync</a></code>
             </div>
         
@@ -549,7 +559,7 @@ describe the default NWN:EE instruction set.</p>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">disasm</span><span class="function-signature">(file)</span>:
+    <span class="py-keyword">def</span> <span class="py-defname">disasm</span><span class="function-signature">(file: <code>BinaryIO</code>)</span>:
     <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/asm.py#L204">
       
       (source)
@@ -564,7 +574,7 @@ describe the default NWN:EE instruction set.</p>
     
     <div><p>Disassembles bytecode from a file-ish.</p>
 <p>Skips any encountered NCS header as a convenience.</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file</span></td><td class="fieldArgDesc">A file-ish containing the bytecode to disassemble.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Yields</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.asm.Instr.html" class="internal-link" title="nwn.asm.Instr">Instr</a></code></td><td class="fieldArgDesc">The next instruction read from the bytecode stream.</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A file-ish containing the bytecode to disassemble.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Yields</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.asm.Instr.html" class="internal-link" title="nwn.asm.Instr">Instr</a></code></td><td class="fieldArgDesc">The next instruction read from the bytecode stream.</td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
@@ -578,7 +588,7 @@ describe the default NWN:EE instruction set.</p>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">read_extra</span><span class="function-signature">(file, op: <code><a href="nwn.asm.Opcode.html" class="internal-link" title="nwn.asm.Opcode">Opcode</a></code>, aux: <code><a href="nwn.asm.Auxcode.html" class="internal-link" title="nwn.asm.Auxcode">Auxcode</a></code>) -&gt; <code>tuple</code></span>:
+    <span class="py-keyword">def</span> <span class="py-defname">read_extra</span><span class="function-signature">(file: <code>BinaryIO</code>, op: <code><a href="nwn.asm.Opcode.html" class="internal-link" title="nwn.asm.Opcode">Opcode</a></code>, aux: <code><a href="nwn.asm.Auxcode.html" class="internal-link" title="nwn.asm.Auxcode">Auxcode</a></code>) -&gt; <code>tuple</code></span>:
     <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/asm.py#L119">
       
       (source)
@@ -594,7 +604,7 @@ describe the default NWN:EE instruction set.</p>
     <div><p>Parses additional data based on the opcode and auxiliary code.</p>
 <p>Note: This will re-parse embedded extra data every time it's called:
 For example, JSON payloads will be evaluated.</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary stream from which to read the data.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">op:</span><code><a href="nwn.asm.Opcode.html" class="internal-link" title="nwn.asm.Opcode">Opcode</a></code></td><td class="fieldArgDesc">The opcode of the instruction.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">aux:</span><code><a href="nwn.asm.Auxcode.html" class="internal-link" title="nwn.asm.Auxcode">Auxcode</a></code></td><td class="fieldArgDesc">The auxiliary code providing additional context for the operation.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>tuple</code></td><td class="fieldArgDesc">A tuple containing the parsed data, or empty.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>struct.error</code></td><td>If the data cannot be read from the stream.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>Various error conditions.</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary stream from which to read the data.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">op:</span><code><a href="nwn.asm.Opcode.html" class="internal-link" title="nwn.asm.Opcode">Opcode</a></code></td><td class="fieldArgDesc">The opcode of the instruction.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">aux:</span><code><a href="nwn.asm.Auxcode.html" class="internal-link" title="nwn.asm.Auxcode">Auxcode</a></code></td><td class="fieldArgDesc">The auxiliary code providing additional context for the operation.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>tuple</code></td><td class="fieldArgDesc">A variable length tuple containing the parsed data, or empty.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>struct.error</code></td><td>If the data cannot be read from the stream.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>Various error conditions.</td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
@@ -608,7 +618,7 @@ For example, JSON payloads will be evaluated.</p>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">read_instr</span><span class="function-signature">(file) -&gt; <code><a href="nwn.asm.Instr.html" class="internal-link" title="nwn.asm.Instr">Instr</a></code></span>:
+    <span class="py-keyword">def</span> <span class="py-defname">read_instr</span><span class="function-signature">(file: <code>BinaryIO</code>) -&gt; <code><a href="nwn.asm.Instr.html" class="internal-link" title="nwn.asm.Instr">Instr</a></code></span>:
     <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/asm.py#L181">
       
       (source)
@@ -621,7 +631,7 @@ For example, JSON payloads will be evaluated.</p>
   </div>
   <div class="docstring functionBody">
     
-    <div><p>Reads an instruction from the given input stream.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file</span></td><td class="fieldArgDesc">A binary stream from which the instruction is read.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.asm.Instr.html" class="internal-link" title="nwn.asm.Instr">Instr</a></code></td><td class="fieldArgDesc">The instruction read from the input stream.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>struct.error</code></td><td>If the data cannot be read from the stream.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the opcode or auxiliary code is invalid.</td></tr></table></div>
+    <div><p>Reads an instruction from the given input stream.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">A binary stream from which the instruction is read.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="nwn.asm.Instr.html" class="internal-link" title="nwn.asm.Instr">Instr</a></code></td><td class="fieldArgDesc">The instruction read from the input stream.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>struct.error</code></td><td>If the data cannot be read from the stream.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the opcode or auxiliary code is invalid.</td></tr></table></div>
   </div>
 </div><div class="baseconstant private">
   
@@ -731,7 +741,7 @@ For example, JSON payloads will be evaluated.</p>
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a>,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-04-13 10:09:09.
+      24.11.2 at 2025-05-05 14:09:44.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>
