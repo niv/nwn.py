@@ -1,8 +1,28 @@
+import os
 import struct
 from io import BufferedReader, BytesIO
 
-from nwn.nwscript.asm import Opcode, Auxcode, read_extra
+import pytest
+
+from nwn.nwscript.asm import Opcode, Auxcode, read_extra, disasm
 from nwn._shared import get_nwn_encoding
+
+
+def find_ncs_files(directory="./tests/nwscript/corpus"):
+    return [
+        os.path.join(directory, f) for f in os.listdir(directory) if f.endswith(".ncs")
+    ]
+
+
+def test_any_ncs():
+    assert find_ncs_files()
+
+
+@pytest.mark.parametrize("ncs_filename", find_ncs_files())
+def test_disasm(ncs_filename):
+    with open(ncs_filename, "rb") as f:
+        for ins in disasm(f):
+            assert ins
 
 
 def test_parse_extra_constant_integer():
