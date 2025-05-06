@@ -74,7 +74,7 @@ class Compiler:
 
     def __init__(
         self,
-        resolver: Callable[[str], Optional[bytes]],
+        resolver: Callable[[str], Optional[str]],
         src_rt=2009,  # nss
         bin_rt=2010,  # ncs
         dbg_rt=2064,  # ndb
@@ -92,7 +92,7 @@ class Compiler:
         Re-use the compiler instance for increased performance.
 
         Args:
-            resolver: A callable that resolves the filename to a bytes object, or None.
+            resolver: A callable that resolves the filename to a str, or None.
                 The filename will always have the source restype extension appended.
                 (e.g. "myscript.nss", not "myscript").
             src_rt: The resource type for the source file.
@@ -248,13 +248,14 @@ class Compiler:
         else:
             assert not self._ndb, f"compiler called twice for debug data: {self._ndb=}"
             assert res_type == self._dbg_rt, f"unexpected restype: {res_type=}"
-            self._ndb = dat
+            self._ndb = dat.decode(self._encoding)
         return 0
 
     def _load_file(self, script_name: bytes, res_type: int):
         assert res_type == self._src_rt, f"unexpected restype: {res_type=}"
         filename = f"{script_name.decode(self._encoding)}.{self._src_ext}"
         if data := self._resolver(filename):
+            data = data.encode(self._encoding) if isinstance(data, str) else data
             self._lib.scriptCompApiDeliverFile(self._comp, data, len(data))
             return True
 

@@ -2,27 +2,27 @@ import pytest
 from nwn.nwscript.comp import Compiler, CompilationError
 
 TEST_FILES = {
-    "nwscript.nss": b"""
+    "nwscript.nss": """
 int Nonsense(int n);
         """,
-    "simple.nss": b"""
+    "simple.nss": """
 void main() {
     int i = 42;
 }
         """,
-    "with_include.nss": b"""
+    "with_include.nss": """
 #include "included"
 
 void main() {
     int i = GetIncludedValue();
 }
         """,
-    "included.nss": b"""
+    "included.nss": """
 int GetIncludedValue() {
     return 42;
 }
         """,
-    "syntax_error.nss": b"""
+    "syntax_error.nss": """
 void main() {
     int i = 42
     PrintString("Missing semicolon above");
@@ -49,7 +49,7 @@ def test_simple_compilation():
     assert len(ncs) > 0
 
     assert ndb is not None
-    assert isinstance(ndb, bytes)
+    assert isinstance(ndb, str)
     assert len(ndb) > 0
 
 
