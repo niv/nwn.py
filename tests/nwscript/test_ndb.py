@@ -12,7 +12,7 @@ from nwn.nwscript.ndb import (
 )
 
 
-def find_ndb_files(directory="./tests/nwscript/"):
+def find_ndb_files(directory="./tests/nwscript/corpus"):
     return [
         os.path.join(directory, f) for f in os.listdir(directory) if f.endswith(".ndb")
     ]
