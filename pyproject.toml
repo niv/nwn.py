@@ -1,6 +1,6 @@
 [project]
 name = "nwn"
-version = "0.0.11"
+version = "0.0.12"
 description = "collection of modules for working with Neverwinter Nights 1: Enhanced Edition"
 readme = "README.rst"
 license = "MIT"
