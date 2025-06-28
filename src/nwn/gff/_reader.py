@@ -1,7 +1,7 @@
 import struct
 from typing import BinaryIO
 
-from nwn._shared import get_nwn_encoding, Language
+from nwn._shared import get_nwn_encoding, GenderedLanguage
 from nwn.gff._types import (
     Dword,
     CExoString,
@@ -9,7 +9,7 @@ from nwn.gff._types import (
     CExoLocString,
     Struct,
     List,
-    SIMPLE_TYPES
+    SIMPLE_TYPES,
 )
 from nwn.gff._impl import FieldKind, Header, FieldEntry, StructEntry
 
@@ -106,7 +106,7 @@ def read(file: BinaryIO):
             count = struct.unpack("<I", file.read(4))[0]
             entries = {}
             for _ in range(count):
-                fid = Language(struct.unpack("<I", file.read(4))[0])
+                fid = GenderedLanguage.from_id(struct.unpack("<I", file.read(4))[0])
                 sz = struct.unpack("<I", file.read(4))[0]
                 entries[fid] = file.read(sz).decode(get_nwn_encoding())
             return CExoLocString(strref, entries)

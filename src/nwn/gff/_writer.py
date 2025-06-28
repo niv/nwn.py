@@ -102,7 +102,7 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
             field_data.extend(struct.pack("<I", len(value.entries)))
             for fid, text in value.entries.items():
                 encoded = text.encode(get_nwn_encoding())
-                field_data.extend(struct.pack("<I", fid))
+                field_data.extend(struct.pack("<I", fid.to_id()))
                 field_data.extend(struct.pack("<I", len(encoded)))
                 field_data.extend(encoded)
 

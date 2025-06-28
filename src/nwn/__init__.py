@@ -27,6 +27,8 @@ This package is licensed under the MIT license.
 
 from ._shared import (
     Language,
+    GenderedLanguage,
+    Gender,
     get_nwn_encoding,
     restype_to_extension,
     extension_to_restype,
@@ -35,6 +37,8 @@ from ._shared import (
 
 __all__ = [
     "Language",
+    "GenderedLanguage",
+    "Gender",
     "get_nwn_encoding",
     "restype_to_extension",
     "extension_to_restype",

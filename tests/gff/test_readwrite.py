@@ -4,7 +4,7 @@ from io import BytesIO
 
 import pytest
 
-from nwn import gff, Language
+from nwn import gff, Language, Gender, GenderedLanguage
 
 
 def gff_corpus_files():
@@ -33,8 +33,9 @@ def test_cexolocstr():
 
     assert isinstance(root.Description, gff.CExoLocString)
     assert isinstance(root.Description.strref, gff.Dword)
-    assert isinstance(list(root.Description.entries.keys())[0], Language)
-    assert root.Description.entries[Language.FRENCH] == "Bonjour."
+    assert isinstance(list(root.Description.entries.keys())[0], GenderedLanguage)
+    lng = GenderedLanguage(Language.ENGLISH, Gender.FEMALE)
+    assert root.Description.entries[lng] == "Bonjour."
 
 
 @pytest.mark.parametrize("file_name", gff_corpus_files())
@@ -55,6 +56,8 @@ def test_rewrite(file_name):
 
 
 def test_all_types():
+    l1 = GenderedLanguage(Language.ENGLISH, Gender.MALE)
+    l2 = GenderedLanguage(Language.FRENCH, Gender.FEMALE)
     root = gff.Struct(
         0,
         Byte=gff.Byte(255),
@@ -70,7 +73,7 @@ def test_all_types():
         CExoString=gff.CExoString("Test String"),
         ResRef=gff.ResRef("ResRefTest"),
         CExoLocString=gff.CExoLocString(
-            strref=123456, entries={0: "Entry 0", 1: "Entry 1"}
+            strref=gff.Dword(123456), entries={l1: "Entry 0", l2: "Entry 1"}
         ),
         Void=gff.VOID(b"1234"),
         Struct=gff.Struct(0, NestedByte=gff.Byte(1)),

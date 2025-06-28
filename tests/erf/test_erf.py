@@ -3,7 +3,7 @@ from datetime import date
 import hashlib
 
 from nwn.erf import Reader, Writer
-from nwn._shared import Language
+from nwn._shared import Language, Gender, GenderedLanguage
 
 
 def test_reader():
@@ -34,15 +34,16 @@ def test_write_read():
 
     file = BytesIO()
 
+    english_male = GenderedLanguage(Language.ENGLISH, Gender.MALE)
+
     with Writer(file, file_type="HI") as w:
-        w.add_localized_string(Language.ENGLISH, "Test.")
+        w.add_localized_string(english_male, "Test.")
         w.add_file("test.txt", payload)
 
     data = file.getvalue()
     reader = Reader(BytesIO(data))
     assert reader.build_date == date.today()
     assert len(reader.localized_strings) == 1
-    assert reader.localized_strings[Language.ENGLISH] == "Test."
-    assert reader.localized_strings[0] == "Test."
+    assert reader.localized_strings[english_male] == "Test."
     assert reader.read_file("test.txt") == payload
     assert reader.file_type == b"HI  "

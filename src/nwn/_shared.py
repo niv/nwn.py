@@ -1,6 +1,7 @@
 """Shared types and helpers useful across the whole library."""
 
 from enum import IntEnum
+from typing import NamedTuple
 
 
 class Language(IntEnum):
@@ -12,6 +13,49 @@ class Language(IntEnum):
     ITALIAN = 3
     SPANISH = 4
     POLISH = 5
+
+
+class Gender(IntEnum):
+    """Maps engine gender IDs."""
+
+    MALE = 0
+    FEMALE = 1
+
+
+class GenderedLanguage(NamedTuple):
+    """
+    A combination of Language and Gender.
+
+    This type is needed for various file formats, where the Language and Gender
+    types are combined into a single integer.
+    """
+
+    lang: Language
+    gender: Gender
+
+    @classmethod
+    def from_id(cls, combined_id: int):
+        """
+        Create a new GenderedLanguage instance from a combined ID.
+
+        Args:
+            combined_id: The combined ID, which is 2 times the Language ID plus the Gender.
+
+        Returns:
+            A new GenderedLanguage instance.
+        """
+        lang = Language(combined_id // 2)
+        gender = Gender(combined_id % 2)
+        return GenderedLanguage(lang, gender)
+
+    def to_id(self) -> int:
+        """
+        Convert the Language instance to a combined ID.
+
+        Returns:
+            The combined ID, which is 2 times the Language ID plus the Gender.
+        """
+        return self.lang * 2 + self.gender
 
 
 def get_nwn_encoding():

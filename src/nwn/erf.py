@@ -7,7 +7,7 @@ from datetime import date, timedelta
 
 from ._shared import (
     get_nwn_encoding,
-    Language,
+    GenderedLanguage,
     restype_to_extension,
     extension_to_restype,
     FileMagic,
@@ -78,7 +78,7 @@ class Reader:
         self._seek(self._header.offset_to_locstr)
         loc_str = {}
         for _ in range(self._header.locstr_count):
-            lid = struct.unpack("I", self._file.read(4))[0]
+            lid = GenderedLanguage.from_id(struct.unpack("I", self._file.read(4))[0])
             sz = struct.unpack("I", self._file.read(4))[0]
             st = self._file.read(sz).decode(get_nwn_encoding())
             loc_str[lid] = st
@@ -122,7 +122,7 @@ class Reader:
         )
 
     @property
-    def localized_strings(self) -> dict[Language, str]:
+    def localized_strings(self) -> dict[GenderedLanguage, str]:
         """The localized strings in the ERF archive."""
         return self._localized_strings
 
@@ -213,8 +213,8 @@ class Writer:
         assert self._file.tell() == 160
         return self
 
-    def add_localized_string(self, lang, text):
-        self._locstr[lang] = text
+    def add_localized_string(self, gendered_lang: GenderedLanguage, text):
+        self._locstr[gendered_lang] = text
 
     def add_file(self, filename: str, data: bytes | BinaryIO):
         if isinstance(data, BinaryIO):
@@ -236,9 +236,9 @@ class Writer:
             return False
 
         locstr_offset = self._file.tell()
-        for lid, text in self._locstr.items():
+        for gendered_lang, text in self._locstr.items():
             encoded_text = text.encode(get_nwn_encoding())
-            self._file.write(struct.pack("I", lid))
+            self._file.write(struct.pack("I", gendered_lang.to_id()))
             self._file.write(struct.pack("I", len(encoded_text)))
             self._file.write(encoded_text)
         locstr_size = self._file.tell() - locstr_offset
