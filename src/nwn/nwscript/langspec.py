@@ -3,7 +3,7 @@ A simplified parser for nwscript.nss.
 """
 
 import re
-from typing import TextIO, NamedTuple, Any, Optional
+from typing import TextIO, NamedTuple, Any
 
 from ._types import Vector, Object, Location, VMType
 
@@ -21,7 +21,7 @@ class Constant(NamedTuple):
 class FunctionArg(NamedTuple):
     ty: VMType
     name: str
-    default: Optional[Any]
+    default: Any | None
 
 
 class Function(NamedTuple):

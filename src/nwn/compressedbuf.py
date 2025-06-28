@@ -49,8 +49,8 @@ _ZSTD_VERSION = 1
 
 
 def read(
-    file: BinaryIO, expect_magic: FileMagic = None
-) -> tuple[bytes, int, Algorithm]:
+    file: BinaryIO, expect_magic: FileMagic | None = None
+) -> tuple[bytes, FileMagic, Algorithm]:
     """
     Decompresses the given binary file using the specified algorithm.
 
@@ -67,7 +67,7 @@ def read(
             match the expected value, or if an unsupported algorithm is encountered.
     """
 
-    magic = file.read(4)
+    magic = FileMagic(file.read(4))
     if expect_magic is not None and magic != expect_magic:
         raise ValueError(f"invalid magic: {magic}")
 
@@ -75,7 +75,7 @@ def read(
     if header_version != _VERSION:
         raise ValueError(f"invalid header version: {header_version}")
 
-    algorithm = int.from_bytes(file.read(4), "little")
+    algorithm = Algorithm(int.from_bytes(file.read(4), "little"))
     uncompressed_size = int.from_bytes(file.read(4), "little")
 
     if uncompressed_size == 0:
@@ -101,7 +101,7 @@ def read(
         return (pyzstd.decompress(file.read()), magic, algorithm)
 
     else:
-        raise ValueError("Unsupported algorithm")
+        raise NotImplementedError()
 
 
 def write(file: BinaryIO, magic: FileMagic, data: bytes, alg=Algorithm.ZSTD):

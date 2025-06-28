@@ -103,7 +103,7 @@ class Set:
     default: str
     floor: str
 
-    grass: SetGrass = None
+    grass: SetGrass | None = None
     terrains: list[Terrain] = field(default_factory=list)
     crossers: list[Crosser] = field(default_factory=list)
     primary_rules: list[Rule] = field(default_factory=list)

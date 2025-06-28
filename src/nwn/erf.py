@@ -1,7 +1,7 @@
 """Read and write ERF (Encapsulated Resource Format) archives."""
 
 import struct
-from typing import NamedTuple, IO
+from typing import NamedTuple, BinaryIO
 from enum import Enum
 from datetime import date, timedelta
 
@@ -193,8 +193,8 @@ class Writer:
 
     def __init__(
         self,
-        file,
-        file_type: FileMagic = b"ERF ",
+        file: BinaryIO,
+        file_type: FileMagic = FileMagic(b"ERF "),
         build_date=date.today(),
     ):
         self._file = file
@@ -216,8 +216,8 @@ class Writer:
     def add_localized_string(self, lang, text):
         self._locstr[lang] = text
 
-    def add_file(self, filename, data: bytes | IO):
-        if hasattr(data, "read"):
+    def add_file(self, filename: str, data: bytes | BinaryIO):
+        if isinstance(data, BinaryIO):
             data = data.read()
 
         offset = self._file.tell()

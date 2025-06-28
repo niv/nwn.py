@@ -4,7 +4,7 @@ Read keyfiles, which store base game resources in the installation directory.
 
 import os
 import struct
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from typing import NamedTuple, BinaryIO
 
 from ._shared import restype_to_extension
@@ -145,7 +145,7 @@ class Reader:
             self._bif_files = []
 
     @property
-    def build_date(self) -> datetime:
+    def build_date(self) -> date:
         """
         The build date when this keyfile was created.
         """

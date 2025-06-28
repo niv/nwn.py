@@ -61,13 +61,13 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
     label_to_index = {}
 
     def _add_label(label: str) -> int:
-        label = label.encode("ascii")[0:16]
-        label = label.ljust(16, b"\x00")
-        if label in label_to_index:
-            return label_to_index[label]
+        binlabel = label.encode("ascii")[0:16]
+        binlabel = binlabel.ljust(16, b"\x00")
+        if binlabel in label_to_index:
+            return label_to_index[binlabel]
         index = len(labels)
-        label_to_index[label] = index
-        labels.append(label)
+        label_to_index[binlabel] = index
+        labels.append(binlabel)
         return index
 
     def _process_field(name: str, value) -> int:

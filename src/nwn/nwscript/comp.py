@@ -8,9 +8,8 @@ This module or the underlying library is currently NOT threadsafe.
 
 Example:
     >>> from nwn.nwscript.comp import Compiler
-    >>> from typing import Optional
     ...
-    ... def resolver(filename: str) -> Optional[bytes]:
+    ... def resolver(filename: str) -> bytes | None:
     ...     # Load the file from disk, or return None if not found.
     ...     # You can also service from memory, or anywhere else.
     ...     with open(filename, "rb") as f:
@@ -26,7 +25,7 @@ import os
 import platform
 import ctypes as ct
 from ctypes.util import find_library
-from typing import Callable, Optional
+from typing import Callable
 from enum import IntEnum
 
 from nwn import get_nwn_encoding, restype_to_extension
@@ -82,7 +81,7 @@ class Compiler:
 
     def __init__(
         self,
-        resolver: Callable[[str], Optional[str]],
+        resolver: Callable[[str], str | bytes | None],
         src_rt=2009,  # nss
         bin_rt=2010,  # ncs
         dbg_rt=2064,  # ndb

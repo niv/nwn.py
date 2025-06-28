@@ -72,7 +72,7 @@ def test_invalid_algorithm():
         + (99).to_bytes(4, "little")
         + (10).to_bytes(4, "little")
     )
-    with pytest.raises(ValueError, match="Unsupported algorithm"):
+    with pytest.raises(ValueError, match="is not a valid Algorithm"):
         read(file, MAGIC_NWSYNC_FILE)
 
 
