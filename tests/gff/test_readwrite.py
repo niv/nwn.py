@@ -1,3 +1,5 @@
+import os
+import glob
 from io import BytesIO
 
 import pytest
@@ -5,8 +7,17 @@ import pytest
 from nwn import gff, Language
 
 
+def gff_corpus_files():
+    files = glob.glob("tests/gff/corpus/*")
+    return [f for f in files if os.path.isfile(f)]
+
+
+def test_corpus_files():
+    assert gff_corpus_files(), "No test files found in tests/gff/corpus directory"
+
+
 def test_read():
-    with open("tests/gff/x3_it_rubygem.uti", "rb") as f:
+    with open("tests/gff/corpus/x3_it_rubygem.uti", "rb") as f:
         root, file_type = gff.read(f)
 
     assert file_type == "UTI "
@@ -17,7 +28,7 @@ def test_read():
 
 
 def test_cexolocstr():
-    with open("tests/gff/x3_it_rubygem.uti", "rb") as f:
+    with open("tests/gff/corpus/x3_it_rubygem.uti", "rb") as f:
         root, _ = gff.read(f)
 
     assert isinstance(root.Description, gff.CExoLocString)
@@ -26,11 +37,13 @@ def test_cexolocstr():
     assert root.Description.entries[Language.FRENCH] == "Bonjour."
 
 
-def test_rewrite():
-    with open("tests/gff/x3_it_rubygem.uti", "rb") as f:
+@pytest.mark.parametrize("file_name", gff_corpus_files())
+def test_rewrite(file_name):
+    with open(file_name, "rb") as f:
         root, file_type = gff.read(f)
 
     out = BytesIO()
+    # breakpoint()
     gff.write(out, root, file_type)
     assert out.tell()
     out.seek(0)
