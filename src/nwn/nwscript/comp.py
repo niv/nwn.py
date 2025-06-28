@@ -27,6 +27,7 @@ import platform
 import ctypes as ct
 from ctypes.util import find_library
 from typing import Callable, Optional
+from enum import IntEnum
 
 from nwn import get_nwn_encoding, restype_to_extension
 
@@ -45,6 +46,13 @@ _CB_LOAD = ct.CFUNCTYPE(
     ct.c_char_p,
     ct.c_uint16,
 )
+
+
+class Optimization(IntEnum):
+    DEAD_FUNCTIONS = 0x00000001
+    FOLD_CONSTANTS = 0x00000002
+    MELD_INSTRUCTIONS = 0x00000004
+    DEAD_BRANCHES = 0x00000008
 
 
 class _NativeCompileResult(ct.Structure):
@@ -82,6 +90,7 @@ class Compiler:
         debug_info=True,
         max_include_depth=16,
         encoding=None,
+        optimizations: set[Optimization] | int | None = None,
     ):
         """
         Create a new compiler instance.
@@ -106,6 +115,8 @@ class Compiler:
             max_include_depth: The maximum include depth.
             encoding: The encoding to use for filenames (defaults to the configured
                 nwn encoding).
+            optimizations: A set of optimizations to apply. The default is
+                to use whatever the linked library defaults to.
 
         Raises:
             FileNotFoundError: If the library cannot not be found, either bundled
@@ -152,6 +163,16 @@ class Compiler:
             None,
             b"scriptout",
         )
+
+        if optimizations is not None:
+            if isinstance(optimizations, int):
+                opt = optimizations
+            elif isinstance(optimizations, set):
+                opt = sum(o.value for o in optimizations)
+            else:
+                raise TypeError(f"Invalid optimizations type: {type(optimizations)}")
+
+            self._lib.scriptCompApiSetOptimizationFlags(self._comp, opt)
 
     @classmethod
     def _load_library(cls) -> ct.CDLL:
@@ -233,6 +254,13 @@ class Compiler:
         fn_destroycomp.argtypes = [
             ct.c_void_p,  # compiler
         ]
+
+        fn_setopt = lib.scriptCompApiSetOptimizationFlags
+        fn_setopt.argtypes = [
+            ct.c_void_p,  # compiler
+            ct.c_int,  # flags
+        ]
+
         return lib
 
     def __del__(self):

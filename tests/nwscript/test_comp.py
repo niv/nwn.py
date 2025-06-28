@@ -1,5 +1,6 @@
 import pytest
 from nwn.nwscript.comp import Compiler, CompilationError
+from nwn.nwscript.comp import Optimization
 
 TEST_FILES = {
     "nwscript.nss": """
@@ -151,3 +152,19 @@ def test_multiple_compilations():
     ncs2, ndb2 = comp.compile("with_include")
     assert ncs2 is not None
     assert ncs1 != ncs2
+
+
+def test_optimization_invalid_type():
+    with pytest.raises(TypeError, match="Invalid optimizations type"):
+        Compiler(resolver, optimizations="invalid")
+
+
+def test_optimizations_are_applied():
+    comp_no_opt = Compiler(resolver, optimizations=0)
+    ncs_no_opt, _ = comp_no_opt.compile("simple")
+
+    comp_all_opt = Compiler(resolver, optimizations=0xFFFFFFFF)
+    ncs_all_opt, _ = comp_all_opt.compile("simple")
+
+    assert len(ncs_all_opt) < len(ncs_no_opt)
+    assert ncs_all_opt != ncs_no_opt
