@@ -3,18 +3,13 @@ from typing import BinaryIO
 
 from nwn._shared import get_nwn_encoding, Language
 from nwn.gff._types import (
-    Byte,
-    Char,
-    Word,
-    Short,
     Dword,
-    Int,
-    Float,
     CExoString,
     ResRef,
     CExoLocString,
     Struct,
     List,
+    SIMPLE_TYPES
 )
 from nwn.gff._impl import FieldKind, Header, FieldEntry, StructEntry
 
@@ -75,18 +70,9 @@ def read(file: BinaryIO):
         structs.append(StructEntry(data[0], data[1], data[2]))
 
     def _read_field_value(field):
-        simple_types = {
-            FieldKind.BYTE: ("B", Byte),
-            FieldKind.CHAR: ("b", Char),
-            FieldKind.WORD: ("H", Word),
-            FieldKind.SHORT: ("h", Short),
-            FieldKind.DWORD: ("I", Dword),
-            FieldKind.INT: ("i", Int),
-            FieldKind.FLOAT: ("f", Float),
-        }
-
-        if field.type in simple_types:
-            us, cls = simple_types[field.type]
+        if field.type in SIMPLE_TYPES:
+            cls = SIMPLE_TYPES[field.type]
+            us = cls.SIMPLE_DATA_FORMAT
             data = struct.pack("<I", field.data_or_offset)[: struct.calcsize(us)]
             up = struct.unpack("<" + us, data)
             return cls(up[0])

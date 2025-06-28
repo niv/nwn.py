@@ -3,12 +3,6 @@ from typing import BinaryIO
 
 from nwn._shared import get_nwn_encoding
 from nwn.gff._types import (
-    Byte,
-    Char,
-    Word,
-    Short,
-    Dword,
-    Int,
     Dword64,
     Int64,
     Float,
@@ -73,8 +67,10 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
     def _process_field(name: str, value) -> int:
         data_or_offset = len(field_data)
 
-        if isinstance(value, (Byte, Char, Word, Short, Dword, Int)):
-            data_or_offset = int(value)
+        if hasattr(value, "SIMPLE_DATA_FORMAT"):
+            tmp = struct.pack(f"<{value.SIMPLE_DATA_FORMAT}", value)
+            padded = tmp.ljust(4, b"\x00")
+            data_or_offset = struct.unpack("<I", padded)[0]
 
         elif isinstance(value, Dword64):
             field_data.extend(struct.pack("<Q", int(value)))

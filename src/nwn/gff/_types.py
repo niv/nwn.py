@@ -6,6 +6,7 @@ from nwn.gff._impl import FieldKind
 
 class Byte(int):
     FIELD_KIND = FieldKind.BYTE
+    SIMPLE_DATA_FORMAT = "B"
 
     def __new__(cls, value):
         if not 0 <= value <= 255:
@@ -15,6 +16,7 @@ class Byte(int):
 
 class Char(int):
     FIELD_KIND = FieldKind.CHAR
+    SIMPLE_DATA_FORMAT = "b"
 
     def __new__(cls, value):
         if not -128 <= value <= 127:
@@ -24,6 +26,7 @@ class Char(int):
 
 class Word(int):
     FIELD_KIND = FieldKind.WORD
+    SIMPLE_DATA_FORMAT = "H"
 
     def __new__(cls, value):
         if not 0 <= value <= 65535:
@@ -33,6 +36,7 @@ class Word(int):
 
 class Short(int):
     FIELD_KIND = FieldKind.SHORT
+    SIMPLE_DATA_FORMAT = "h"
 
     def __new__(cls, value):
         if not -32768 <= value <= 32767:
@@ -42,6 +46,7 @@ class Short(int):
 
 class Dword(int):
     FIELD_KIND = FieldKind.DWORD
+    SIMPLE_DATA_FORMAT = "I"
 
     def __new__(cls, value):
         if not 0 <= value <= 4294967295:
@@ -51,6 +56,7 @@ class Dword(int):
 
 class Int(int):
     FIELD_KIND = FieldKind.INT
+    SIMPLE_DATA_FORMAT = "i"
 
     def __new__(cls, value):
         if not -2147483648 <= value <= 2147483647:
@@ -78,6 +84,7 @@ class Int64(int):
 
 class Float(float):
     FIELD_KIND = FieldKind.FLOAT
+    SIMPLE_DATA_FORMAT = "f"
 
 
 class Double(float):
@@ -157,3 +164,14 @@ class List(list[Struct]):
         if value is None:
             value = []
         super().__init__(value)
+
+
+SIMPLE_TYPES = {
+    FieldKind.BYTE: Byte,
+    FieldKind.CHAR: Char,
+    FieldKind.WORD: Word,
+    FieldKind.SHORT: Short,
+    FieldKind.DWORD: Dword,
+    FieldKind.INT: Int,
+    FieldKind.FLOAT: Float,
+}
