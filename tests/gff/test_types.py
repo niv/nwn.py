@@ -1,5 +1,8 @@
+from io import BytesIO
+
 import pytest
 
+from nwn.gff import read, write
 from nwn.gff._types import (
     Byte,
     Char,
@@ -176,3 +179,41 @@ def test_list():
     assert len(gff_list) == 2
     assert gff_list[0].name == "item1"
     assert gff_list[1].name == "item2"
+
+
+def test_nested_list():
+    root = Struct(
+        0,
+        NestedList=List(
+            [
+                Struct(
+                    4,
+                    InnerList=List(
+                        [
+                            Struct(5, InnerValue=CExoString("Inner1")),
+                            Struct(6, InnerValue=CExoString("Inner2")),
+                        ]
+                    ),
+                ),
+                Struct(
+                    4,
+                    InnerList=List(
+                        [
+                            Struct(5, InnerValue=CExoString("Inner3")),
+                            Struct(6, InnerValue=CExoString("Inner4")),
+                            Struct(7, InnerValue=CExoString("Inner5")),
+                        ]
+                    ),
+                ),
+            ]
+        ),
+    )
+
+    output = BytesIO()
+    write(output, root, "TEST")
+
+    output.seek(0)
+    read_root, file_type = read(output)
+
+    assert file_type == "TEST"
+    assert read_root == root

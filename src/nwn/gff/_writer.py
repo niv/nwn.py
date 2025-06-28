@@ -131,7 +131,7 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
 
     def _process_struct(struct_obj: Struct) -> int:
         structs.append(None)
-        struct_id = len(structs) - 1
+        struct_index = len(structs) - 1
 
         struct_field_indices = []
         for name, value in struct_obj.items():
@@ -139,7 +139,7 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
             struct_field_indices.append(field_index)
 
         if len(struct_field_indices) == 1:
-            structs[struct_id] = StructEntry(
+            structs[struct_index] = StructEntry(
                 id=struct_obj.struct_id,
                 data_or_offset=struct_field_indices[0],
                 field_count=1,
@@ -147,23 +147,25 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
         else:
             offset = len(field_indices)
             field_indices.extend(struct_field_indices)
-            structs[struct_id] = StructEntry(
+            structs[struct_index] = StructEntry(
                 id=struct_obj.struct_id,
                 data_or_offset=offset * 4,
                 field_count=len(struct_field_indices),
             )
 
-        return struct_id
+        return struct_index
 
     def _process_list(list_obj: List) -> int:
-        offset = len(list_indices)
-        list_indices.append(len(list_obj))
+        this_list = [len(list_obj)]
         for struct_obj in list_obj:
             struct_index = _process_struct(struct_obj)
-            list_indices.append(struct_index)
-        return offset
+            this_list.append(struct_index)
+        offset = len(list_indices)
+        list_indices.extend(this_list)
+        return offset * 4
 
-    _ = _process_struct(root)
+    root_struct_index = _process_struct(root)
+    assert root_struct_index == 0
 
     header_size = 56
     struct_offset = header_size
