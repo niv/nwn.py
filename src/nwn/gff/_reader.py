@@ -9,6 +9,10 @@ from nwn.gff._types import (
     CExoLocString,
     Struct,
     List,
+    Double,
+    Int64,
+    Dword64,
+    VOID,
     SIMPLE_TYPES,
 )
 from nwn.gff._impl import FieldKind, Header, FieldEntry, StructEntry
@@ -80,13 +84,13 @@ def read(file: BinaryIO):
         file.seek(root_offset + header.field_data_offset + field.data_or_offset)
 
         if field.type == FieldKind.DOUBLE:
-            return struct.unpack("<d", file.read(8))[0]
+            return Double(struct.unpack("<d", file.read(8))[0])
 
         if field.type == FieldKind.DWORD64:
-            return struct.unpack("<Q", file.read(8))[0]
+            return Dword64(struct.unpack("<Q", file.read(8))[0])
 
         if field.type == FieldKind.INT64:
-            return struct.unpack("<q", file.read(8))[0]
+            return Int64(struct.unpack("<q", file.read(8))[0])
 
         if field.type == FieldKind.CEXOSTRING:
             sz = struct.unpack("<I", file.read(4))[0]
@@ -113,7 +117,7 @@ def read(file: BinaryIO):
 
         if field.type == FieldKind.VOID:
             sz = struct.unpack("<I", file.read(4))[0]
-            return file.read(sz)
+            return VOID(file.read(sz))
 
         if field.type == FieldKind.LIST:
             offset = field.data_or_offset // 4

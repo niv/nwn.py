@@ -95,6 +95,29 @@ def test_all_types():
     assert test_ft == "TEST"
     assert test_root == root
 
+    assert isinstance(test_root.Byte, gff.Byte)
+    assert isinstance(test_root.Char, gff.Char)
+    assert isinstance(test_root.Word, gff.Word)
+    assert isinstance(test_root.Short, gff.Short)
+    assert isinstance(test_root.Dword, gff.Dword)
+    assert isinstance(test_root.Int, gff.Int)
+    assert isinstance(test_root.Dword64, gff.Dword64)
+    assert isinstance(test_root.Int64, gff.Int64)
+    assert isinstance(test_root.Float, gff.Float)
+    assert isinstance(test_root.Double, gff.Double)
+    assert isinstance(test_root.CExoString, gff.CExoString)
+    assert isinstance(test_root.ResRef, gff.ResRef)
+    assert isinstance(test_root.CExoLocString, gff.CExoLocString)
+    assert isinstance(test_root.Void, gff.VOID)
+    assert isinstance(test_root.Struct, gff.Struct)
+    assert isinstance(test_root.List, gff.List)
+
+    assert isinstance(test_root.Struct.NestedByte, gff.Byte)
+    assert isinstance(test_root.List[0], gff.Struct)
+    assert isinstance(test_root.List[0].ListByte, gff.Byte)
+    assert isinstance(test_root.List[1], gff.Struct)
+    assert isinstance(test_root.List[1].ListByte, gff.Byte)
+
 
 def test_dict_fail():
     root = gff.Struct(0, Nested={})
