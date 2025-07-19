@@ -146,9 +146,6 @@ class Struct(dict):
     def __setattr__(self, name, value):
         self[name] = value
 
-    def __hash__(self):
-        return hash(self.struct_id)
-
 
 class List(list[Struct]):
     """
