@@ -4,6 +4,7 @@ import struct
 from typing import NamedTuple, BinaryIO
 from enum import Enum
 from datetime import date, timedelta
+from io import FileIO, BufferedReader
 
 from ._shared import (
     get_nwn_encoding,
@@ -217,7 +218,7 @@ class Writer:
         self._locstr[gendered_lang] = text
 
     def add_file(self, filename: str, data: bytes | BinaryIO):
-        if isinstance(data, BinaryIO):
+        if isinstance(data, (FileIO, BufferedReader)):
             data = data.read()
 
         offset = self._file.tell()
