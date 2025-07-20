@@ -7,6 +7,7 @@ from nwn.gff._types import (
     CExoString,
     ResRef,
     CExoLocString,
+    VOID,
     Struct,
     List,
     SIMPLE_TYPES,
@@ -113,7 +114,7 @@ def read(file: BinaryIO):
 
         if field.type == FieldKind.VOID:
             sz = struct.unpack("<I", file.read(4))[0]
-            return file.read(sz)
+            return VOID(file.read(sz))
 
         if field.type == FieldKind.LIST:
             offset = field.data_or_offset // 4
