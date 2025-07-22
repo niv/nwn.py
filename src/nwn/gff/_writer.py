@@ -97,14 +97,16 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
             field_data.extend(encoded)
 
         elif isinstance(value, CExoLocString):
-            field_data.extend(struct.pack("<I", 0))
-            field_data.extend(struct.pack("<I", value.strref))
-            field_data.extend(struct.pack("<I", len(value.entries)))
+            str_data = bytearray()
+            str_data.extend(struct.pack("<I", value.strref))
+            str_data.extend(struct.pack("<I", len(value.entries)))
             for fid, text in value.entries.items():
                 encoded = text.encode(get_nwn_encoding())
-                field_data.extend(struct.pack("<I", fid.to_id()))
-                field_data.extend(struct.pack("<I", len(encoded)))
-                field_data.extend(encoded)
+                str_data.extend(struct.pack("<I", fid.to_id()))
+                str_data.extend(struct.pack("<I", len(encoded)))
+                str_data.extend(encoded)
+            field_data.extend(struct.pack("<I", len(str_data)))
+            field_data.extend(str_data)
 
         elif isinstance(value, VOID):
             field_data.extend(struct.pack("<I", len(value)))
