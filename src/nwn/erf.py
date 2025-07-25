@@ -216,10 +216,14 @@ class Writer:
     def add_localized_string(self, gendered_lang: GenderedLanguage, text):
         self._locstr[gendered_lang] = text
 
-    def add_file(self, filename: str, data: bytes | BinaryIO):
-        if isinstance(data, BinaryIO):
-            data = data.read()
+    def add_file_data(self, filename: str, data: bytes):
+        """
+        Adds a file to the ERF archive.
 
+        Args:
+            filename: The name of the file to add, including its extension.
+            data: The binary data of the file to add.
+        """
         offset = self._file.tell()
         size = len(data)
         # ensure we have a restype

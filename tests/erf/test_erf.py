@@ -38,7 +38,7 @@ def test_write_read():
 
     with Writer(file, file_type="HI") as w:
         w.add_localized_string(english_male, "Test.")
-        w.add_file("test.txt", payload)
+        w.add_file_data("test.txt", payload)
 
     data = file.getvalue()
     reader = Reader(BytesIO(data))
