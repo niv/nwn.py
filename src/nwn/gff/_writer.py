@@ -1,7 +1,7 @@
 import struct
 from typing import BinaryIO
 
-from nwn._shared import get_nwn_encoding
+from nwn._shared import get_nwn_encoding, FileMagic
 from nwn.gff._types import (
     Dword64,
     Int64,
@@ -17,7 +17,7 @@ from nwn.gff._types import (
 from nwn.gff._impl import FieldEntry, StructEntry
 
 
-def write(file: BinaryIO, root: Struct, file_type: str) -> None:
+def write(file: BinaryIO, root: Struct, magic: FileMagic):
     """
     Write a GFF data structure to a binary stream.
 
@@ -33,7 +33,7 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
     Args:
         file: The binary stream to write to.
         root: The root structure of the GFF file.
-        file_type: The file type identifier (4 characters).
+        magic: The file magic identifier (4 characters).
     """
 
     labels = []
@@ -177,7 +177,7 @@ def write(file: BinaryIO, root: Struct, file_type: str) -> None:
     field_indices_offset = field_data_offset + len(field_data)
     list_indices_offset = field_indices_offset + len(field_indices) * 4
 
-    file.write(file_type.encode("ascii"))
+    file.write(magic)
     file.write(b"V3.2")
 
     file.write(

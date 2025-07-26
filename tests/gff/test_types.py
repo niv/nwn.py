@@ -21,7 +21,7 @@ from nwn.gff._types import (
     Struct,
     List,
 )
-from nwn import Language
+from nwn import Language, FileMagic
 
 
 def test_byte():
@@ -210,10 +210,10 @@ def test_nested_list():
     )
 
     output = BytesIO()
-    write(output, root, "TEST")
+    write(output, root, FileMagic("TEST"))
 
     output.seek(0)
     read_root, file_type = read(output)
 
-    assert file_type == "TEST"
+    assert file_type == FileMagic("TEST")
     assert read_root == root

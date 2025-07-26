@@ -4,7 +4,7 @@ from io import BytesIO
 
 import pytest
 
-from nwn import gff, Language, Gender, GenderedLanguage
+from nwn import gff, Language, Gender, GenderedLanguage, FileMagic
 
 
 def gff_corpus_files():
@@ -20,7 +20,7 @@ def test_read():
     with open("tests/gff/corpus/x3_it_rubygem.uti", "rb") as f:
         root, file_type = gff.read(f)
 
-    assert file_type == "UTI "
+    assert file_type == b"UTI "
     assert root.Tag == "X3_IT_RUBYGEM"
 
     assert root.PaletteID == 54
@@ -86,13 +86,13 @@ def test_all_types():
     )
 
     out = BytesIO()
-    gff.write(out, root, "TEST")
+    gff.write(out, root, FileMagic("TEST"))
     assert out.tell()
     out.seek(0)
 
     test_root, test_ft = gff.read(out)
 
-    assert test_ft == "TEST"
+    assert test_ft == FileMagic("TEST")
     assert test_root == root
 
     assert isinstance(test_root.Byte, gff.Byte)
@@ -122,10 +122,10 @@ def test_all_types():
 def test_dict_fail():
     root = gff.Struct(0, Nested={})
     with pytest.raises(ValueError):
-        gff.write(BytesIO(), root, "TEST")
+        gff.write(BytesIO(), root, FileMagic("TEST"))
 
 
 def test_list_fail():
     root = gff.Struct(0, Nested=[])
     with pytest.raises(ValueError):
-        gff.write(BytesIO(), root, "TEST")
+        gff.write(BytesIO(), root, FileMagic("TEST"))

@@ -1,7 +1,7 @@
 import struct
 from typing import BinaryIO
 
-from nwn._shared import get_nwn_encoding, GenderedLanguage
+from nwn._shared import get_nwn_encoding, GenderedLanguage, FileMagic
 from nwn.gff._types import (
     Dword,
     CExoString,
@@ -18,7 +18,7 @@ from nwn.gff._types import (
 from nwn.gff._impl import FieldKind, Header, FieldEntry, StructEntry
 
 
-def read(file: BinaryIO):
+def read(file: BinaryIO) -> tuple[Struct, FileMagic]:
     """
     Read a GFF data from a binary stream.
 
@@ -162,4 +162,4 @@ def read(file: BinaryIO):
         return resolved_structs[struct_idx]
 
     root = _read_struct(None, 0)
-    return root, header.file_type
+    return root, FileMagic(header.file_type)
