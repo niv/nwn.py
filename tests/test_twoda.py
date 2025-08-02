@@ -24,11 +24,6 @@ def test_invalid_magic():
         _ = twoda.read(StringIO("2DA V1.0\n"))
 
 
-def test_missing_newline():
-    with pytest.raises(ValueError):
-        _ = twoda.read(StringIO("2DA V2.0\nABC"))
-
-
 def test_missing_headers():
     with pytest.raises(ValueError):
         _ = twoda.read(StringIO("2DA V2.0\n\n"))
@@ -62,3 +57,21 @@ def test_twoda_writer():
     assert r.columns == columns
     for i, row in enumerate(r):
         assert row == data[i]
+
+
+def test_twoda_empty_lines():
+    data = """
+    2DA V2.0
+
+    COL1     COL2
+    
+    0   1        2
+    3   "3 4"    5
+    """
+
+    tda = twoda.read(StringIO(data))
+    assert tda.columns == ["COL1", "COL2"]
+    rows = [row for row in tda]
+    assert len(rows) == 2
+    assert rows[0] == {"COL1": "1", "COL2": "2"}
+    assert rows[1] == {"COL1": "3 4", "COL2": "5"}

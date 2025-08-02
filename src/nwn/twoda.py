@@ -4,14 +4,14 @@ Read and write 2DA files (2-dimensional array, similar to CSV).
 
 from typing import TextIO
 
-_MAGIC = "2DA V2.0"
+_MAGIC: str = "2DA V2.0"
 
 CELL = str | None
 r"""A type alias for a cell value, which can be a string or None (\*\*\*\*)."""
 
 
 def _escape_cell(cell: CELL):
-    if cell is None:
+    if cell is None or cell.strip() == "":
         return "****"
     if " " in cell:
         return f'"{cell}"'
@@ -49,10 +49,14 @@ class DictReader:
         return self
 
     def __next__(self):
-        ln = self._f.readline()
-        if not ln:
-            raise StopIteration
-        ln = _split_twoda_style(ln.strip())
+        while True:
+            ln = self._f.readline()
+            if not ln:
+                raise StopIteration
+            ln = ln.strip()
+            if ln:
+                break
+        ln = _split_twoda_style(ln)
         # First cell is the row number, which canonically gets discarded
         ln.pop(0)
         ln = [None if x == "****" else x for x in ln]
@@ -67,7 +71,7 @@ class DictReader:
         self._f.close()
 
 
-def read(file: TextIO):
+def read(file: TextIO) -> DictReader:
     """
     Reads a 2DA file and returns a DictReader object.
 
@@ -87,21 +91,19 @@ def read(file: TextIO):
     """
 
     def fetch():
-        ln = file.readline()
-        if ln is None:
-            raise ValueError("Unexpected EOF")
-        return ln.strip()
+        while True:
+            ln = file.readline()
+            if not ln:
+                raise ValueError("Unexpected EOF")
+            ln = ln.strip()
+            if ln:
+                break
+        return ln
 
-    head = fetch()
-    if head != _MAGIC:
-        raise ValueError("Not a 2DA file")
+    if (head := fetch()) != _MAGIC:
+        raise ValueError(f"Not a 2DA file header: {head=}")
 
-    if fetch() != "":
-        raise ValueError("Expected empty line after magic")
-
-    columns = fetch().split()
-
-    if not columns:
+    if not (columns := fetch().split()):
         raise ValueError("No columns found")
 
     return DictReader(columns=columns, f=file)
