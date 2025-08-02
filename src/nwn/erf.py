@@ -86,8 +86,8 @@ class Reader:
         self._seek(self._header.offset_to_reslist)
         resources = []
         for _ in range(self._header.entry_count):
-            offset = struct.unpack("i", self._file.read(4))[0]
-            disk_size = struct.unpack("i", self._file.read(4))[0]
+            offset = struct.unpack("I", self._file.read(4))[0]
+            disk_size = struct.unpack("I", self._file.read(4))[0]
             uncompressed = disk_size
             resources.append((offset, disk_size, uncompressed))
 
