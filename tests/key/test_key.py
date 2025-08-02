@@ -13,7 +13,7 @@ def reader():
 def test_simple_read(reader):
     nws = reader.read_file("nwscript.nss")
     assert hashlib.sha1(nws).hexdigest() == "8a4d7d70d664416999b2d4a454793b8a135ab71d"
-    assert reader.filenames() == [
+    assert reader.filenames == [
         "inc_common.shd",
         "nwscript.nss",
         "fswater.shd",

@@ -41,6 +41,11 @@ class Reader:
         file: BinaryIO
         variable_resources: dict[int, _VariableResource]
 
+    class Entry(NamedTuple):
+        resref: str
+        size: int
+        bif: str
+
     def __init__(self, filename: str, bif_directory=None):
         bif_directory = bif_directory or os.path.dirname(filename) + "/.."
         self._bif_files = {}
@@ -124,6 +129,18 @@ class Reader:
 
         self._bif_files = [read_bif(fn) for fn in filename_table]
 
+        self._entries = {
+            fn: self.Entry(
+                resref=fn,
+                size=self._bif_files[res_id >> 20]
+                .variable_resources[res_id & 0xFFFFF]
+                .io_size,
+                bif=self._bif_files[res_id >> 20].filename,
+            )
+            for fn, res_id in self._resref_id_lookup.items()
+            if res_id >> 20 < len(self._bif_files)
+        }
+
     def __enter__(self):
         return self
 
@@ -154,12 +171,21 @@ class Reader:
             days=self._build_day - 1
         )
 
+    @property
     def filenames(self) -> list[str]:
         """
         Returns all filenames in the keyfile.
         """
 
         return list(self._resref_id_lookup.keys())
+
+    @property
+    def filemap(self) -> dict[str, Entry]:
+        """
+        Returns a mapping of filenames to Entry objects.
+        """
+
+        return self._entries
 
     def read_file(self, filename: str) -> bytes:
         """
