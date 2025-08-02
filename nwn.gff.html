@@ -132,6 +132,16 @@
         
 
         
+            <div class="itemName"><code><a href="nwn.gff._json.html" class="internal-link" title="nwn.gff._json">_json</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="nwn.gff._reader.html" class="internal-link" title="nwn.gff._reader">_reader</a></code>
             </div>
         
@@ -335,6 +345,26 @@
 
         
             <div class="itemName"><code><a href="#read" class="internal-link" title="nwn.gff.read">read</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#struct_from_json" class="internal-link" title="nwn.gff.struct_from_json">struct<wbr></wbr>_from<wbr></wbr>_json</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#struct_to_json" class="internal-link" title="nwn.gff.struct_to_json">struct<wbr></wbr>_to<wbr></wbr>_json</a></code>
             </div>
         
 
@@ -623,6 +653,9 @@ provides a number of custom types to represent the various field types that
 can be found in a GFF file.</p>
 <p>All field types are subclasses of the native python types, and are used to
 enforce the GFF type system.</p>
+<p>This module also provides helpers to transform NWN-style JSON data to/from
+the native python type schema (eg. this data is returned by the game template
+functions, and is also the serialisation format used by neverwinter.nim).</p>
 </div>
         </div>
 
@@ -634,6 +667,11 @@ enforce the GFF type system.</p>
     
     <td>Module</td>
     <td><code><a href="nwn.gff._impl.html" class="internal-link" title="nwn.gff._impl">_impl</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="module private">
+    
+    <td>Module</td>
+    <td><code><a href="nwn.gff._json.html" class="internal-link" title="nwn.gff._json">_json</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr><tr class="module private">
     
@@ -745,6 +783,16 @@ enforce the GFF type system.</p>
   </tr><tr class="function">
     
     <td>Function</td>
+    <td><code><a href="#struct_from_json" class="internal-link" title="nwn.gff.struct_from_json">struct<wbr></wbr>_from<wbr></wbr>_json</a></code></td>
+    <td>Parse nwn-style json representation into native python types, same as you would get from reading a GFF file with the <code><a href="nwn.gff.html#read" class="internal-link" title="nwn.gff.read">read</a></code> function.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#struct_to_json" class="internal-link" title="nwn.gff.struct_to_json">struct<wbr></wbr>_to<wbr></wbr>_json</a></code></td>
+    <td>Convert a Struct to its nwn-style json representation.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
     <td><code><a href="#write" class="internal-link" title="nwn.gff.write">write</a></code></td>
     <td>Write a GFF data structure to a binary stream.</td>
   </tr>
@@ -764,7 +812,7 @@ enforce the GFF type system.</p>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file: <code>BinaryIO</code>)</span>:
+    <span class="py-keyword">def</span> <span class="py-defname">read</span><span class="function-signature">(file: <code>BinaryIO</code>) -&gt; <code>tuple[<wbr></wbr>Struct, <wbr></wbr>FileMagic]</code></span>:
     <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/gff/_reader.py#L21">
       
       (source)
@@ -784,7 +832,75 @@ enforce the GFF type system.</p>
 <span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">with</span> <span class="py-builtin">open</span>(<span class="py-string">"file.gff"</span>, <span class="py-string">"rb"</span>) <span class="py-keyword">as</span> f:
 <span class="py-more">... </span>    root, file_type = gff.read(f)
 <span class="py-more">... </span>    <span class="py-builtin">print</span>(root)</pre></div>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary stream to read from.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td colspan="2">A tuple containing the root struct and the file type.</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary stream to read from.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>tuple[<wbr></wbr><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a>, <wbr></wbr>FileMagic]</code></td><td class="fieldArgDesc">A tuple containing the root struct and the file type.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="nwn.gff.struct_from_json">
+    
+  </a>
+  <a name="struct_from_json">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">struct_from_json</span><span class="function-signature">(data: <code>dict</code>) -&gt; <code>tuple[<wbr></wbr><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a>, <wbr></wbr><a href="nwn.FileMagic.html" class="internal-link" title="nwn.FileMagic">FileMagic</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/gff/_json.py#L69">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#struct_from_json" title="nwn.gff.struct_from_json">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Parse nwn-style json representation into native python types, same
+as you would get from reading a GFF file with the <code><a href="nwn.gff.html#read" class="internal-link" title="nwn.gff.read">read</a></code> function.</p>
+<p>The data provided must be a dictionary of the root structure; e.g. reading
+the file as written by the game with the json module.</p>
+<div class="rst-admonition rst-admonition-example">
+<p class="rst-admonition-title rst-first">Example</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">with</span> <span class="py-builtin">open</span>(<span class="py-string">"item.uti.json"</span>, <span class="py-string">"r"</span>) <span class="py-keyword">as</span> f:
+<span class="py-more">... </span>    data = json.load(f)
+<span class="py-more">... </span>    <span class="py-builtin">print</span>(data[<span class="py-string">"AddCost"</span>])  <span class="py-comment"># "AddCost": {"type": "dword", "value": 1000}</span>
+<span class="py-more">... </span>    <span class="py-keyword">from</span> nwn.gff <span class="py-keyword">import</span> struct_from_json
+<span class="py-more">... </span>    xfrm, ty = struct_from_json(data)
+<span class="py-more">... </span>    <span class="py-builtin">print</span>(xfrm[<span class="py-string">"AddCost"</span>])  <span class="py-comment"># Dword(1000)</span></pre></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data:</span><code>dict</code></td><td class="fieldArgDesc">The json data representing a GFF structure, as emitted by
+the game or neverwinter.nim.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>tuple[<wbr></wbr><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a>, <wbr></wbr>FileMagic]</code></td><td class="fieldArgDesc">The parsed GFF structure.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the json data is malformed or contains unsupported types.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="nwn.gff.struct_to_json">
+    
+  </a>
+  <a name="struct_to_json">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">struct_to_json</span><span class="function-signature">(struct: <code><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a></code>, data_type: <code><a href="nwn.FileMagic.html" class="internal-link" title="nwn.FileMagic">FileMagic</a></code>) -&gt; <code>dict</code></span>:
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/gff/_json.py#L132">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#struct_to_json" title="nwn.gff.struct_to_json">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Convert a Struct to its nwn-style json representation.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">struct:</span><code><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a></code></td><td class="fieldArgDesc">The Struct to convert.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">data<wbr></wbr>_type:</span><code>FileMagic</code></td><td class="fieldArgDesc">File magic type to include in the json.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>dict</code></td><td class="fieldArgDesc">A dictionary representing the Struct in json format.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the Struct contains unsupported types.</td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
@@ -798,7 +914,7 @@ enforce the GFF type system.</p>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>BinaryIO</code>, root: <code>Struct</code>, file_type: <code>str</code>)</span>:
+    <span class="py-keyword">def</span> <span class="py-defname">write</span><span class="function-signature">(file: <code>BinaryIO</code>, root: <code>Struct</code>, magic: <code>FileMagic</code>)</span>:
     <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/gff/_writer.py#L20">
       
       (source)
@@ -821,7 +937,7 @@ them (e.g. storing a byte as a int will make the game not see it).</p>
 <span class="py-prompt">&gt;&gt;&gt; </span>root = gff.Struct(0, Byte=gff.Byte(255), SomeStruct=gff.Struct(SomeKey=gff.CExoString(<span class="py-string">"5"</span>)))
 <span class="py-more">... </span>out = BytesIO()
 <span class="py-more">... </span>gff.write(out, root, <span class="py-string">"TEST"</span>)</pre></div>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary stream to write to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">root:</span><code><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a></code></td><td class="fieldArgDesc">The root structure of the GFF file.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file<wbr></wbr>_type:</span><code>str</code></td><td class="fieldArgDesc">The file type identifier (4 characters).</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code>BinaryIO</code></td><td class="fieldArgDesc">The binary stream to write to.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">root:</span><code><a href="nwn.gff.Struct.html" class="internal-link" title="nwn.gff.Struct">Struct</a></code></td><td class="fieldArgDesc">The root structure of the GFF file.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">magic:</span><code>FileMagic</code></td><td class="fieldArgDesc">The file magic identifier (4 characters).</td></tr></table></div>
   </div>
 </div>
         </div>
@@ -836,7 +952,7 @@ them (e.g. storing a byte as a int will make the game not see it).</p>
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a>,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-07-23 16:19:07.
+      24.11.2 at 2025-08-02 15:35:10.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>
