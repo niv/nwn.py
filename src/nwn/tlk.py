@@ -10,7 +10,7 @@ from typing import NamedTuple, BinaryIO
 from nwn._shared import Language, get_nwn_encoding
 
 
-class TlkEntry(NamedTuple):
+class Entry(NamedTuple):
     """
     A single entry in a TLK file including the text, sound resref, and sound length.
     Only used when reading TLK files with sound data.
@@ -26,7 +26,7 @@ class TlkEntry(NamedTuple):
 
 def read(
     file: BinaryIO, include_sound_data=False, max_entries=0x7FFFF
-) -> tuple[list, Language]:
+) -> tuple[list[Entry], Language]:
     """
     Reads a TLK file fully into memory and returns a list of entries.
 
@@ -81,14 +81,14 @@ def read(
         text = file.read(string_sz).decode(get_nwn_encoding())
 
         if include_sound_data:
-            entries.append(TlkEntry(text, sound_resref, sound_length))
+            entries.append(Entry(text, sound_resref, sound_length))
         else:
             entries.append(text)
 
     return (entries, language)
 
 
-def write(file: BinaryIO, entries: list, language: Language):
+def write(file: BinaryIO, entries: list[Entry], language: Language):
     """
     Writes a Tlk object to a binary file.
 
@@ -121,7 +121,7 @@ def write(file: BinaryIO, entries: list, language: Language):
         text_len = 0
 
         if isinstance(entry, str):
-            entry = TlkEntry(entry)
+            entry = Entry(entry)
 
         if entry.text:
             flags |= 0x1
