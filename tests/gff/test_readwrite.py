@@ -9,7 +9,7 @@ from nwn import gff, Language, Gender, GenderedLanguage, FileMagic
 
 def gff_corpus_files():
     files = glob.glob("tests/gff/corpus/*")
-    return [f for f in files if os.path.isfile(f)]
+    return [f for f in files if os.path.isfile(f) if not f.endswith(".json")]
 
 
 def test_corpus_files():

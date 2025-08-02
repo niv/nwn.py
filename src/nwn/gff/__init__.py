@@ -11,6 +11,10 @@ can be found in a GFF file.
 
 All field types are subclasses of the native python types, and are used to
 enforce the GFF type system.
+
+This module also provides helpers to transform NWN-style JSON data to/from
+the native python type schema (eg. this data is returned by the game template
+functions, and is also the serialisation format used by neverwinter.nim).
 """
 
 from nwn.gff._reader import read
@@ -33,6 +37,7 @@ from nwn.gff._types import (
     Struct,
     List,
 )
+from nwn.gff._json import struct_to_json, struct_from_json
 
 
 __all__ = [
@@ -54,4 +59,6 @@ __all__ = [
     "VOID",
     "List",
     "Struct",
+    "struct_to_json",
+    "struct_from_json",
 ]
