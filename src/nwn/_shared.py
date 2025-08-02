@@ -164,6 +164,7 @@ _restype_to_extension = {
     9997: "erf",
     9998: "bif",
     9999: "key",
+    0xFFFF: "___",
 }
 
 
