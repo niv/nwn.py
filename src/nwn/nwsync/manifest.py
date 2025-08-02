@@ -84,6 +84,24 @@ class Manifest(NamedTuple):
         """Currently, the only supported version is 3."""
         return NWSYNC_MANIFEST_VERSION
 
+    def entry_by_resref(self, resref: str) -> ManifestEntry:
+        """
+        Get a ManifestEntry by its resref.
+
+        Args:
+            resref: The resref to search for.
+
+        Returns:
+            The ManifestEntry.
+
+        Raises:
+            ValueError: If no entry with the given resref exists.
+        """
+        for entry in self.entries:
+            if entry.resref == resref:
+                return entry
+        raise ValueError(f"No entry found for resref: {resref}")
+
 
 def read(file: BinaryIO) -> Manifest:
     """
