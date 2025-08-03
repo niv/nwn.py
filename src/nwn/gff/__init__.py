@@ -36,6 +36,7 @@ from nwn.gff._types import (
     VOID,
     Struct,
     List,
+    type_label_to_type,
 )
 from nwn.gff._json import struct_to_json, struct_from_json
 
@@ -61,4 +62,5 @@ __all__ = [
     "Struct",
     "struct_to_json",
     "struct_from_json",
+    "type_label_to_type",
 ]

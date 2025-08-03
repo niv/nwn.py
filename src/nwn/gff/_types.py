@@ -7,6 +7,7 @@ from nwn.gff._impl import FieldKind
 class Byte(int):
     FIELD_KIND = FieldKind.BYTE
     SIMPLE_DATA_FORMAT = "B"
+    LABEL = "byte"
 
     def __new__(cls, value):
         if not 0 <= value <= 255:
@@ -17,6 +18,7 @@ class Byte(int):
 class Char(int):
     FIELD_KIND = FieldKind.CHAR
     SIMPLE_DATA_FORMAT = "b"
+    LABEL = "char"
 
     def __new__(cls, value):
         if not -128 <= value <= 127:
@@ -27,6 +29,7 @@ class Char(int):
 class Word(int):
     FIELD_KIND = FieldKind.WORD
     SIMPLE_DATA_FORMAT = "H"
+    LABEL = "word"
 
     def __new__(cls, value):
         if not 0 <= value <= 65535:
@@ -37,6 +40,7 @@ class Word(int):
 class Short(int):
     FIELD_KIND = FieldKind.SHORT
     SIMPLE_DATA_FORMAT = "h"
+    LABEL = "short"
 
     def __new__(cls, value):
         if not -32768 <= value <= 32767:
@@ -47,6 +51,7 @@ class Short(int):
 class Dword(int):
     FIELD_KIND = FieldKind.DWORD
     SIMPLE_DATA_FORMAT = "I"
+    LABEL = "dword"
 
     def __new__(cls, value):
         if not 0 <= value <= 4294967295:
@@ -57,6 +62,7 @@ class Dword(int):
 class Int(int):
     FIELD_KIND = FieldKind.INT
     SIMPLE_DATA_FORMAT = "i"
+    LABEL = "int"
 
     def __new__(cls, value):
         if not -2147483648 <= value <= 2147483647:
@@ -66,6 +72,7 @@ class Int(int):
 
 class Dword64(int):
     FIELD_KIND = FieldKind.DWORD64
+    LABEL = "dword64"
 
     def __new__(cls, value):
         if not 0 <= value <= 18446744073709551615:
@@ -75,6 +82,7 @@ class Dword64(int):
 
 class Int64(int):
     FIELD_KIND = FieldKind.INT64
+    LABEL = "int64"
 
     def __new__(cls, value):
         if not -9223372036854775808 <= value <= 9223372036854775807:
@@ -85,18 +93,22 @@ class Int64(int):
 class Float(float):
     FIELD_KIND = FieldKind.FLOAT
     SIMPLE_DATA_FORMAT = "f"
+    LABEL = "float"
 
 
 class Double(float):
     FIELD_KIND = FieldKind.DOUBLE
+    LABEL = "double"
 
 
 class CExoString(str):
     FIELD_KIND = FieldKind.CEXOSTRING
+    LABEL = "cexostring"
 
 
 class ResRef(str):
     FIELD_KIND = FieldKind.RESREF
+    LABEL = "resref"
 
     def __new__(cls, value):
         if len(value) > 16:
@@ -109,6 +121,7 @@ class CExoLocString:
     """Represents a localized string in the NWN engine."""
 
     FIELD_KIND = FieldKind.CEXOLOCSTRING
+    LABEL = "cexolocstring"
 
     strref: Dword
     entries: dict[GenderedLanguage, str]
@@ -116,6 +129,7 @@ class CExoLocString:
 
 class VOID(bytes):
     FIELD_KIND = FieldKind.VOID
+    LABEL = "void"
 
     def __new__(cls, value):
         return super().__new__(cls, value)
@@ -125,6 +139,7 @@ class Struct(dict):
     """GFF Structs are just python dicts with .attr access and some metadata."""
 
     FIELD_KIND = FieldKind.STRUCT
+    LABEL = "struct"
 
     def __init__(self, struct_id, **kwargs):
         super().__init__(**kwargs)
@@ -156,6 +171,7 @@ class List(list[Struct]):
     """
 
     FIELD_KIND = FieldKind.LIST
+    LABEL = "list"
 
     def __init__(self, value=None):
         if value is None:
@@ -172,3 +188,41 @@ SIMPLE_TYPES = {
     FieldKind.INT: Int,
     FieldKind.FLOAT: Float,
 }
+
+LABEL_MAP = {
+    "byte": Byte,
+    "char": Char,
+    "word": Word,
+    "short": Short,
+    "dword": Dword,
+    "int": Int,
+    "dword64": Dword64,
+    "int64": Int64,
+    "float": Float,
+    "double": Double,
+    "cexostring": CExoString,
+    "resref": ResRef,
+    "cexolocstring": CExoLocString,
+    "void": VOID,
+    "struct": Struct,
+    "list": List,
+}
+
+
+def type_label_to_type(label: str):
+    """
+    Convert a GFF type label to the corresponding type class.
+
+    Args:
+        label: The GFF label to convert.
+
+    Returns:
+        The corresponding type class.
+
+    Raises:
+        ValueError: If the label is not recognized.
+    """
+
+    if label in LABEL_MAP:
+        return LABEL_MAP[label]
+    raise ValueError(f"Unknown GFF type label: {label}")
