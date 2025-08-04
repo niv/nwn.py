@@ -115,6 +115,15 @@ class Instr(NamedTuple):
     def __str__(self):
         return f"{self.op.name}.{self.aux.name}{self.extra}"
 
+    def shortcode(self) -> str:
+        """
+        Returns a short code for the instruction, suitable for use in
+        disassembly listings.
+        """
+        aux_code = _AUXCODE_TO_CANONICAL.get(self.aux, "")
+        op_code = _OPCODE_TO_CANONICAL.get(self.op, "")
+        return f"{op_code}{('.' + aux_code) if aux_code else ''}"
+
 
 def read_extra(file: BinaryIO, op: Opcode, aux: Auxcode) -> tuple:
     """
