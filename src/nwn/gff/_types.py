@@ -126,6 +126,15 @@ class CExoLocString:
     strref: Dword
     entries: dict[GenderedLanguage, str]
 
+    def __str__(self):
+        english = GenderedLanguage.from_id(0)
+        if self.strref == 0xFFFFFFFF and self.entries.keys() == {english}:
+            return self.entries[english]
+        s = {str(lid.to_id()): text for lid, text in self.entries.items()}
+        if self.strref != 0xFFFFFFFF:
+            s["id"] = str(self.strref)
+        return str(s)
+
 
 class VOID(bytes):
     FIELD_KIND = FieldKind.VOID
