@@ -1,7 +1,7 @@
 """Shared types and helpers useful across the whole library."""
 
 from enum import IntEnum
-from typing import NamedTuple
+from dataclasses import dataclass
 
 
 class Language(IntEnum):
@@ -22,7 +22,8 @@ class Gender(IntEnum):
     FEMALE = 1
 
 
-class GenderedLanguage(NamedTuple):
+@dataclass(frozen=True)
+class GenderedLanguage:
     """
     A combination of Language and Gender.
 
@@ -32,6 +33,9 @@ class GenderedLanguage(NamedTuple):
 
     lang: Language
     gender: Gender
+
+    def __str__(self):
+        return f"{self.lang.name} {self.gender.name}"
 
     @classmethod
     def from_id(cls, combined_id: int):
