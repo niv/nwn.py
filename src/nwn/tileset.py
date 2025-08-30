@@ -3,7 +3,7 @@
 import configparser
 from dataclasses import dataclass, field
 import re
-from typing import BinaryIO
+from typing import TextIO, get_origin, get_args
 
 
 @dataclass
@@ -79,14 +79,14 @@ class Group:
 @dataclass
 class SetGrass:
     grass: int
-    density: float
-    height: float
-    ambientred: float
-    ambientgreen: float
-    ambientblue: float
-    diffusered: float
-    diffusegreen: float
-    diffuseblue: float
+    density: float | None = None
+    height: float | None = None
+    ambientred: float | None = None
+    ambientgreen: float | None = None
+    ambientblue: float | None = None
+    diffusered: float | None = None
+    diffusegreen: float | None = None
+    diffuseblue: float | None = None
 
 
 @dataclass
@@ -116,6 +116,13 @@ def _dataclass_name(s):
 
 
 def _read_value(ty, v):
+    # Handle optional unions (e.g., float | None)
+    if get_origin(ty) is not None:
+        args = get_args(ty)
+        if len(args) == 2 and type(None) in args:
+            non_none_type = next(arg for arg in args if arg is not type(None))
+            return _read_value(non_none_type, v) if v is not None else None
+
     if ty == int:
         return int(v)
     if ty == bool:
@@ -124,7 +131,7 @@ def _read_value(ty, v):
         return float(v)
     if ty == str:
         return str(v)
-    if (hasattr(ty, "__origin__") and ty.__origin__ == list) or ty == list:
+    if get_origin(ty) == list or ty == list:
         # We manually load these in
         return []
     raise ValueError(f"Unsupported type: {ty}")
@@ -140,7 +147,7 @@ def _read_dataclass(cls, **kwargs):
     )
 
 
-def read_set(file: BinaryIO) -> Set:
+def read_set(file: TextIO) -> Set:
     """
     Reads a .set file and parses its contents into a Set object.
     """
@@ -192,5 +199,8 @@ def read_set(file: BinaryIO) -> Set:
                 tile = data[s][f"Tile{i}"]
                 group.tiles.append(int(tile))
             general.groups.append(group)
+
+    if not general:
+        raise ValueError("No GENERAL section found; invalid tileset?")
 
     return general
