@@ -124,11 +124,11 @@ def _read_value(ty, v):
             return _read_value(non_none_type, v) if v is not None else None
 
     if ty == int:
-        return int(v)
+        return int(v) if v else 0
     if ty == bool:
         return v in {"1"}
     if ty == float:
-        return float(v)
+        return float(v) if v else 0.0
     if ty == str:
         return str(v)
     if get_origin(ty) == list or ty == list:

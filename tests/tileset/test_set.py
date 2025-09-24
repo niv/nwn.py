@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from nwn.tileset import read_set
+from nwn.tileset import read_set, _read_value
 
 
 def tileset_corpus_files():
@@ -49,3 +49,15 @@ def test_read_set():
     assert len(result.groups) == 89
     assert result.groups[0].name == "WallGate"
     assert result.groups[0].tiles == [42]
+
+
+def test_empty_string_parsing():
+    assert _read_value(int, "") == 0
+    assert _read_value(int, "0") == 0
+    assert _read_value(int, "42") == 42
+    assert _read_value(float, "") == 0.0
+    assert _read_value(float, "0.0") == 0.0
+    assert _read_value(float, "3.14") == 3.14
+    assert _read_value(float | None, "") == 0.0
+    assert _read_value(float | None, None) is None
+    assert _read_value(float | None, "2.5") == 2.5
