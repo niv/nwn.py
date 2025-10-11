@@ -29,9 +29,8 @@ Binary Format
 
 from enum import IntEnum
 from typing import BinaryIO
-import zlib
-
-import pyzstd
+from compression import zlib
+from compression import zstd
 
 from ._shared import FileMagic
 
@@ -98,7 +97,7 @@ def read(
         if dictionary != 0:
             raise ValueError("dictionaries are not supported")
 
-        return (pyzstd.decompress(file.read()), magic, algorithm)
+        return (zstd.decompress(file.read()), magic, algorithm)
 
     else:
         raise NotImplementedError()
@@ -133,7 +132,7 @@ def write(file: BinaryIO, magic: FileMagic, data: bytes, alg=Algorithm.ZSTD):
     elif alg == Algorithm.ZSTD:
         file.write(_ZSTD_VERSION.to_bytes(4, "little"))
         file.write((0).to_bytes(4, "little"))  # dictionary
-        file.write(pyzstd.compress(data))
+        file.write(zstd.compress(data))
 
     else:
         raise ValueError("Unsupported algorithm")
