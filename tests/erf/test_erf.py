@@ -29,6 +29,11 @@ def test_reader():
         assert reader.filemap["skyboxes.2da"].filename == "skyboxes.2da"
 
 
+def test_reader_from_path():
+    reader = Reader("tests/erf/test.hak")
+    assert len(reader.filenames) > 0
+
+
 def test_write_read():
     payload = b"Hello, World!"
 

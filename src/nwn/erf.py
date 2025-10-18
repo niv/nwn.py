@@ -26,7 +26,7 @@ class Reader:
         ...    ...
 
     Args:
-        file: The file object to read from.
+        file: The file object to read from, either a filename or a BinaryIO.
     """
 
     class Version(Enum):
@@ -60,8 +60,13 @@ class Reader:
     def _seek(self, relative_to_start):
         self._file.seek(self._root_offset + relative_to_start)
 
-    def __init__(self, file, max_entries=65535, max_locstr=100):
-        self._file = file
+    def __init__(self, file: BinaryIO | str, max_entries=65535, max_locstr=100):
+        if isinstance(file, str):
+            self._owns_file = True
+            self._file = open(file, "rb")  # pylint: disable=consider-using-with
+        else:
+            self._owns_file = False
+            self._file = file
         self._root_offset = self._file.tell()
 
         ft = self._file.read(4)
@@ -108,6 +113,10 @@ class Reader:
             )
             for (resref, restype), (o, d, u) in zip(keys, resources)
         }
+
+    def __del__(self):
+        if self._owns_file:
+            self._file.close()
 
     @property
     def file_type(self) -> FileMagic:
