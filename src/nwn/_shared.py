@@ -223,9 +223,11 @@ class FileMagic(bytes):
         ValueError: If the input is not exactly 4 bytes long.
     """
 
-    def __new__(cls, value: str | bytes):
+    def __new__(cls, value: str | bytes | memoryview):
         if isinstance(value, str):
             value = value.encode("ascii")
+        if isinstance(value, memoryview):
+            value = value.tobytes()
         if len(value) > 4:
             raise ValueError("Magic must be at most 4 bytes long")
         value = value.ljust(4, b" ")
