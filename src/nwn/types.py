@@ -87,3 +87,34 @@ class FileMagic(bytes):
                 "Magic must contain only ASCII uppercase letters, digits, or spaces"
             )
         return super().__new__(cls, value)
+
+
+class Platform(IntEnum):
+    """
+    Game platform IDs, as used in various file formats and network messages.
+    """
+
+    INVALID = 0
+    WINDOWS_X86 = 1
+    WINDOWS_X64 = 2
+
+    LINUX_X86 = 10
+    LINUX_X64 = 11
+    LINUX_ARM32 = 12
+    LINUX_ARM64 = 13
+
+    MAC_X86 = 20
+    MAC_X64 = 21
+    MAC_ARM64 = 22
+
+    IOS = 30
+
+    ANDROID_ARM32 = 40
+    ANDROID_ARM64 = 41
+    ANDROID_X64 = 42
+
+    NINTENDO_SWITCH = 50
+
+    MICROSOFT_XBOXONE = 60
+
+    SONY_PS4 = 70
