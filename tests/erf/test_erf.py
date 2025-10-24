@@ -28,6 +28,10 @@ def test_reader():
         )
         assert reader.filemap["skyboxes.2da"].filename == "skyboxes.2da"
 
+        assert reader["skyboxes.2da"] == reader.read_file("skyboxes.2da")
+        assert list(iter(reader)) == reader.filenames
+        assert len(reader) == 2
+
 
 def test_reader_from_path():
     reader = Reader("tests/erf/test.hak")

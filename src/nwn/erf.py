@@ -1,7 +1,7 @@
 """Read and write ERF (Encapsulated Resource Format) archives."""
 
 import struct
-from typing import NamedTuple, BinaryIO
+from typing import NamedTuple, BinaryIO, Mapping
 from enum import Enum
 from datetime import date, timedelta
 
@@ -14,7 +14,7 @@ from ._shared import (
 )
 
 
-class Reader:
+class Reader(Mapping[str, bytes]):
     """
     Class to read and access an ERF archive (MOD, HAK, ERF, ...)
 
@@ -180,6 +180,15 @@ class Reader:
         resource = self._files[filename.lower()]
         self._seek(resource.offset)
         return self._file.read(resource.disk_size)
+
+    def __getitem__(self, item: str) -> bytes:
+        return self.read_file(item)
+
+    def __iter__(self):
+        return iter(self.filenames)
+
+    def __len__(self) -> int:
+        return len(self._files)
 
 
 class Writer:
