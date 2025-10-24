@@ -236,3 +236,25 @@ class FileMagic(bytes):
                 "Magic must contain only ASCII uppercase letters, digits, or spaces"
             )
         return super().__new__(cls, value)
+
+
+def is_valid_resref(f: str) -> bool:
+    """
+    Check if a given filename is a valid NWN resref.
+
+    Args:
+        f: The filename to check.
+
+    Returns:
+        True if the filename is a valid resref, False otherwise.
+    """
+    if "/" in f or "\\" in f or f.count(".") != 1:
+        return False
+    name, ext = f.rsplit(".", 1)
+    if len(name) > 16 or not name:
+        return False
+    try:
+        extension_to_restype(ext)
+        return True
+    except ValueError:
+        return False

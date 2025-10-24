@@ -32,6 +32,7 @@ from ._shared import (
     get_nwn_encoding,
     restype_to_extension,
     extension_to_restype,
+    is_valid_resref,
     FileMagic,
 )
 
@@ -42,5 +43,6 @@ __all__ = [
     "get_nwn_encoding",
     "restype_to_extension",
     "extension_to_restype",
+    "is_valid_resref",
     "FileMagic",
 ]
