@@ -206,7 +206,7 @@ def extension_to_restype(extension: str) -> int:
     """
 
     try:
-        return {v: k for k, v in _restype_to_extension.items()}[extension]
+        return {v: k for k, v in _restype_to_extension.items()}[extension.lower()]
     except KeyError as e:
         raise ValueError(f"Unknown extension: {extension}") from e
 
