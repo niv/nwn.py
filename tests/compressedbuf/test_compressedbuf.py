@@ -9,6 +9,7 @@ from nwn.compressedbuf import (
 )
 
 from nwn.types import FileMagic
+from nwn.compressedbuf import compress, decompress
 
 
 MAGIC_NWSYNC_MANIFEST = FileMagic(b"NSYM")
@@ -85,3 +86,50 @@ def test_lorem():
         assert magic == mag
         assert alg == Algorithm.ZSTD
         assert decompressed_data == expect
+
+
+def test_compress_decompress_none():
+    data = b"foobar"
+    magic = MAGIC_NWSYNC_MANIFEST
+
+    compressed = compress(data, magic, Algorithm.NONE)
+    decompressed = decompress(compressed, magic)
+    assert decompressed == data
+
+
+def test_compress_decompress_zlib():
+    data = b"foobar"
+    magic = MAGIC_NWSYNC_MANIFEST
+
+    compressed = compress(data, magic, Algorithm.ZLIB)
+    decompressed = decompress(compressed, magic)
+    assert decompressed == data
+
+
+def test_compress_decompress_zstd():
+    data = b"foobar"
+    magic = MAGIC_NWSYNC_MANIFEST
+
+    compressed = compress(data, magic, Algorithm.ZSTD)
+    decompressed = decompress(compressed, magic)
+    assert decompressed == data
+
+
+def test_compress_empty_data():
+    data = b""
+    magic = MAGIC_NWSYNC_MANIFEST
+
+    for alg in [Algorithm.NONE, Algorithm.ZLIB, Algorithm.ZSTD]:
+        compressed = compress(data, magic, alg)
+        decompressed = decompress(compressed, magic)
+        assert decompressed == data
+
+
+def test_decompress_wrong_magic():
+    data = b"foobar"
+    magic = MAGIC_NWSYNC_MANIFEST
+    wrong_magic = MAGIC_NWSYNC_FILE
+
+    compressed = compress(data, magic, Algorithm.ZSTD)
+    with pytest.raises(ValueError, match="invalid magic"):
+        decompress(compressed, wrong_magic)

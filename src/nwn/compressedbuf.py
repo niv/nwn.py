@@ -29,6 +29,7 @@ Binary Format
 
 from enum import IntEnum
 from typing import BinaryIO
+from io import BytesIO
 from compression import zlib
 from compression import zstd
 
@@ -136,3 +137,41 @@ def write(file: BinaryIO, magic: FileMagic, data: bytes, alg=Algorithm.ZSTD):
 
     else:
         raise ValueError("Unsupported algorithm")
+
+
+def compress(data: bytes, file_magic: FileMagic, alg=Algorithm.ZSTD) -> bytes:
+    """
+    Compresses the given data using the specified algorithm and returns the
+    compressed data as bytes.
+
+    Args:
+        data: The data to be compressed.
+        file_magic: The file magic to use.
+        alg (Algorithm, optional): The compression algorithm to use.
+            Defaults to Algorithm.ZSTD.
+
+    Returns:
+        The compressed data as bytes.
+    """
+
+    out = BytesIO()
+    write(out, file_magic, data, alg)
+    return out.getvalue()
+
+
+def decompress(data: bytes, expect_magic: FileMagic | None = None) -> bytes:
+    """
+    Decompresses the given data using the specified algorithm and returns
+    the decompressed data as bytes.
+
+    Args:
+        data: The data to be decompressed.
+        expect_magic: The expected file magic. If provided,
+            the file magic read from the data must match this value.
+
+    Returns:
+        The decompressed data as bytes.
+    """
+    inp = BytesIO(data)
+    decompressed_data, _, _ = read(inp, expect_magic)
+    return decompressed_data
