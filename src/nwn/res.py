@@ -2,6 +2,11 @@
 Types and classes for ResMan (resource management) functionality.
 """
 
+from typing import Mapping
+from collections import UserDict
+from abc import ABC
+
+
 RESTYPE_MAP = {
     0: "res",
     1: "bmp",
@@ -159,3 +164,30 @@ def is_valid_resref(f: str) -> bool:
         return True
     except ValueError:
         return False
+
+
+class Container(Mapping[str, bytes], ABC):
+    """
+    A generic resource container interface suitable for plugging into ResMan.
+    """
+
+
+class ResDict(UserDict[str, bytes]):
+    """
+    A case-insensitive resource dict that validates resource references.
+    Data is stored in memory.
+    """
+
+    def _normalize(self, key: str) -> str:
+        return key.lower()
+
+    def __getitem__(self, key: str) -> bytes:
+        return self.data[self._normalize(key)]
+
+    def __setitem__(self, key: str, value: bytes):
+        if not is_valid_resref(key):
+            raise ValueError(f"Invalid resref: {key}")
+        self.data[self._normalize(key)] = value
+
+    def __delitem__(self, key: str):
+        del self.data[self._normalize(key)]
