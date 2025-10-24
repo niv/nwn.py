@@ -5,13 +5,9 @@ from typing import NamedTuple, BinaryIO, Mapping
 from enum import Enum
 from datetime import date, timedelta
 
-from ._shared import (
-    get_nwn_encoding,
-    GenderedLanguage,
-    restype_to_extension,
-    extension_to_restype,
-    FileMagic,
-)
+from .environ import get_nwn_encoding
+from .types import FileMagic, GenderedLanguage
+from .res import restype_to_extension, extension_to_restype
 
 
 class Reader(Mapping[str, bytes]):

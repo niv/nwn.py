@@ -4,7 +4,8 @@ from io import BytesIO
 
 import pytest
 
-from nwn import gff, Language, Gender, GenderedLanguage, FileMagic
+from nwn import gff
+from nwn.types import FileMagic, Gender, GenderedLanguage, Language
 
 
 def gff_corpus_files():

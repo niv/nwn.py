@@ -5,7 +5,7 @@ from io import BufferedReader, BytesIO
 import pytest
 
 from nwn.nwscript.asm import Opcode, Auxcode, read_extra, disasm
-from nwn._shared import get_nwn_encoding
+from nwn.environ import get_nwn_encoding
 
 
 def find_ncs_files(directory="./tests/nwscript/corpus"):

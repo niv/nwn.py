@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from nwn import GenderedLanguage
+from nwn.types import GenderedLanguage
 from nwn.gff._impl import FieldKind
 
 

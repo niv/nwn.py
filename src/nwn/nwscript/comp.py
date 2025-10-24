@@ -28,7 +28,8 @@ from ctypes.util import find_library
 from typing import Callable
 from enum import IntEnum
 
-from nwn import get_nwn_encoding, restype_to_extension
+from nwn import restype_to_extension
+from nwn.environ import get_nwn_encoding
 
 
 _CB_WRITE = ct.CFUNCTYPE(

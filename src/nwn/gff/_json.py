@@ -1,6 +1,6 @@
 from typing import Any
 
-from nwn import FileMagic, GenderedLanguage
+from nwn.types import FileMagic, GenderedLanguage
 from nwn.gff import (
     Struct,
     List,

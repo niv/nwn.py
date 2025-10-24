@@ -1,7 +1,7 @@
 import struct
 from typing import BinaryIO
 
-from nwn._shared import get_nwn_encoding, GenderedLanguage, FileMagic
+from nwn.environ import get_nwn_encoding
 from nwn.gff._types import (
     Dword,
     CExoString,
@@ -16,6 +16,7 @@ from nwn.gff._types import (
     SIMPLE_TYPES,
 )
 from nwn.gff._impl import FieldKind, Header, FieldEntry, StructEntry
+from nwn.types import FileMagic, GenderedLanguage
 
 
 def read(file: BinaryIO) -> tuple[Struct, FileMagic]:

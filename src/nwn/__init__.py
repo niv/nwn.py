@@ -25,24 +25,8 @@ License
 This package is licensed under the MIT license.
 """
 
-from ._shared import (
-    Language,
-    GenderedLanguage,
-    Gender,
-    get_nwn_encoding,
-    restype_to_extension,
-    extension_to_restype,
-    is_valid_resref,
-    FileMagic,
-)
-
-__all__ = [
-    "Language",
-    "GenderedLanguage",
-    "Gender",
-    "get_nwn_encoding",
-    "restype_to_extension",
-    "extension_to_restype",
-    "is_valid_resref",
-    "FileMagic",
-]
+# Deprecation import shim, will be removed at some point; these are just left
+# here to avoid breaking existing code that imports from nwn.*
+from .environ import get_codepage as get_nwn_encoding
+from .types import FileMagic, Gender, GenderedLanguage, Language
+from .res import restype_to_extension, extension_to_restype, is_valid_resref

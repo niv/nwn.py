@@ -7,7 +7,8 @@ All strings are transparently converted to and from the NWN encoding.
 import struct
 
 from typing import NamedTuple, BinaryIO
-from nwn._shared import Language, get_nwn_encoding
+from nwn.environ import get_nwn_encoding
+from nwn.types import Language
 
 
 class Entry(NamedTuple):

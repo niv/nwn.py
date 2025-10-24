@@ -32,7 +32,7 @@ from typing import BinaryIO
 from compression import zlib
 from compression import zstd
 
-from ._shared import FileMagic
+from .types import FileMagic
 
 
 class Algorithm(IntEnum):

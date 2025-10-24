@@ -1,7 +1,7 @@
 import struct
 from typing import BinaryIO
 
-from nwn._shared import get_nwn_encoding, FileMagic
+from nwn.environ import get_nwn_encoding
 from nwn.gff._types import (
     Dword64,
     Int64,
@@ -15,6 +15,7 @@ from nwn.gff._types import (
     List,
 )
 from nwn.gff._impl import FieldEntry, StructEntry
+from nwn.types import FileMagic
 
 
 def write(file: BinaryIO, root: Struct, magic: FileMagic):

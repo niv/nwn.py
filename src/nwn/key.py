@@ -7,7 +7,7 @@ import struct
 from datetime import datetime, timedelta, date
 from typing import NamedTuple, BinaryIO, Mapping
 
-from ._shared import restype_to_extension
+from .res import restype_to_extension
 
 
 class _VariableResource(NamedTuple):

@@ -21,7 +21,8 @@ from nwn.gff._types import (
     Struct,
     List,
 )
-from nwn import Language, FileMagic
+from nwn.types import FileMagic
+from nwn.types import Language
 
 
 def test_byte():

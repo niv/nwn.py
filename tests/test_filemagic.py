@@ -1,5 +1,5 @@
 import pytest
-from nwn import FileMagic
+from nwn.types import FileMagic
 
 
 def test_string_input():
