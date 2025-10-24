@@ -199,12 +199,12 @@ class Reader:
 
         Raises:
             ValueError: If the internal state is invalid.
-            FileNotFoundError: If the file is not found in the archive.
+            KeyError: If the file is not found in the archive.
         """
 
         res_id = self._resref_id_lookup.get(filename)
         if res_id is None:
-            raise FileNotFoundError(f"File {filename} not found in keyfile")
+            raise KeyError(f"File {filename} not found in keyfile")
         bif_idx = res_id >> 20
         res_idx = res_id & 0xFFFFF
         bif = self._bif_files[bif_idx]

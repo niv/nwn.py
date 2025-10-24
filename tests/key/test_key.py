@@ -22,5 +22,5 @@ def test_simple_read(reader):
 
 
 def test_invalid_file(reader):
-    with pytest.raises(FileNotFoundError):
+    with pytest.raises(KeyError):
         reader.read_file("does_not_exist.txt")
