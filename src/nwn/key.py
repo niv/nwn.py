@@ -5,7 +5,7 @@ Read keyfiles, which store base game resources in the installation directory.
 import os
 import struct
 from datetime import datetime, timedelta, date
-from typing import NamedTuple, BinaryIO
+from typing import NamedTuple, BinaryIO, Mapping
 
 from ._shared import restype_to_extension
 
@@ -17,7 +17,7 @@ class _VariableResource(NamedTuple):
     res_type: int
 
 
-class Reader:
+class Reader(Mapping[str, bytes]):
     """
     Open a keyfile for reading.
 
@@ -211,3 +211,12 @@ class Reader:
         resource = bif.variable_resources[res_idx]
         bif.file.seek(resource.io_offset)
         return bif.file.read(resource.io_size)
+
+    def __getitem__(self, key: str) -> bytes:
+        return self.read_file(key)
+
+    def __iter__(self):
+        return iter(self.filenames)
+
+    def __len__(self) -> int:
+        return len(self._entries)
