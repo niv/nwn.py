@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from enum import IntEnum
+from typing import NamedTuple
 
 
 class Language(IntEnum):
@@ -118,3 +119,15 @@ class Platform(IntEnum):
     MICROSOFT_XBOXONE = 60
 
     SONY_PS4 = 70
+
+
+class Vector(NamedTuple):
+    """
+    A 3D vector in the game world.
+
+    Vectors are always immutable, just like in the game engine.
+    """
+
+    x: float = 0.0
+    y: float = 0.0
+    z: float = 0.0

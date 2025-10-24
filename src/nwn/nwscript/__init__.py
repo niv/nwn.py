@@ -2,9 +2,9 @@
 nwscript-related utilities.
 """
 
+from ..types import Vector
 from ._types import (
     Object,
-    Vector,
     Location,
     Effect,
     EngineStructure,

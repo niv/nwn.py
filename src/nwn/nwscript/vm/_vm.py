@@ -3,7 +3,8 @@ import logging
 from nwn.nwscript import ndb
 from nwn.nwscript.asm import Opcode, Auxcode, read_instr
 from nwn.nwscript.langspec import LanguageSpec
-from nwn.nwscript import Object, Vector, VMType
+from nwn.nwscript import Object, VMType
+from nwn.types import Vector
 
 from .._types import _VMClosure
 from ._stack import Stack

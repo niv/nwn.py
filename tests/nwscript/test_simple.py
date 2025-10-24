@@ -1,6 +1,7 @@
 import pytest
 
-from nwn.nwscript import Object, Effect, Vector
+from nwn.nwscript import Object, Effect
+from nwn.types import Vector
 
 
 def test_run(test_vm):

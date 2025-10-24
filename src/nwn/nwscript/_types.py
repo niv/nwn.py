@@ -1,6 +1,7 @@
-from typing import NamedTuple
 from dataclasses import dataclass, field
 from enum import Enum
+
+from nwn.types import Vector
 
 
 class _ObjectSelf:
@@ -54,18 +55,6 @@ class Object:
 
 
 Object.INVALID = Object(0x7F000000)
-
-
-class Vector(NamedTuple):
-    """
-    A 3d vector that maps directly to the nwscript ``vector`` type.
-
-    Vectors are always immutable, just like in the game engine.
-    """
-
-    x: float = 0.0
-    y: float = 0.0
-    z: float = 0.0
 
 
 @dataclass

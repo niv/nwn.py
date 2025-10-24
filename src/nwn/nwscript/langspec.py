@@ -5,7 +5,9 @@ A simplified parser for nwscript.nss.
 import re
 from typing import TextIO, NamedTuple, Any
 
-from ._types import Vector, Object, Location, VMType
+from ..types import Vector
+
+from ._types import Object, Location, VMType
 
 
 class Constant(NamedTuple):
