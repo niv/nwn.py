@@ -7,8 +7,8 @@ All strings are transparently converted to and from the NWN encoding.
 import struct
 
 from typing import NamedTuple, BinaryIO
-from nwn.environ import get_nwn_encoding
 from nwn.types import Language
+from nwn.environ import get_codepage
 
 
 class Entry(NamedTuple):
@@ -79,7 +79,7 @@ def read(
         sound_resref = sound_resref.decode("ascii").strip("\x00\xc0")
 
         file.seek(entries_offset + offset_to_string)
-        text = file.read(string_sz).decode(get_nwn_encoding())
+        text = file.read(string_sz).decode(get_codepage())
 
         if include_sound_data:
             entries.append(Entry(text, sound_resref, sound_length))
@@ -126,7 +126,7 @@ def write(file: BinaryIO, entries: list[Entry], language: Language):
 
         if entry.text:
             flags |= 0x1
-            text_len = len(entry.text.encode(get_nwn_encoding()))
+            text_len = len(entry.text.encode(get_codepage()))
         if entry.sound_resref:
             flags |= 0x2
         if entry.sound_length:
@@ -148,6 +148,6 @@ def write(file: BinaryIO, entries: list[Entry], language: Language):
             )
         )
         string_offset += text_len
-        str_data += entry.text.encode(get_nwn_encoding())
+        str_data += entry.text.encode(get_codepage())
 
     file.write(str_data)

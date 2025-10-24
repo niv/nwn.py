@@ -28,8 +28,8 @@ from ctypes.util import find_library
 from typing import Callable
 from enum import IntEnum
 
-from nwn import restype_to_extension
-from nwn.environ import get_nwn_encoding
+from nwn.res import restype_to_extension
+from nwn.environ import get_codepage
 
 
 _CB_WRITE = ct.CFUNCTYPE(
@@ -133,7 +133,7 @@ class Compiler:
         self._src_ext = restype_to_extension(src_rt)
         self._bin_ext = restype_to_extension(bin_rt)
         self._dbg_ext = restype_to_extension(dbg_rt)
-        self._encoding = encoding or get_nwn_encoding()
+        self._encoding = encoding or get_codepage()
 
         self._lib = Compiler._load_library()
 

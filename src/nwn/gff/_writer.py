@@ -1,7 +1,7 @@
 import struct
 from typing import BinaryIO
 
-from nwn.environ import get_nwn_encoding
+from nwn.types import FileMagic
 from nwn.gff._types import (
     Dword64,
     Int64,
@@ -14,8 +14,8 @@ from nwn.gff._types import (
     Struct,
     List,
 )
+from nwn.environ import get_codepage
 from nwn.gff._impl import FieldEntry, StructEntry
-from nwn.types import FileMagic
 
 
 def write(file: BinaryIO, root: Struct, magic: FileMagic):
@@ -86,12 +86,12 @@ def write(file: BinaryIO, root: Struct, magic: FileMagic):
             field_data.extend(struct.pack("<d", float(value)))
 
         elif isinstance(value, CExoString):
-            encoded = value.encode(get_nwn_encoding())
+            encoded = value.encode(get_codepage())
             field_data.extend(struct.pack("<I", len(encoded)))
             field_data.extend(encoded)
 
         elif isinstance(value, ResRef):
-            encoded = value.encode(get_nwn_encoding())
+            encoded = value.encode(get_codepage())
             if len(encoded) > 16:
                 raise ValueError("Resref too long")
             field_data.extend(struct.pack("<B", len(encoded)))
@@ -102,7 +102,7 @@ def write(file: BinaryIO, root: Struct, magic: FileMagic):
             str_data.extend(struct.pack("<I", value.strref))
             str_data.extend(struct.pack("<I", len(value.entries)))
             for fid, text in value.entries.items():
-                encoded = text.encode(get_nwn_encoding())
+                encoded = text.encode(get_codepage())
                 str_data.extend(struct.pack("<I", fid.to_id()))
                 str_data.extend(struct.pack("<I", len(encoded)))
                 str_data.extend(encoded)

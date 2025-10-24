@@ -1,7 +1,7 @@
-"""Shared types useful across the whole library."""
+"""Shared types and helpers useful across the whole library."""
 
+from enum import IntEnum, StrEnum
 from dataclasses import dataclass
-from enum import IntEnum
 from typing import NamedTuple
 
 
@@ -14,6 +14,45 @@ class Language(IntEnum):
     ITALIAN = 3
     SPANISH = 4
     POLISH = 5
+
+    @property
+    def code(self) -> str:
+        """Get the two-letter language code."""
+        return {
+            Language.ENGLISH: "en",
+            Language.FRENCH: "fr",
+            Language.GERMAN: "de",
+            Language.ITALIAN: "it",
+            Language.SPANISH: "es",
+            Language.POLISH: "pl",
+        }[self]
+
+    @classmethod
+    def from_code(cls, code: str) -> Language:
+        """
+        Get the Language enum from a two-letter code.
+
+        Args:
+            code: The two-letter language code (eg. "de").
+
+        Returns:
+            The corresponding Language enum.
+
+        Raises:
+            ValueError: If the code is unknown.
+        """
+        for lang in cls:
+            if lang.code == code:
+                return lang
+        raise ValueError(f"Unknown language code: {code}")
+
+
+class CodePage(StrEnum):
+    """Maps engine code page names."""
+
+    CP1250 = "cp1250"
+    CP1251 = "cp1251"
+    CP1252 = "cp1252"
 
 
 class Gender(IntEnum):

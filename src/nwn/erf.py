@@ -5,8 +5,8 @@ from typing import NamedTuple, BinaryIO, Mapping
 from enum import Enum
 from datetime import date, timedelta
 
-from .environ import get_nwn_encoding
 from .types import FileMagic, GenderedLanguage
+from .environ import get_codepage
 from .res import restype_to_extension, extension_to_restype
 
 
@@ -81,7 +81,7 @@ class Reader(Mapping[str, bytes]):
         for _ in range(self._header.locstr_count):
             lid = GenderedLanguage.from_id(struct.unpack("I", self._file.read(4))[0])
             sz = struct.unpack("I", self._file.read(4))[0]
-            st = self._file.read(sz).decode(get_nwn_encoding())
+            st = self._file.read(sz).decode(get_codepage())
             loc_str[lid] = st
 
         self._seek(self._header.offset_to_reslist)
@@ -255,7 +255,7 @@ class Writer:
 
         locstr_offset = self._file.tell()
         for gendered_lang, text in self._locstr.items():
-            encoded_text = text.encode(get_nwn_encoding())
+            encoded_text = text.encode(get_codepage())
             self._file.write(struct.pack("I", gendered_lang.to_id()))
             self._file.write(struct.pack("I", len(encoded_text)))
             self._file.write(encoded_text)

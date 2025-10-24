@@ -11,7 +11,7 @@ from enum import Enum
 from typing import NamedTuple, BinaryIO
 import json
 
-from nwn.environ import get_nwn_encoding
+from nwn.environ import get_codepage
 
 _NCS_HEADER = b"NCS V1.0"
 
@@ -154,7 +154,7 @@ def read_extra(file: BinaryIO, op: Opcode, aux: Auxcode) -> tuple:
             return struct.unpack(">i", file.read(4))
         if aux == Auxcode.TYPE_STRING:
             slen = struct.unpack(">H", file.read(2))[0]
-            return (file.read(slen).decode(get_nwn_encoding()),)
+            return (file.read(slen).decode(get_codepage()),)
         if aux == Auxcode.TYPE_ENGST2:
             return struct.unpack(">i", file.read(4))
         if aux == Auxcode.TYPE_ENGST7:

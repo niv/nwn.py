@@ -1,7 +1,7 @@
 import struct
 from typing import BinaryIO
 
-from nwn.environ import get_nwn_encoding
+from nwn.types import GenderedLanguage, FileMagic
 from nwn.gff._types import (
     Dword,
     CExoString,
@@ -15,8 +15,8 @@ from nwn.gff._types import (
     VOID,
     SIMPLE_TYPES,
 )
+from nwn.environ import get_codepage
 from nwn.gff._impl import FieldKind, Header, FieldEntry, StructEntry
-from nwn.types import FileMagic, GenderedLanguage
 
 
 def read(file: BinaryIO) -> tuple[Struct, FileMagic]:
@@ -97,13 +97,13 @@ def read(file: BinaryIO) -> tuple[Struct, FileMagic]:
             sz = struct.unpack("<I", file.read(4))[0]
             if sz > 0xFFFF:
                 raise ValueError("String too long")
-            return CExoString(file.read(sz).decode(get_nwn_encoding()))
+            return CExoString(file.read(sz).decode(get_codepage()))
 
         if field.type == FieldKind.RESREF:
             sz = struct.unpack("<b", file.read(1))[0]
             if sz > 16:
                 raise ValueError("Resref too long")
-            return ResRef(file.read(sz).decode(get_nwn_encoding()))
+            return ResRef(file.read(sz).decode(get_codepage()))
 
         if field.type == FieldKind.CEXOLOCSTRING:
             _ = struct.unpack("<I", file.read(4))[0]
@@ -113,7 +113,7 @@ def read(file: BinaryIO) -> tuple[Struct, FileMagic]:
             for _ in range(count):
                 fid = GenderedLanguage.from_id(struct.unpack("<I", file.read(4))[0])
                 sz = struct.unpack("<I", file.read(4))[0]
-                entries[fid] = file.read(sz).decode(get_nwn_encoding())
+                entries[fid] = file.read(sz).decode(get_codepage())
             return CExoLocString(strref, entries)
 
         if field.type == FieldKind.VOID:

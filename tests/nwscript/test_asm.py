@@ -5,7 +5,7 @@ from io import BufferedReader, BytesIO
 import pytest
 
 from nwn.nwscript.asm import Opcode, Auxcode, read_extra, disasm
-from nwn.environ import get_nwn_encoding
+from nwn.environ import get_codepage
 
 
 def find_ncs_files(directory="./tests/nwscript/corpus"):
@@ -41,7 +41,7 @@ def test_parse_extra_constant_string():
     test_string = "hello"
     io = BufferedReader(
         BytesIO(
-            struct.pack(">H", len(test_string)) + test_string.encode(get_nwn_encoding())
+            struct.pack(">H", len(test_string)) + test_string.encode(get_codepage())
         )
     )
     result = read_extra(io, Opcode.CONSTANT, Auxcode.TYPE_STRING)

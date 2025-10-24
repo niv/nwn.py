@@ -47,8 +47,8 @@ uint16               restype
 
 from typing import NamedTuple, BinaryIO
 
-from ..environ import get_nwn_encoding
 from ..types import FileMagic
+from ..environ import get_codepage
 from ..res import restype_to_extension, extension_to_restype
 
 NWSYNC_MANIFEST_VERSION = 3
@@ -132,7 +132,7 @@ def read(file: BinaryIO) -> Manifest:
     for _ in range(entry_count):
         sha1 = file.read(20)
         size = int.from_bytes(file.read(4), "little")
-        resref = file.read(16).decode(get_nwn_encoding()).rstrip("\0")
+        resref = file.read(16).decode(get_codepage()).rstrip("\0")
         restype = int.from_bytes(file.read(2), "little")
         filename = f"{resref}.{restype_to_extension(restype)}"
         entry = ManifestEntry(sha1, size, filename)
@@ -140,7 +140,7 @@ def read(file: BinaryIO) -> Manifest:
 
     for _ in range(mapping_count):
         index = int.from_bytes(file.read(4), "little")
-        resref = file.read(16).decode(get_nwn_encoding()).rstrip("\0")
+        resref = file.read(16).decode(get_codepage()).rstrip("\0")
         restype = int.from_bytes(file.read(2), "little")
         filename = f"{resref}.{restype_to_extension(restype)}"
         entry = ManifestEntry(entries[index].sha1, entries[index].size, filename)
@@ -196,7 +196,7 @@ def write(file: BinaryIO, manifest: Manifest):
     file.write(len(mappings).to_bytes(4, "little"))
 
     def write_filename(resref_base, restype):
-        file.write(resref_base.encode(get_nwn_encoding()).ljust(16, b"\0"))
+        file.write(resref_base.encode(get_codepage()).ljust(16, b"\0"))
         file.write((restype).to_bytes(2, "little"))
 
     for entry, resref_base, restype in unique_entries:

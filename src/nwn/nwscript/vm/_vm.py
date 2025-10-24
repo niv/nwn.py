@@ -25,7 +25,7 @@ class VM:
 
     - int <> int (32 bit on the nwscript side)
     - float <> float (32 bit on the nwscript side)
-    - str <> string: in the current encoding (get_nwn_encoding())
+    - str <> string: in the current encoding (get_codepage())
     - Object <> object
     - Vector <> vector
     - Location <> location
