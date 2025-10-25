@@ -26,7 +26,7 @@ class Entry(NamedTuple):
 
 def read(
     file: BinaryIO, include_sound_data=False, max_entries=0x7FFFF
-) -> tuple[list[Entry], Language]:
+) -> tuple[list[str | Entry], Language]:
     """
     Reads a TLK file fully into memory and returns a list of entries.
 
@@ -39,8 +39,8 @@ def read(
             reading untrusted or corrupted data.
 
     Returns:
-        A tuple containing a list of entries and the language of the TLK file.
-            The list contains either strings or TlkEntry objects, depending on
+        The list of entries and the language of the TLK file.
+            The list contains either strings or Entry objects, depending on
             the value of include_sound_data.
 
     Raises:
