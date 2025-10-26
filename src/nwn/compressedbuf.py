@@ -30,8 +30,8 @@ Binary Format
 from enum import IntEnum
 from typing import BinaryIO
 from io import BytesIO
-from compression import zlib
-from compression import zstd
+import zlib
+import pyzstd as zstd
 
 from .types import FileMagic
 

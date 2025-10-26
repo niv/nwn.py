@@ -5,12 +5,15 @@ description = "collection of modules for working with Neverwinter Nights 1: Enha
 readme = "README.rst"
 license = "MIT"
 authors = [{ name = "Bernhard Stoeckner", email = "n@e-ix.net" }]
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Games/Entertainment :: Role-Playing",
+]
+dependencies = [
+    "pyzstd>=0.18.0",
 ]
 [project.urls]
 "Source Code" = "https://github.com/niv/nwn.py"

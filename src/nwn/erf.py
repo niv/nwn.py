@@ -31,7 +31,7 @@ class Reader(Mapping[str, bytes]):
 
     class _Header(NamedTuple):
         file_type: FileMagic
-        file_version: Reader.Version
+        file_version: "Reader.Version"
         locstr_count: int
         locstr_sz: int
         entry_count: int

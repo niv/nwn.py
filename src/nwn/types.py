@@ -28,7 +28,7 @@ class Language(IntEnum):
         }[self]
 
     @classmethod
-    def from_code(cls, code: str) -> Language:
+    def from_code(cls, code: str) -> "Language":
         """
         Get the Language enum from a two-letter code.
 
