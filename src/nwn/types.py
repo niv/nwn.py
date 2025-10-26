@@ -54,6 +54,33 @@ class CodePage(StrEnum):
     CP1251 = "cp1251"
     CP1252 = "cp1252"
 
+    @classmethod
+    def from_language(cls, lang: Language) -> "CodePage":
+        """
+        Get the default codepage for a given language.
+
+        Args:
+            lang: The Language enum.
+
+        Returns:
+            The corresponding CodePage enum.
+
+        Raises:
+            ValueError: If the language is unknown.
+        """
+        match lang:
+            case (
+                Language.ENGLISH
+                | Language.FRENCH
+                | Language.GERMAN
+                | Language.ITALIAN
+                | Language.SPANISH
+            ):
+                return cls.CP1252
+            case Language.POLISH:
+                return cls.CP1250
+        raise ValueError(f"Unknown language: {lang}")
+
 
 class Gender(IntEnum):
     """Maps engine gender IDs."""

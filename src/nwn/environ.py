@@ -165,20 +165,12 @@ def get_codepage() -> CodePage:
         cp = os.environ.get("NWN_CODEPAGE", get_setting("game.language.codepage"))
     except FileNotFoundError:
         cp = None
-    if not cp:
-        language = get_language()
-        match language:
-            case (
-                Language.ENGLISH
-                | Language.FRENCH
-                | Language.GERMAN
-                | Language.ITALIAN
-                | Language.SPANISH
-            ):
-                return CodePage.CP1252
-            case Language.POLISH:
-                return CodePage.CP1250
-    return CodePage(cp)
+    try:
+        if not cp:
+            cp = CodePage.from_language(get_language())
+        return CodePage(cp)
+    except ValueError:
+        return CodePage.CP1252
 
 
 @cache
@@ -199,17 +191,7 @@ def get_language() -> Language:
         if loc := locale.getlocale()[0]:
             lang = loc.split("_")[0]
 
-    match lang:
-        case "en":
-            return Language.ENGLISH
-        case "fr":
-            return Language.FRENCH
-        case "de":
-            return Language.GERMAN
-        case "it":
-            return Language.ITALIAN
-        case "es":
-            return Language.SPANISH
-        case "pl":
-            return Language.POLISH
-    return Language.ENGLISH
+    try:
+        return Language.from_code(lang or "en")
+    except ValueError:
+        return Language.ENGLISH
