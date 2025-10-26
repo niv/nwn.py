@@ -7,7 +7,7 @@
   <head>
     
     <title>nwn.erf.Reader</title>
-    <meta name="generator" content="pydoctor 24.11.2"> 
+    <meta name="generator" content="pydoctor 25.10.1"> 
         
     </meta>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -161,7 +161,47 @@
         
 
         
+            <div class="itemName"><code><a href="#__del__" class="internal-link" title="nwn.erf.Reader.__del__">__del__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__getitem__" class="internal-link" title="nwn.erf.Reader.__getitem__">__getitem__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="#__init__" class="internal-link" title="nwn.erf.Reader.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__iter__" class="internal-link" title="nwn.erf.Reader.__iter__">__iter__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__len__" class="internal-link" title="nwn.erf.Reader.__len__">__len__</a></code>
             </div>
         
 
@@ -300,6 +340,16 @@
         
 
         
+            <div class="itemName"><code><a href="#_owns_file" class="internal-link" title="nwn.erf.Reader._owns_file">_owns<wbr></wbr>_file</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="#_root_offset" class="internal-link" title="nwn.erf.Reader._root_offset">_root<wbr></wbr>_offset</a></code>
             </div>
         
@@ -375,7 +425,7 @@
     
     <div class="container-fluid">
 
-      <div id="main" class="">
+      <main class="">
         
 
         
@@ -383,7 +433,7 @@
 
         <div class="page-header">
           <h1 class="class"><code><code><a href="index.html" class="internal-link">nwn</a></code><wbr></wbr>.<code><a href="nwn.erf.html" class="internal-link" title="nwn.erf">erf</a></code><wbr></wbr>.<code><a href="nwn.erf.Reader.html" class="internal-link" title="nwn.erf.Reader">Reader</a></code></code></h1>
-          <div id="showPrivate">
+          <div id="show-private">
             <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
           </div>
         </div>
@@ -393,8 +443,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Reader</span>: <a href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L17" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nwn.erf.Reader.__init__">Reader(file, max_entries, max_locstr)</a></code></p>
-          <p><a href="classIndex.html#nwn.erf.Reader">View In Hierarchy</a></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Reader</span>(Mapping[<wbr></wbr>str, <wbr></wbr>bytes]): <a href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L13" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nwn.erf.Reader.__init__">Reader(file, max_entries, max_locstr)</a></code></p><p><a href="classIndex.html#nwn.erf.Reader">View In Hierarchy</a></p>
         </div>
 
         <div class="moduleDocstring">
@@ -407,28 +456,48 @@
 <span class="py-more">... </span>   <span class="py-builtin">print</span>(erf.filenames)
 <span class="py-more">... </span>   gff_data = erf.read_file(<span class="py-string">"item.uti"</span>)
 <span class="py-more">... </span>   ...</pre></div>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file</span></td><td class="fieldArgDesc">The file object to read from.</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file</span></td><td class="fieldArgDesc">The file object to read from, either a filename or a BinaryIO.</td></tr></table></div>
         </div>
 
-        <div id="splitTables">
-          <table class="children sortable" id="id7">
+        <div id="split-tables">
+          <table class="children sortable" id="id6">
   
   
   <tr class="class">
     
     <td>Class</td>
     <td><code><a href="nwn.erf.Reader.Entry.html" class="internal-link" title="nwn.erf.Reader.Entry"><wbr></wbr>Entry</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="nwn.erf.Reader.Version.html" class="internal-link" title="nwn.erf.Reader.Version"><wbr></wbr>Version</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__del__" class="internal-link" title="nwn.erf.Reader.__del__">__del__</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__getitem__" class="internal-link" title="nwn.erf.Reader.__getitem__">__getitem__</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><code><a href="#__init__" class="internal-link" title="nwn.erf.Reader.__init__">__init__</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__iter__" class="internal-link" title="nwn.erf.Reader.__iter__">__iter__</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__len__" class="internal-link" title="nwn.erf.Reader.__len__">__len__</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -468,37 +537,42 @@
     
     <td>Class</td>
     <td><code><a href="nwn.erf.Reader._Header.html" class="internal-link" title="nwn.erf.Reader._Header">_<wbr></wbr>Header</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="method private">
     
     <td>Method</td>
     <td><code><a href="#_seek" class="internal-link" title="nwn.erf.Reader._seek">_seek</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="#_file" class="internal-link" title="nwn.erf.Reader._file">_file</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="#_files" class="internal-link" title="nwn.erf.Reader._files">_files</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="#_header" class="internal-link" title="nwn.erf.Reader._header">_header</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="#_localized_strings" class="internal-link" title="nwn.erf.Reader._localized_strings">_localized<wbr></wbr>_strings</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_owns_file" class="internal-link" title="nwn.erf.Reader._owns_file">_owns<wbr></wbr>_file</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
     <td><code><a href="#_root_offset" class="internal-link" title="nwn.erf.Reader._root_offset">_root<wbr></wbr>_offset</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
           
@@ -506,8 +580,62 @@
             
         </div>
 
-        <div id="childList">
+        <div id="child-list">
           <div class="basemethod">
+  
+  
+  <a name="nwn.erf.Reader.__del__">
+    
+  </a>
+  <a name="__del__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__del__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L113">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#__del__" title="nwn.erf.Reader.__del__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nwn.erf.Reader.__getitem__">
+    
+  </a>
+  <a name="__getitem__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__getitem__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">item: <code>str</code></span>) -&gt; <code>bytes</code>:</span>
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L180">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#__getitem__" title="nwn.erf.Reader.__getitem__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
   
   
   <a name="nwn.erf.Reader.__init__">
@@ -519,12 +647,66 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, file, max_entries=65535, max_locstr=100)</span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L63">
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__init__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">file: <code>BinaryIO | str</code>, </span><span class="rst-sig-param">max_entries=65535, </span><span class="rst-sig-param">max_locstr=100</span>):</span>
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L59">
       
       (source)
     </a>
     <a class="headerLink" href="#__init__" title="nwn.erf.Reader.__init__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nwn.erf.Reader.__iter__">
+    
+  </a>
+  <a name="__iter__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__iter__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>):</span>
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L183">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#__iter__" title="nwn.erf.Reader.__iter__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nwn.erf.Reader.__len__">
+    
+  </a>
+  <a name="__len__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">__len__</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span></span>) -&gt; <code>int</code>:</span>
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L186">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#__len__" title="nwn.erf.Reader.__len__">
       
       
       ¶
@@ -546,8 +728,8 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">read_file</span><span class="function-signature">(self, filename: <code>str</code>) -&gt; <code>bytes</code></span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L157">
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">read_file</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">filename: <code>str</code></span>) -&gt; <code>bytes</code>:</span>
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L162">
       
       (source)
     </a>
@@ -559,7 +741,7 @@
   </div>
   <div class="docstring functionBody">
     
-    <div><p>Retrieve the contents of a file from the archive.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">The name of the file to retrieve.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bytes</code></td><td class="fieldArgDesc">The contents of the file as a byte string.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>KeyError</code></td><td>If the file is not found in the archive.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the filename is of a unknown restype.</td></tr></table></div>
+    <div><p>Retrieve the contents of a file from the archive.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">The name of the file to retrieve.</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>bytes</code></td><td class="fieldArgDesc">The contents of the file as a byte string.</td></tr></table><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>KeyError</code></td><td>If the file is not found in the archive.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If the filename is of a unknown restype.</td></tr></table></div>
   </div>
 </div><div class="baseproperty">
   
@@ -571,9 +753,9 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
+    <div><span class="decorator">@property<br /></span></div>
     <span class="py-defname">build_date</span>: <code>date</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L117">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L122">
       
       (source)
     </a>
@@ -598,9 +780,9 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
+    <div><span class="decorator">@property<br /></span></div>
     <span class="py-defname">description_strref</span>: <code>int</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L129">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L134">
       
       (source)
     </a>
@@ -625,9 +807,9 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">file_type</span>: <code>FileMagic</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L112">
+    <div><span class="decorator">@property<br /></span></div>
+    <span class="py-defname">file_type</span>: <code><a href="nwn.types.FileMagic.html" class="internal-link" title="nwn.types.FileMagic">FileMagic</a></code> =
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L117">
       
       (source)
     </a>
@@ -652,9 +834,9 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
+    <div><span class="decorator">@property<br /></span></div>
     <span class="py-defname">filemap</span>: <code>dict[<wbr></wbr>str, <wbr></wbr><a href="nwn.erf.Reader.Entry.html" class="internal-link" title="nwn.erf.Reader.Entry">Entry</a>]</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L144">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L149">
       
       (source)
     </a>
@@ -682,9 +864,9 @@ corresponding file data.</p>
     
   </a>
   <div class="functionHeader">
-    @property<br />
+    <div><span class="decorator">@property<br /></span></div>
     <span class="py-defname">filenames</span>: <code>list[<wbr></wbr>str]</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L134">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L139">
       
       (source)
     </a>
@@ -709,9 +891,9 @@ corresponding file data.</p>
     
   </a>
   <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">localized_strings</span>: <code>dict[<wbr></wbr>GenderedLanguage, <wbr></wbr>str]</code> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L124">
+    <div><span class="decorator">@property<br /></span></div>
+    <span class="py-defname">localized_strings</span>: <code>dict[<wbr></wbr><a href="nwn.types.GenderedLanguage.html" class="internal-link" title="nwn.types.GenderedLanguage">GenderedLanguage</a>, <wbr></wbr>str]</code> =
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L129">
       
       (source)
     </a>
@@ -738,8 +920,8 @@ corresponding file data.</p>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">_seek</span><span class="function-signature">(self, relative_to_start)</span>:
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L60">
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">_seek</span><span class="function-signature">(<span class="rst-sig-param"><span class="rst-undocumented">self</span>, </span><span class="rst-sig-param">relative_to_start</span>):</span>
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L56">
       
       (source)
     </a>
@@ -765,7 +947,7 @@ corresponding file data.</p>
   <div class="functionHeader">
     
     <span class="py-defname">_file</span> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L64">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L62">
       
       (source)
     </a>
@@ -792,7 +974,7 @@ corresponding file data.</p>
   <div class="functionHeader">
     
     <span class="py-defname">_files</span> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L105">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L106">
       
       (source)
     </a>
@@ -819,7 +1001,7 @@ corresponding file data.</p>
   <div class="functionHeader">
     
     <span class="py-defname">_header</span> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L70">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L71">
       
       (source)
     </a>
@@ -846,11 +1028,38 @@ corresponding file data.</p>
   <div class="functionHeader">
     
     <span class="py-defname">_localized_strings</span> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L103">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L104">
       
       (source)
     </a>
     <a class="headerLink" href="#_localized_strings" title="nwn.erf.Reader._localized_strings">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nwn.erf.Reader._owns_file">
+    
+  </a>
+  <a name="_owns_file">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_owns_file</span>: <code>bool</code> =
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L61">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#_owns_file" title="nwn.erf.Reader._owns_file">
       
       
       ¶
@@ -873,7 +1082,7 @@ corresponding file data.</p>
   <div class="functionHeader">
     
     <span class="py-defname">_root_offset</span> =
-    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L65">
+    <a class="sourceLink" href="https://github.com/niv/nwn.py/blob/master//src/nwn/erf.py#L66">
       
       (source)
     </a>
@@ -891,7 +1100,7 @@ corresponding file data.</p>
 </div>
         </div>
       
-      </div>
+      </main>
     </div>
 
     <footer class="navbar navbar-default">
@@ -901,7 +1110,7 @@ corresponding file data.</p>
     <div class="container-fluid">
       <a href="index.html">API Documentation</a> for <a href="https://pypi.org/project/nwn/" class="projecthome">nwn</a>,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.11.2 at 2025-08-30 12:49:55.
+      25.10.1 at 2025-10-26 15:59:02.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>
