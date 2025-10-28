@@ -53,26 +53,45 @@ def read(file: BinaryIO) -> tuple[Struct, FileMagic]:
         raise ValueError(f"Unsupported GFF version: {header.file_version}")
 
     file.seek(root_offset + header.label_offset)
-    for _ in range(header.label_count):
-        labels.append(file.read(16).split(b"\x00")[0].decode("ascii"))
+    labels = [
+        label_bytes.rstrip(b"\x00").decode("ascii")
+        for (label_bytes,) in struct.iter_unpack(
+            "16s", file.read(header.label_count * 16)
+        )
+    ]
 
     file.seek(root_offset + header.field_offset)
-    for _ in range(header.field_count):
-        data = struct.unpack("<III", file.read(12))
-        fields.append(FieldEntry(FieldKind(data[0]), data[1], data[2]))
+    fields = [
+        FieldEntry(FieldKind(kind), data_or_offset, label_index)
+        for kind, data_or_offset, label_index in struct.iter_unpack(
+            "<III", file.read(header.field_count * 12)
+        )
+    ]
 
     file.seek(root_offset + header.field_indices_offset)
-    for _ in range(header.field_indices_size // 4):
-        field_indices.append(struct.unpack("<I", file.read(4))[0])
+    field_indices = list(
+        struct.unpack(
+            f"<{header.field_indices_size // 4}I", file.read(header.field_indices_size)
+        )
+    )
 
     file.seek(root_offset + header.list_indices_offset)
-    for _ in range(header.list_indices_size // 4):
-        list_indices.append(struct.unpack("<I", file.read(4))[0])
+    list_indices = list(
+        struct.unpack(
+            f"<{header.list_indices_size // 4}I", file.read(header.list_indices_size)
+        )
+    )
 
     file.seek(root_offset + header.struct_offset)
-    for _ in range(header.struct_count):
-        data = struct.unpack("<III", file.read(12))
-        structs.append(StructEntry(data[0], data[1], data[2]))
+    structs = [
+        StructEntry(id, data_or_offset, field_count)
+        for id, data_or_offset, field_count in struct.iter_unpack(
+            "<III", file.read(header.struct_count * 12)
+        )
+    ]
+
+    file.seek(root_offset + header.field_data_offset)
+    field_data = file.read(header.field_data_size)
 
     def _read_field_value(field):
         if field.type in SIMPLE_TYPES:
