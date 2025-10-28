@@ -58,24 +58,17 @@ class Reader(Mapping[str, bytes]):
         if version != b"V1  ":
             raise ValueError("Unsupported keyfile version")
 
-        bif_count = struct.unpack("<I", file.read(4))[0]
-        key_count = struct.unpack("<I", file.read(4))[0]
-        offset_to_file_table = struct.unpack("<I", file.read(4))[0]
-        offset_to_key_table = struct.unpack("<I", file.read(4))[0]
-        self._build_year = struct.unpack("<I", file.read(4))[0]
-        self._build_day = struct.unpack("<I", file.read(4))[0]
+        (
+            bif_count,
+            key_count,
+            offset_to_file_table,
+            offset_to_key_table,
+            self._build_year,
+            self._build_day,
+        ) = struct.unpack("<IIIIII", file.read(24))
 
         file.seek(offset_to_file_table)
-        file_table = []
-        for _ in range(bif_count):
-            file_table.append(
-                (
-                    struct.unpack("<I", file.read(4))[0],
-                    struct.unpack("<I", file.read(4))[0],
-                    struct.unpack("<H", file.read(2))[0],
-                    struct.unpack("<H", file.read(2))[0],
-                )
-            )
+        file_table = list(struct.iter_unpack("<IIHH", file.read(12 * bif_count)))
 
         filename_table = []
         for entry in file_table:
@@ -84,6 +77,7 @@ class Reader(Mapping[str, bytes]):
             filename_table.append(filename)
 
         def read_bif(bif_filename):
+            # pylint: disable=consider-using-with
             bif_file = open(os.path.join(bif_directory, bif_filename), "rb")
             magic = bif_file.read(4)
             if magic != b"BIFF":
@@ -91,18 +85,17 @@ class Reader(Mapping[str, bytes]):
             version = bif_file.read(4)
             if version != b"V1  ":
                 raise ValueError("Unsupported BIF version")
-            var_res_count = struct.unpack("<I", bif_file.read(4))[0]
-            fixed_res_count = struct.unpack("<I", bif_file.read(4))[0]
+            var_res_count, fixed_res_count, variable_table_offset = struct.unpack(
+                "<III", bif_file.read(12)
+            )
             if fixed_res_count != 0:
                 raise ValueError("Fixed resources not supported")
-            variable_table_offset = struct.unpack("<I", bif_file.read(4))[0]
             variable_resources = {}
             bif_file.seek(variable_table_offset)
-            for _ in range(var_res_count):
-                full_id = struct.unpack("<I", bif_file.read(4))[0]
-                offset = struct.unpack("<I", bif_file.read(4))[0]
-                file_size = struct.unpack("<I", bif_file.read(4))[0]
-                res_type = struct.unpack("<I", bif_file.read(4))[0]
+            resource_data = bif_file.read(var_res_count * 16)
+            for full_id, offset, file_size, res_type in struct.iter_unpack(
+                "<IIII", resource_data
+            ):
                 variable_resources[full_id & 0xFFFFF] = _VariableResource(
                     id=full_id,
                     io_offset=offset,
@@ -117,10 +110,13 @@ class Reader(Mapping[str, bytes]):
 
         file.seek(offset_to_key_table)
         self._resref_id_lookup = {}
-        for _ in range(key_count):
-            resref = file.read(16).split(b"\x00")[0].decode("ASCII")
-            res_type = struct.unpack("<H", file.read(2))[0]
-            res_id = struct.unpack("<I", file.read(4))[0]
+        key_table_data = file.read(key_count * 22)
+        for (
+            resref_bytes,
+            res_type,
+            res_id,
+        ) in struct.iter_unpack("<16sHI", key_table_data):
+            resref = resref_bytes.rstrip(b"\x00").decode("ASCII")
             bif_idx = res_id >> 20
             if bif_idx < 0 or bif_idx >= len(file_table):
                 raise ValueError("Invalid BIF index")
