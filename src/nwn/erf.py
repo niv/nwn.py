@@ -77,29 +77,33 @@ class Reader(Mapping[str, bytes]):
             raise ValueError("Too many localized strings")
 
         self._seek(self._header.offset_to_locstr)
-        loc_str = {}
-        for _ in range(self._header.locstr_count):
-            lid = GenderedLanguage.from_id(struct.unpack("I", self._file.read(4))[0])
-            sz = struct.unpack("I", self._file.read(4))[0]
-            st = self._file.read(sz).decode(get_codepage())
-            loc_str[lid] = st
+        loc_str = {
+            GenderedLanguage.from_id(lid): st.decode(get_codepage())
+            for lid, sz, st in (
+                (lid, sz, self._file.read(sz))
+                for lid, sz in struct.iter_unpack(
+                    "II", self._file.read(self._header.locstr_count * 8)
+                )
+            )
+        }
 
         self._seek(self._header.offset_to_reslist)
-        resources = []
-        for _ in range(self._header.entry_count):
-            offset = struct.unpack("I", self._file.read(4))[0]
-            disk_size = struct.unpack("I", self._file.read(4))[0]
-            uncompressed = disk_size
-            resources.append((offset, disk_size, uncompressed))
-
+        resources = [
+            (offset, disk_size, disk_size)
+            for offset, disk_size in struct.iter_unpack(
+                "II", self._file.read(self._header.entry_count * 8)
+            )
+        ]
         self._seek(self._header.offset_to_keylist)
-        keys = []
-        for _ in range(self._header.entry_count):
-            resref = self._file.read(16).split(b"\x00")[0].decode("ASCII")
-            _ = struct.unpack("I", self._file.read(4))[0]  # res_id unused
-            res_type = struct.unpack("H", self._file.read(2))[0]
-            _ = self._file.read(2)  # unused
-            keys.append((resref, res_type))
+        keys = [
+            (
+                resref_bytes.rstrip(b"\x00").decode("ASCII"),
+                res_type,
+            )
+            for resref_bytes, _, res_type, _ in struct.iter_unpack(
+                "16sIH2s", self._file.read(self._header.entry_count * 24)
+            )
+        ]
 
         self._localized_strings = loc_str
 
