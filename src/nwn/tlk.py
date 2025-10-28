@@ -5,8 +5,9 @@ All strings are transparently converted to and from the NWN encoding.
 """
 
 import struct
-
+from io import BytesIO
 from typing import NamedTuple, BinaryIO
+
 from nwn.types import Language
 from nwn.environ import get_codepage
 
@@ -48,45 +49,57 @@ def read(
         ValueError: If the file does not contain valid TLK data.
     """
 
-    magic = file.read(4)
+    (
+        magic,
+        version,
+        language,
+        entry_count,
+        entries_offset,
+    ) = struct.unpack("<4s4sIII", file.read(20))
+
     if magic != b"TLK ":
         raise ValueError("Invalid TLK magic")
-    version = file.read(4)
     if version != b"V3.0":
         raise ValueError("Invalid TLK version")
-    language = struct.unpack("<I", file.read(4))[0]
     language = Language(language)
-    entry_count = struct.unpack("<I", file.read(4))[0]
-    entries_offset = struct.unpack("<I", file.read(4))[0]
 
     if entry_count > max_entries:
         raise ValueError(f"Too many entries in TLK file: {entry_count} > {max_entries}")
 
-    entries = []
-    for i in range(entry_count):
-        file.seek(20 + 40 * i)
-
+    file.seek(20)
+    entry_data = file.read(entry_count * 40)
+    entries = [
         (
-            _,  # flags (text_present=0x1, sound_present=0x2,length_present=0x4)
-            sound_resref,
-            _,  # volume variance: unused as per spec
-            _,  # pitch variance: unused as per spec
+            sound_resref.decode("ascii").strip("\x00\xc0"),
             offset_to_string,
             string_sz,
             sound_length,
-        ) = struct.unpack("<I16sIIIIf", file.read(40))
+        )
+        for (
+            _,  # flags (text_present=0x1,sound_present=0x2,length_present=0x4)
+            sound_resref,
+            _,  # volume_variance unused as per spec
+            _,  # pitch_variance unused as per spec
+            offset_to_string,
+            string_sz,
+            sound_length,
+        ) in struct.iter_unpack("<I16sIIIIf", entry_data)
+    ]
 
-        sound_resref = sound_resref.decode("ascii").strip("\x00\xc0")
+    # We might be reading from a file-like object in the middle of some other stream,
+    # so make sure not to read beyond the boundary of the last string.
+    end_offset = max(offset + size for (_, offset, size, _) in entries)
+    file.seek(entries_offset)
+    string_data = file.read(end_offset).decode(get_codepage())
 
-        file.seek(entries_offset + offset_to_string)
-        text = file.read(string_sz).decode(get_codepage())
-
-        if include_sound_data:
-            entries.append(Entry(text, sound_resref, sound_length))
-        else:
-            entries.append(text)
-
-    return (entries, language)
+    return [
+        (
+            Entry(string_data[offset : offset + size], sound_resref, sound_length)
+            if include_sound_data
+            else string_data[offset : offset + size]
+        )
+        for (sound_resref, offset, size, sound_length) in entries
+    ], language
 
 
 def write(file: BinaryIO, entries: list[Entry], language: Language):
