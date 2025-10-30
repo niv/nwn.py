@@ -3,6 +3,7 @@ Class and library to deal with NWN resources directories.
 """
 
 import os
+from pathlib import Path
 
 from nwn.res import Container, is_valid_resref
 
@@ -30,20 +31,20 @@ class LocalDirectory(Container):
     def reindex(self):
         self._files = (
             {
-                f.lower(): os.path.join(self._path, f)
-                for f in os.listdir(self._path)
-                if is_valid_resref(f)
+                f.name.lower(): f
+                for f in self._path.iterdir()
+                if f.is_file() and is_valid_resref(f.name)
             }
-            if os.path.isdir(self._path)
+            if self._path.is_dir()
             else {}
         )
 
-    def __init__(self, path: str, writable: bool = False):
-        self._path = path
+    def __init__(self, path: str | Path, writable: bool = False):
+        self._path = Path(path)
         self.reindex()
         self._writable = writable
         if self._writable:
-            os.makedirs(self._path, exist_ok=True)
+            self._path.mkdir(parents=True, exist_ok=True)
 
     def __getitem__(self, key: str) -> bytes:
         file_path = self._files[key.lower()]
@@ -61,7 +62,7 @@ class LocalDirectory(Container):
             raise TypeError("ResDir is read-only")
         if not is_valid_resref(key):
             raise ValueError(f"Invalid resref: {key}")
-        file_path = os.path.join(self._path, key)
+        file_path = self._path / key
         with open(file_path, "wb") as f:
             f.write(value)
         self._files[key.lower()] = file_path
@@ -71,3 +72,6 @@ class LocalDirectory(Container):
             raise TypeError("ResDir is read-only")
         file_path = self._files.pop(key.lower())
         os.remove(file_path)
+
+    def __repr__(self):
+        return f"LocalDirectory({self._path}, count={len(self)})"
