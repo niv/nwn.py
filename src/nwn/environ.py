@@ -2,6 +2,13 @@
 Functionality related to game and user/system environment,
 such as locating installation directories and detecting
 language and codepage.
+
+Note that most functions here rely on caching to avoid repeated
+filesystem access; if you modify environment variables or
+configuration files during runtime, you may need to clear
+the relevant function caches using functools.cache_clear(). This
+will typically only be necessary during testing, is not considered
+part of the public API, and will likely change in a future version.
 """
 
 import os
@@ -9,10 +16,83 @@ import tomllib
 import configparser
 import locale
 import platform
-from functools import cache
+from pathlib import Path
 from typing import Any
+from enum import StrEnum
+
+# I'm not overly fond of this. The internal cache system is currently necessary
+# for performance, but it might be replaced in the future with more explicit
+# control over caching. Caveat empor if you decide to use it in your code.
+from functools import cache
 
 from .types import Language, CodePage
+
+
+class Alias(StrEnum):
+    HD0 = "_hd0"  # NWN_HOME
+    MODULES = "modules"
+    SAVES = "saves"
+    OVERRIDE = "override"
+    DEVELOPMENT = "development"
+    HAK = "hak"
+    SCREENSHOTS = "screenshots"
+    CURRENTGAME = "currentgame"
+    LOGS = "logs"
+    TEMP = "temp"
+    TEMPCLIENT = "tempclient"
+    PATCH = "patch"
+    LOCALVAULT = "localvault"
+    DMVAULT = "dmvault"
+    SERVERVAULT = "servervault"
+    OLDSERVERVAULT = "oldservervault"
+    DATABASE = "database"
+    PORTRAITS = "portraits"
+    AMBIENT = "ambient"
+    MOVIES = "movies"
+    MUSIC = "music"
+    TLK = "tlk"
+    NWSYNC = "nwsync"
+    CACHE = "cache"
+    MODELCOMPILER = "modelcompiler"
+    CRASHREPORT = "crashreport"
+
+    HD0INSTALL = "_hd0install"  # NWN_ROOT
+    PORTRAITSINSTALL = "data/prt"
+    MOVIESINSTALL = "data/mov"
+    MUSICINSTALL = "data/mus"
+    AMBIENTINSTALL = "data/amb"
+    PATCHINSTALL = "data/pat"
+    PREMIUMINSTALL = "data/prem"
+    MODULESINSTALL = "data/mod"
+    NWMINSTALL = "data/nwm"
+    LCVAULTINSTALL = "data/lcv"
+    DMVAULTINSTALL = "data/dmv"
+    HAKINSTALL = "data/hk"
+    TLKINSTALL = "data/tlk"
+
+    HD0LOCINSTALL = "_hd0locinstall"  # NWN_ROOT / lang
+    MOVIESLOCINSTALL = "data/mov"
+    TLKLOCINSTALL = "data/tlk"
+    OVERRIDELOCINSTALL = "data/ovr"
+
+    @classmethod
+    def by_name(cls, name: str) -> "Alias":
+        """
+        Get the Alias enum from a string name.
+
+        Args:
+            name: The alias name (e.g. "MODULES").
+
+        Returns:
+            The corresponding Alias enum.
+
+        Raises:
+            ValueError: If the name is unknown.
+        """
+        for alias in cls:
+            if alias.value.upper() == name.upper():
+                return alias
+        raise ValueError(f"{name} is not a valid Alias")
 
 
 @cache
@@ -34,18 +114,16 @@ def _get_aliases() -> dict:
         ini_path = os.path.join(user, "nwn.ini")
         config = configparser.ConfigParser()
         config.read(ini_path)
-        return dict(config["Alias"])
+        return {k.upper(): v for k, v in config["Alias"].items()}
     except KeyError:
         return {}
 
 
 @cache
-def resolve_alias(alias: str) -> str:
+def resolve_alias(alias: str | Alias) -> Path:
     """
     Get the path for a given NWN alias from nwn.ini, or return the
     default value if not found.
-
-    Currently only works for user directory aliases, not install or locinstall.
 
     Args:
         alias: The alias to look up.
@@ -57,8 +135,26 @@ def resolve_alias(alias: str) -> str:
         FileNotFoundError: If the user directory cannot be found. This function
             requires a user directory set up already.
     """
-    aliases = _get_aliases()
-    return aliases.get(alias.upper(), os.path.join(get_user_directory(), alias.lower()))
+
+    if isinstance(alias, str):
+        alias = Alias.by_name(alias)
+
+    if alias == Alias.HD0:
+        return get_user_directory()
+    if alias == Alias.HD0INSTALL:
+        return get_install_directory()
+    if alias == Alias.HD0LOCINSTALL:
+        return get_install_language_directory()
+
+    value = alias.value.lower()
+
+    if alias.name.endswith("LOCINSTALL"):
+        return get_install_language_directory() / "data" / value
+
+    if alias.name.endswith("INSTALL"):
+        return get_install_directory() / "data" / value
+
+    return get_user_directory() / _get_aliases().get(alias.name.upper(), value)
 
 
 @cache
@@ -88,7 +184,7 @@ def get_setting(key: str) -> Any:
 
 
 @cache
-def get_user_directory() -> str:
+def get_user_directory() -> Path:
     """
     Find the current user NWN directory.
 
@@ -117,13 +213,13 @@ def get_user_directory() -> str:
 
     for candidate in candidates:
         if candidate and os.path.isdir(candidate):
-            return candidate
+            return Path(candidate)
 
     raise FileNotFoundError("Could not locate NWN user directory; try setting NWN_HOME")
 
 
 @cache
-def get_install_directory() -> str:
+def get_install_directory() -> Path:
     """
     Find the first matching NWN installation directory.
     Currently only supports searching for Steam installs.
@@ -156,9 +252,24 @@ def get_install_directory() -> str:
 
     for candidate in candidates:
         if candidate and os.path.isdir(candidate):
-            return candidate
+            return Path(candidate)
 
     raise FileNotFoundError("Could not locate NWN; try setting NWN_ROOT")
+
+
+def get_install_language_directory() -> Path:
+    """
+    Get the path to the language data directory inside the NWN installation.
+
+    Returns:
+        The path to the language data directory.
+
+    Raises:
+        FileNotFoundError: If the installation directory cannot be found.
+    """
+    install = get_install_directory()
+    language = get_language()
+    return install / "lang" / language.code
 
 
 @cache
@@ -193,10 +304,14 @@ def get_language() -> Language:
     Returns:
         The detected Language enum value, or english by default.
     """
-    try:
-        lang = get_setting("game.language.override")
-    except FileNotFoundError:
-        lang = None
+
+    lang = os.environ.get("NWN_LANGUAGE")
+
+    if not lang:
+        try:
+            lang = get_setting("game.language.override")
+        except FileNotFoundError:
+            lang = None
 
     if not lang:
         if loc := locale.getlocale()[0]:
