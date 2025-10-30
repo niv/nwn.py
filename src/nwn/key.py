@@ -4,6 +4,7 @@ Read keyfiles, which store base game resources in the installation directory.
 
 import os
 import struct
+from pathlib import Path
 from datetime import datetime, timedelta, date
 from typing import NamedTuple, BinaryIO, Mapping
 
@@ -37,7 +38,7 @@ class Reader(Mapping[str, bytes]):
     """
 
     class _BIFF(NamedTuple):
-        filename: str
+        filename: Path
         file: BinaryIO
         variable_resources: dict[int, _VariableResource]
 
@@ -46,10 +47,11 @@ class Reader(Mapping[str, bytes]):
         size: int
         bif: str
 
-    def __init__(self, filename: str, bif_directory=None):
-        bif_directory = bif_directory or os.path.dirname(filename) + "/.."
+    def __init__(self, filename: str | Path, bif_directory=None):
+        filename = Path(filename)
+        bif_directory = bif_directory or filename.parent / ".."
         self._bif_files = {}
-        file = self._file = open(filename, "rb")
+        file = self._file = open(filename, "rb")  # pylint: disable=consider-using-with
 
         magic = file.read(4)
         if magic != b"KEY ":
@@ -74,11 +76,11 @@ class Reader(Mapping[str, bytes]):
         for entry in file_table:
             file.seek(entry[1])
             filename = file.read(entry[2]).decode("ASCII").replace("\\", "/")
-            filename_table.append(filename)
+            filename_table.append(Path(filename))
 
-        def read_bif(bif_filename):
+        def read_bif(bif_filename: Path):
             # pylint: disable=consider-using-with
-            bif_file = open(os.path.join(bif_directory, bif_filename), "rb")
+            bif_file = open(bif_directory / bif_filename, "rb")
             magic = bif_file.read(4)
             if magic != b"BIFF":
                 raise ValueError("Not a BIF file")
@@ -103,7 +105,7 @@ class Reader(Mapping[str, bytes]):
                     res_type=res_type,
                 )
             return self._BIFF(
-                os.path.normpath(bif_filename),
+                bif_filename,
                 bif_file,
                 variable_resources,
             )
