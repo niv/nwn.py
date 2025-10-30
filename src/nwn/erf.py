@@ -1,6 +1,7 @@
 """Read and write ERF (Encapsulated Resource Format) archives."""
 
 import struct
+from pathlib import Path
 from typing import NamedTuple, BinaryIO, Mapping
 from enum import Enum
 from datetime import date, timedelta
@@ -56,8 +57,8 @@ class Reader(Mapping[str, bytes]):
     def _seek(self, relative_to_start):
         self._file.seek(self._root_offset + relative_to_start)
 
-    def __init__(self, file: BinaryIO | str, max_entries=65535, max_locstr=100):
-        if isinstance(file, str):
+    def __init__(self, file: BinaryIO | str | Path, max_entries=65535, max_locstr=100):
+        if isinstance(file, (str, Path)):
             self._owns_file = True
             self._file = open(file, "rb")  # pylint: disable=consider-using-with
         else:
