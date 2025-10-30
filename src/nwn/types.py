@@ -42,7 +42,7 @@ class Language(IntEnum):
             ValueError: If the code is unknown.
         """
         for lang in cls:
-            if lang.code == code:
+            if lang.code == code.lower():
                 return lang
         raise ValueError(f"Unknown language code: {code}")
 
