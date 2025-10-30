@@ -26,14 +26,14 @@ Example:
 
 """
 
-import os
 from collections import ChainMap
 
 from nwn.environ import (
     get_install_directory,
+    get_install_language_directory,
     get_user_directory,
-    get_language,
     resolve_alias,
+    Alias,
 )
 from nwn.res import Container
 from nwn.resdir import LocalDirectory
@@ -45,7 +45,8 @@ class ResMan(ChainMap[str, bytes]):
     A resource manager that chains multiple resource mappings together.
 
     This is currently a type alias for ChainMap[str, bytes] to indicate its
-    intended use.
+    intended use, but may be extended in the future; so make sure to use
+    this type for foward compatibility.
     """
 
 
@@ -65,54 +66,55 @@ def create(*maps: Container, include_user: bool = True) -> ResMan:
         include_user: Whether to include the user directory aliases.
 
     Returns:
-        A ChainMap containing all provided resource maps, plus the base game
+        A ResMan containing all provided resource maps, plus the base game
         resource keys.
 
     Raises:
         FileNotFoundError: If any of the required directories cannot be found.
     """
-    install = get_install_directory()
     try:
         user = get_user_directory() if include_user else None
     except FileNotFoundError:
         user = None
-    language = get_language()
-    dataroot = os.path.join(install, "data")
-    langdataroot = os.path.join(install, "lang", language.code, "data")
 
-    langkey = os.path.join(langdataroot, "nwn_base_loc.key")
-    if not os.path.isfile(langkey):
+    dataroot = get_install_directory() / "data"
+    langdataroot = get_install_language_directory() / "data"
+
+    retailkey = dataroot / "nwn_retail.key"
+    # Not all installs have a retail.key (eg the headless server package)
+    if not retailkey.is_file():
+        retailkey = None
+
+    langkey = langdataroot / "nwn_base_loc.key"
+    # Not all language overrides have a keyfile
+    if not langkey.is_file():
         langkey = None
 
-    def make_root_resdir(path: str) -> LocalDirectory:
-        return LocalDirectory(os.path.join(dataroot, path))
-
-    def make_lang_resdir(path: str) -> LocalDirectory:
-        return LocalDirectory(os.path.join(langdataroot, path))
-
-    def make_user_aliasdir(alias: str) -> LocalDirectory | None:
-        return LocalDirectory(resolve_alias(alias)) if user else None
+    def loc_dir(alias: Alias) -> LocalDirectory | None:
+        if not user:
+            return None
+        return LocalDirectory(resolve_alias(alias))
 
     stack = [
         *maps,
         # TEMPCLIENT: not used for our python impl
-        make_user_aliasdir("PORTRAITS"),
-        make_root_resdir("prt"),
+        loc_dir(Alias.PORTRAITS),
+        loc_dir(Alias.PORTRAITSINSTALL),
         # DMVAULT: not enabled by default
         # LOCALVAULT: not enabled by default
         # SERVERVAULT: not enabled by default
         # DMVAULTINSTALL: not enabled by default
         # LCVAULTINSTALL: not enabled by default
-        make_user_aliasdir("DEVELOPMENT"),
-        make_user_aliasdir("OVERRIDE"),
-        make_lang_resdir("ovr"),
+        loc_dir(Alias.DEVELOPMENT),
+        loc_dir(Alias.OVERRIDE),
+        loc_dir(Alias.OVERRIDELOCINSTALL),
         # OVERRIDEINSTALL: not used since patch 37
-        make_user_aliasdir("AMBIENT"),
-        make_root_resdir("amb"),
-        make_user_aliasdir("MUSIC"),
-        make_root_resdir("mus"),
+        loc_dir(Alias.AMBIENT),
+        loc_dir(Alias.AMBIENTINSTALL),
+        loc_dir(Alias.MUSIC),
+        loc_dir(Alias.MUSICINSTALL),
         Key(langkey) if langkey else None,
-        Key(os.path.join(dataroot, "nwn_retail.key")),
-        Key(os.path.join(dataroot, "nwn_base.key")),
+        Key(dataroot / "nwn_retail.key") if retailkey else None,
+        Key(dataroot / "nwn_base.key"),
     ]
-    return ResMan(*[s for s in stack if s])
+    return ResMan(*[s for s in stack if s is not None])
