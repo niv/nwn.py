@@ -172,7 +172,7 @@ class Container(Mapping[str, bytes], ABC):
     """
 
 
-class ResDict(UserDict[str, bytes]):
+class ResDict(Container, UserDict[str, bytes]):
     """
     A case-insensitive resource dict that validates resource references.
     Data is stored in memory.
