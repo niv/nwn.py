@@ -5,45 +5,44 @@ All strings are transparently converted to and from the NWN encoding.
 """
 
 import struct
-from io import BytesIO
-from typing import NamedTuple, BinaryIO
+from typing import BinaryIO
 
 from nwn.types import Language
 from nwn.environ import get_codepage
 
 
-class Entry(NamedTuple):
+class Entry(str):
     """
     A single entry in a TLK file including the text, sound resref, and sound length.
     Only used when reading TLK files with sound data.
     """
 
-    text: str
+    def __new__(cls, text: str, sound_resref: str = "", sound_length: float = 0.0):
+        obj = str.__new__(cls, text)
+        object.__setattr__(obj, "sound_resref", sound_resref)
+        object.__setattr__(obj, "sound_length", sound_length)
+        return obj
+
     sound_resref: str = ""
     sound_length: float = 0.0
 
-    def __str__(self):
-        return self.text
+    @property
+    def text(self) -> str:
+        return str(self)
 
 
-def read(
-    file: BinaryIO, include_sound_data=False, max_entries=0x7FFFF
-) -> tuple[list[str | Entry], Language]:
+def read(file: BinaryIO, max_entries=0x7FFFF) -> tuple[list[Entry], Language]:
     """
     Reads a TLK file fully into memory and returns a list of entries.
 
     Args:
         file: A binary file object containing the TLK file.
-        include_sound_data: If True, entries are returned as TlkEntry objects.
-            Otherwise, the resulting dict will contain only the text.
         max_entries: The maximum number of entries to read from the TLK file.
             This is a sanity check to avoid allocating excess memory when
             reading untrusted or corrupted data.
 
     Returns:
-        The list of entries and the language of the TLK file.
-            The list contains either strings or Entry objects, depending on
-            the value of include_sound_data.
+        A tuple containing the list of entries, and the language of the TLK file.
 
     Raises:
         ValueError: If the file does not contain valid TLK data.
@@ -93,11 +92,7 @@ def read(
     string_data = file.read(end_offset).decode(get_codepage())
 
     return [
-        (
-            Entry(string_data[offset : offset + size], sound_resref, sound_length)
-            if include_sound_data
-            else string_data[offset : offset + size]
-        )
+        Entry(string_data[offset : offset + size], sound_resref, sound_length)
         for (sound_resref, offset, size, sound_length) in entries
     ], language
 
@@ -109,7 +104,7 @@ def write(file: BinaryIO, entries: list[Entry], language: Language):
     Args:
         file: A binary file object to write the TLK data to.
         entries: A list containing the entries to write, in order.
-            Entries can be either strings or TlkEntry objects.
+            Entries can be either strings or Entry objects.
         language: The language of the TLK file to write.
 
     Raises:
@@ -133,9 +128,6 @@ def write(file: BinaryIO, entries: list[Entry], language: Language):
     for idx, entry in enumerate(entries):
         flags = 0
         text_len = 0
-
-        if isinstance(entry, str):
-            entry = Entry(entry)
 
         if entry.text:
             flags |= 0x1
