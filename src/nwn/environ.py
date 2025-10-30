@@ -8,6 +8,7 @@ import os
 import tomllib
 import configparser
 import locale
+import platform
 from functools import cache
 from typing import Any
 
@@ -104,18 +105,21 @@ def get_user_directory() -> str:
     candidates = [
         os.environ.get("NWN_HOME"),
         os.environ.get("NWN_USER_DIRECTORY"),
-        os.path.expanduser("~/.local/share/Neverwinter Nights"),
-        os.path.expanduser("~/Documents/Neverwinter Nights"),
     ]
+
+    # We never expose system dirs to pytest, just to avoid it clobbering
+    # user data and to make tests reproducible.
+    if not os.environ.get("PYTEST_CURRENT_TEST"):
+        if platform.system() in ("Windows", "Darwin"):
+            candidates.append(os.path.expanduser("~/Documents/Neverwinter Nights"))
+        else:
+            candidates.append(os.path.expanduser("~/.local/share/Neverwinter Nights"))
 
     for candidate in candidates:
         if candidate and os.path.isdir(candidate):
             return candidate
 
-    raise FileNotFoundError(
-        "Could not locate NWN user directory; "
-        "try setting NWN_HOME or NWN_USER_DIRECTORY"
-    )
+    raise FileNotFoundError("Could not locate NWN user directory; try setting NWN_HOME")
 
 
 @cache
@@ -133,21 +137,28 @@ def get_install_directory() -> str:
         FileNotFoundError: If the directory cannot be found.
     """
 
-    suffix = "/Steam/steamapps/common/Neverwinter Nights/data"
     candidates = [
         os.environ.get("NWN_ROOT"),
-        os.path.expanduser("~/.local/share/" + suffix),
-        os.path.expanduser("~/Library/Application Support/" + suffix),
-        "c:/program files (x86)/" + suffix,
     ]
+
+    # We never expose system dirs to pytest, just to avoid it clobbering
+    # user data and to make tests reproducible.
+    if not os.environ.get("PYTEST_CURRENT_TEST"):
+        suffix = "/Steam/steamapps/common/Neverwinter Nights/"
+        if platform.system() == "Windows":
+            candidates.append("c:/program files (x86)/" + suffix)
+        elif platform.system() == "Darwin":
+            candidates.append(
+                os.path.expanduser("~/Library/Application Support/" + suffix)
+            )
+        else:
+            candidates.append(os.path.expanduser("~/.local/share/" + suffix))
 
     for candidate in candidates:
         if candidate and os.path.isdir(candidate):
             return candidate
 
-    raise FileNotFoundError(
-        "Could not locate NWN; try setting NWN_ROOT or use override"
-    )
+    raise FileNotFoundError("Could not locate NWN; try setting NWN_ROOT")
 
 
 @cache
