@@ -1,0 +1,63 @@
+name: Docs
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Build docs
+        run: |
+          uv run pydoctor \
+            --html-out _gh-pages/ \
+            --theme readthedocs \
+            --docformat=google \
+            --warnings-as-errors \
+            --project-name "nwn" \
+            --project-version "$(grep -oP '(?<=version = ")[^"]*' pyproject.toml)" \
+            --project-url "https://pypi.org/project/nwn/" \
+            --html-viewsource-base "https://github.com/niv/nwn.py/blob/${{ github.sha }}/" \
+            src/nwn
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _gh-pages
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
